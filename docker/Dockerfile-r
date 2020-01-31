@@ -1,0 +1,9 @@
+FROM rocker/tidyverse
+
+# TODO: use renv
+RUN R -e "install.packages('RPostgres', repos = 'http://cran.us.r-project.org')"
+
+# TODO: rocker does not pass environment variables in to the rstudio user.
+#       To get around this, I set them in the mounted home/.Renviron file. 
+#       This is not ideal, as it encodes sensitive information into the image. A
+#       better step might be to override the entrypoint to let them through
