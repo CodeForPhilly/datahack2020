@@ -14,23 +14,53 @@ Code for Philly, DataPhilly, R Ladies Philly, the Philly Data Jawn, Health Feder
 
 Hackathon planners have been working with our partners to identify and clean relevant datasets that would be helpful in answering these broader questions:
 
-### 1. Can we visualize current capacity for Medication Assisted Interventions in PA to streamline referrals?
-
-Add description
-
-### 2. What have been the effects of granting citizens access to Narcan?
-
-Add description
-
-### 3. How many IV drug users are in Philadelphia?
-
-### 4. Data exploration
-
-e.g. Can we infer death rate and overdose rate from census data?
+1. Can we visualize current capacity for Medication Assisted Interventions in PA to streamline referrals?
+2. What have been the effects of granting citizens access to Narcan?
+3. How many IV drug users are in Philadelphia?
+4. Data exploration (e.g. Can we infer death rate and overdose rate from census data?)
 
 ## [Timeline and Workflow](https://codeforphilly.org/events/datahack2020)
 
-The hack is slated to begin on Friday February 7, 2020 with a kickoff event. Partner organizations will present what their group does and why these questions are relevant to them. The next day, participants will have several hours to form their team, consider the questions, and devise a plan to conduct their relevant analysis. Over the next five weeks, these teams will work on their analyses and write their presentations.
+**Feb 7, 2020 (Friday): Partner presentation night**
+    - Hack participants will have the opportunity to hear directly from partner organizations about the challenges they face and what analyses would be most useful to them. After the talks, participants will be encouraged to sign up to a team via [this Google Doc](https://docs.google.com/document/d/1ztiCetudsQuIAHyyYVHKnBeqI1gsde_l1SvRk2V65bw/edit?usp=sharing). 
+
+**Feb 8, 2020 (Saturday): First hack day**
+    - No formal presentations scheduled on this day. Upon arriving, participants will be encouraged to [sign up to a team](https://docs.google.com/document/d/1ztiCetudsQuIAHyyYVHKnBeqI1gsde_l1SvRk2V65bw/edit?usp=sharing) if they have not already done so the previous evening. Teams will then get together to discuss ideas for research questions to pursue, and work out any team logistics (including selecting a team leader, frequency of meetings, location of meetings, tools to be used, and roles in the team). Space will be available for teams to get started on exploring the data and familiarize themselves with the research topics and tools. 
+    
+**Every Tuesday, Feb 11 - March 10, 2020: Hack Nights** 
+    - Space and pizza will be provided for participants to get together in person and work on the project. There is no attendance requirement, but everyone is welcome. Teams are also welcome to get together at other locations and at other times, but will need to organize these meetings themselves. Teams are also welcome to consider remote work options. 
+
+**March 3, 2020: Wrap up analyses and start writing up report and presentation**
+    - By this point, teams should be concluding their analyses and should begin drafting their reports for partners. Teams should expect going through several iterations of these reports, and should therefore allow ample time before the final presentation night to make edits, tweaks and corrections. 
+
+**March 17, 2020 (Tuesday): Presentation night**
+    - Teams will present their findings in front of their fellow hack participants, partner representatives and other data enthusiasts from the general public. Teams should decide on their own the presenter responsibilities, but all presentations are expected to be no longer than 7 minutes long and follow a predefined structure. Teams will have the option to make minor changes to their reports based on discussion at this event.
+    
+**March 24, 2020**: Final reports due on GitHub. 
+
+## Final Report Structure
+
+Each team is expected to submit a final report, that will follow the structure below ([view an example](https://github.com/rladiesPHL/2019_datathon/blob/master/Analyses/2019_RladiesDatathon_FinalReport.pdf)): 
+
+#### Executive Summary
+*This section should have up to 5 bullet points summarizing the main conclusions from the analysis. These should be worded in such a way that stakeholders without data expertise can easily understand what actios would be beneficial. It can be a shorter version of the conclusions section below.*
+
+#### Contributors
+
+*This section should list the names and 1-2 sentence descriptions of everyone who worked on the submission. E.g. "Party Parrot is a data scientist with Philly's DataForGood nonprofit, and a student of applied statistics at Drexel. In both roles, she enjoys conducting predictive analyses and natural language processing.*</span>
+
+#### Problem definition and dataset
+
+*This section should summarize the question your group has worked on, as well as any working definitions that you used (beyond what was outlined in the general description). Additionally, this section should contain any issues or challenges that you noticed in the data, that may be relevant.*
+
+#### Results
+
+*You may structure this section in any way that makes results easier to understand and describe.*
+
+#### Conclusions and Next Steps
+
+*This section should have a bulletpoint list of what conclusions can be drawn from the analyses that were performed, and what next steps should be taken*
+
 
 ## Data
 
@@ -44,7 +74,8 @@ The hack is slated to begin on Friday February 7, 2020 with a kickoff event. Par
 
 ### Past opioid analyses
 
-- [Identifying and classifying opioid-related overdoses: A validation study](https://www-ncbi-nlm-nih-gov.libproxy.temple.edu/pubmed/31020755)
+Below are a few links to help you better understand some analyses and work that has already been done in this area. These links are for informational purposes only. 
+
 - [Exploring the Economic Effects of the Opioid Epidemic](https://www.philadelphiafed.org/-/media/research-and-data/publications/economic-insights/2019/q2/eiq219-opioid-impact.pdf?la=en)
 - [Combating the opioid epidemic](https://www.phila.gov/programs/combating-the-opioid-epidemic/reports-and-data/opioid-misuse-and-overdose-data/)
 
@@ -105,5 +136,4 @@ We will respect confidentiality requests for the purpose of protecting victims o
 If a participant is found to be in violation of this code of conduct, they will be informed verbally and/or in writing by the leadership team. Participants asked to stop any harassing behavior are expected to comply immediately. If the individual is not an immediate threat to the community, they will be issued a warning. If, after receiving an initial warning, the individual is found to have violated the code of conduct a second time, that individual can be expelled from the hackathon. When expelled, they will not be granted access to in-person events and will be removed from all hackathon-related social media platforms. Consideration will be given at all times to the severity of a given code of conduct violation. If it is in the best interest of the community for an individual to immediately be expelled from the hackathon, it is the discretion of the leadership team to do so.
 
 If you feel you have been falsely or unfairly accused of violating this Code of Conduct, you should notify the leadership team with a concise description of your grievance.
-
 
