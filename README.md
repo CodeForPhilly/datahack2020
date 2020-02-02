@@ -6,8 +6,8 @@ Code for Philly, DataPhilly, R Ladies Philly, the Philly Data Jawn, Health Feder
 
 ## Partner Organizations
 
-- Prevention Point
-- Health Federation of Philadelphia
+- [Prevention Point](http://www.ppponline.org) works to improve access to and quality of health and human services for underserved and vulnerable populations
+- [Health Federation of Philadelphia](http://www.healthfederation.org) works to improve access to and quality of health and human services for underserved and vulnerable populations
 - the City of Philadelphia
 
 ## Research Questions
@@ -64,7 +64,12 @@ Each team is expected to submit a final report, that will follow the structure b
 
 ## Data
 
-- Data from the City of Philadelphia
+**Physician Locator**
+
+- table name in DB: "PhysicianLocator_Test"
+- description: Practitioners authorized to treat opioid dependency with buprenorphine ([view data source](https://www.samhsa.gov/medication-assisted-treatment/practitioner-program-data/treatment-practitioner-locator))
+- [codebook for PhysicianLocator_Test](/codebooks/Codebook_PhysicianLocator_Test.pdf)
+
 - Data from Prevention Point
 - [State Population Totals and Components of Change: 2010-2018](https://www.census.gov/data/datasets/time-series/demo/popest/2010s-state-total.html#par_textimage_1873399417)
 - [Overdose Information Network Data CY January 2018 - Current Monthly County State Police](https://data.pa.gov/Opioid-Related/Overdose-Information-Network-Data-CY-January-2018-/hbkk-dwy3)
