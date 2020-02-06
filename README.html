@@ -201,8 +201,8 @@ $(document).ready(function () {
 <div id="partner-organizations" class="section level2">
 <h2>Partner Organizations</h2>
 <ul>
-<li>Prevention Point</li>
-<li>Health Federation of Philadelphia</li>
+<li><a href="http://www.ppponline.org">Prevention Point</a> works to improve access to and quality of health and human services for underserved and vulnerable populations</li>
+<li><a href="http://www.healthfederation.org">Health Federation of Philadelphia</a> works to improve access to and quality of health and human services for underserved and vulnerable populations</li>
 <li>the City of Philadelphia</li>
 </ul>
 </div>
@@ -210,19 +210,19 @@ $(document).ready(function () {
 <h2>Research Questions</h2>
 <p>Hackathon planners have been working with our partners to identify and clean relevant datasets that would be helpful in answering these broader questions:</p>
 <ol style="list-style-type: decimal">
-<li>Can we visualize current capacity for Medication Assisted Interventions in PA to streamline referrals?</li>
-<li>What have been the effects of granting citizens access to Narcan?</li>
-<li>How many IV drug users are in Philadelphia?</li>
-<li>Data exploration (e.g. Can we infer death rate and overdose rate from census data?)</li>
+<li>Can we visualize the recovery process with regards to building understanding in the general public and better tools for warm handoffs?</li>
+<li>What have been the effects of citizens’ access to Narcan?</li>
+<li>Can we estimate the population of individuals using IV drugs in Philadelphia?</li>
+<li>Data exploration</li>
 </ol>
 </div>
 <div id="timeline-and-workflow" class="section level2">
 <h2><a href="https://codeforphilly.org/events/datahack2020">Timeline and Workflow</a></h2>
-<p><strong>Feb 7, 2020 (Friday): Partner presentation night</strong> - Hack participants will have the opportunity to hear directly from partner organizations about the challenges they face and what analyses would be most useful to them. After the talks, participants will be encouraged to sign up to a team via <a href="https://docs.google.com/document/d/1ztiCetudsQuIAHyyYVHKnBeqI1gsde_l1SvRk2V65bw/edit?usp=sharing">this Google Doc</a>.</p>
-<p><strong>Feb 8, 2020 (Saturday): First hack day</strong> - No formal presentations scheduled on this day. Upon arriving, participants will be encouraged to <a href="https://docs.google.com/document/d/1ztiCetudsQuIAHyyYVHKnBeqI1gsde_l1SvRk2V65bw/edit?usp=sharing">sign up to a team</a> if they have not already done so the previous evening. Teams will then get together to discuss ideas for research questions to pursue, and work out any team logistics (including selecting a team leader, frequency of meetings, location of meetings, tools to be used, and roles in the team). Space will be available for teams to get started on exploring the data and familiarize themselves with the research topics and tools.</p>
-<p><strong>Every Tuesday, Feb 11 - March 10, 2020: Hack Nights</strong> - Space and pizza will be provided for participants to get together in person and work on the project. There is no attendance requirement, but everyone is welcome. Teams are also welcome to get together at other locations and at other times, but will need to organize these meetings themselves. Teams are also welcome to consider remote work options.</p>
+<p><strong>Feb 7, 2020 (Friday): <a href="https://www.meetup.com/Code-for-Philly/events/267524879/">Partner presentation night</a></strong> - Hack participants will have the opportunity to hear directly from partner organizations about the challenges they face and what analyses would be most useful to them. After the talks, participants will be encouraged to sign up to a team via <a href="https://docs.google.com/document/d/1ztiCetudsQuIAHyyYVHKnBeqI1gsde_l1SvRk2V65bw/edit?usp=sharing">this Google Doc</a>.</p>
+<p><strong>Feb 8, 2020 (Saturday): <a href="https://www.meetup.com/Code-for-Philly/events/267544650/">First hack day</a></strong> - No formal presentations scheduled on this day. Upon arriving, participants will be encouraged to <a href="https://docs.google.com/document/d/1ztiCetudsQuIAHyyYVHKnBeqI1gsde_l1SvRk2V65bw/edit?usp=sharing">sign up to a team</a> if they have not already done so the previous evening. Teams will then get together to discuss ideas for research questions to pursue, and work out any team logistics (including selecting a team leader, frequency of meetings, location of meetings, tools to be used, and roles in the team). Space will be available for teams to get started on exploring the data and familiarize themselves with the research topics and tools.</p>
+<p><strong>Every Tuesday, Feb 11 - March 10, 2020: <a href="https://www.meetup.com/Code-for-Philly/events/">Hack Nights</a></strong> - Space and pizza will be provided for participants to get together in person and work on the project. There is no attendance requirement, but everyone is welcome. Teams are also welcome to get together at other locations and at other times, but will need to organize these meetings themselves. Teams are also welcome to consider remote work options.</p>
 <p><strong>March 3, 2020: Wrap up analyses and start writing up report and presentation</strong> - By this point, teams should be concluding their analyses and should begin drafting their reports for partners. Teams should expect going through several iterations of these reports, and should therefore allow ample time before the final presentation night to make edits, tweaks and corrections.</p>
-<p><strong>March 17, 2020 (Tuesday): Presentation night</strong> - Teams will present their findings in front of their fellow hack participants, partner representatives and other data enthusiasts from the general public. Teams should decide on their own the presenter responsibilities, but all presentations are expected to be no longer than 7 minutes long and follow a predefined structure. Teams will have the option to make minor changes to their reports based on discussion at this event.</p>
+<p><strong>March 17, 2020 (Tuesday): <a href="https://www.meetup.com/Code-for-Philly/events/268353058/">Presentation night</a></strong> - Teams will present their findings in front of their fellow hack participants, partner representatives and other data enthusiasts from the general public. Teams should decide on their own the presenter responsibilities, but all presentations are expected to be no longer than 7 minutes long and follow a predefined structure. Teams will have the option to make minor changes to their reports based on discussion at this event.</p>
 <p><strong>March 24, 2020</strong>: Final reports due on GitHub.</p>
 </div>
 <div id="final-report-structure" class="section level2">
@@ -251,13 +251,46 @@ $(document).ready(function () {
 </div>
 <div id="data" class="section level2">
 <h2>Data</h2>
+<p><strong>Datasets and Codebooks</strong></p>
 <ul>
-<li>Data from the City of Philadelphia</li>
+<li>table name in DB: “PhysicianLocator_Test”</li>
+<li>description: Practitioners authorized to treat opioid dependency with buprenorphine (<a href="https://www.samhsa.gov/medication-assisted-treatment/practitioner-program-data/treatment-practitioner-locator">view data source</a>)</li>
+<li><p><a href="/codebooks/Codebook_PhysicianLocator_Test.pdf">codebook for PhysicianLocator_Test</a></p></li>
 <li>Data from Prevention Point</li>
 <li><a href="https://www.census.gov/data/datasets/time-series/demo/popest/2010s-state-total.html#par_textimage_1873399417">State Population Totals and Components of Change: 2010-2018</a></li>
 <li><a href="https://data.pa.gov/Opioid-Related/Overdose-Information-Network-Data-CY-January-2018-/hbkk-dwy3">Overdose Information Network Data CY January 2018 - Current Monthly County State Police</a></li>
-<li><a href="https://www.cdc.gov/drugoverdose/data/analysis.html">Opioid Data Analysis and Resources</a></li>
+<li><p><a href="https://www.cdc.gov/drugoverdose/data/analysis.html">Opioid Data Analysis and Resources</a></p></li>
 </ul>
+<p><strong>How to access the data</strong></p>
+<ol style="list-style-type: decimal">
+<li>Log into Code for Philly Slack and join channel #data-hack-chat -&gt; database username and password are a pinned topic in there</li>
+<li><p>Using R:</p>
+<p>Option 1:</p>
+<ul>
+<li><a href="https://rstudio.com/products/rstudio/download/">Install RStudio</a></li>
+<li>New Project -&gt; Version Control -&gt; Git -&gt; Repository URL: <a href="https://github.com/CodeForPhilly/datahack2020.git" class="uri">https://github.com/CodeForPhilly/datahack2020.git</a> (make sure you choose your preferred project directory, and then click “Create Project”)</li>
+<li>Set 2 system variables to allow access to the database; type this in the Console:</li>
+</ul>
+<pre><code>Sys.setenv(DATAHACK_DB_USER = &quot;reader&quot;) 
+Sys.setenv(DATAHACK_DB_PASS = &quot;[pwd]&quot;) # replace [pwd] with the the password you got from the Slack channel
+</code></pre>
+<ul>
+<li>Run the script /home/connect_to_db_rstudio.Rmd; if you get authentication errors, set the environment variables again via the code above.</li>
+</ul>
+<p>Option 2: Rocker</p>
+<ul>
+<li><a href="https://docs.docker.com/install/">Install Docker</a></li>
+<li>Via Docker Quickstart Terminal, cd to ~/datahack2020/docker</li>
+<li>Run:</li>
+</ul>
+<pre><code>docker-compose up</code></pre>
+<ul>
+<li>When that is done processing, open a browser and go to: 192.168.99.100:8787 (on Windows) or localhost:8787 (on Mac) (if this doesn’t work, open up another Docker Quistart Terminal and see what IP is listed there; use that IP address instead of 192.168.99.100)</li>
+<li>When asked for username and pwd, enter rstudio/datahack</li>
+<li>Run the 2 Sys.setenv commands from above</li>
+<li>Run the script /home/connect_to_db_rstudio.Rmd</li>
+</ul></li>
+</ol>
 </div>
 <div id="additional-information" class="section level2">
 <h2>Additional information</h2>

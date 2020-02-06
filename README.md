@@ -14,26 +14,26 @@ Code for Philly, DataPhilly, R Ladies Philly, the Philly Data Jawn, Health Feder
 
 Hackathon planners have been working with our partners to identify and clean relevant datasets that would be helpful in answering these broader questions:
 
-1. Can we visualize current capacity for Medication Assisted Interventions in PA to streamline referrals?
-2. What have been the effects of granting citizens access to Narcan?
-3. How many IV drug users are in Philadelphia?
-4. Data exploration (e.g. Can we infer death rate and overdose rate from census data?)
+1. Can we visualize the recovery process with regards to building understanding in the general public and better tools for warm handoffs?
+2. What have been the effects of citizens’ access to Narcan?
+3. Can we estimate the population of individuals using IV drugs in Philadelphia?
+4. Data exploration
 
 ## [Timeline and Workflow](https://codeforphilly.org/events/datahack2020)
 
-**Feb 7, 2020 (Friday): Partner presentation night**
+**Feb 7, 2020 (Friday): [Partner presentation night](https://www.meetup.com/Code-for-Philly/events/267524879/)**
     - Hack participants will have the opportunity to hear directly from partner organizations about the challenges they face and what analyses would be most useful to them. After the talks, participants will be encouraged to sign up to a team via [this Google Doc](https://docs.google.com/document/d/1ztiCetudsQuIAHyyYVHKnBeqI1gsde_l1SvRk2V65bw/edit?usp=sharing). 
 
-**Feb 8, 2020 (Saturday): First hack day**
+**Feb 8, 2020 (Saturday): [First hack day](https://www.meetup.com/Code-for-Philly/events/267544650/)**
     - No formal presentations scheduled on this day. Upon arriving, participants will be encouraged to [sign up to a team](https://docs.google.com/document/d/1ztiCetudsQuIAHyyYVHKnBeqI1gsde_l1SvRk2V65bw/edit?usp=sharing) if they have not already done so the previous evening. Teams will then get together to discuss ideas for research questions to pursue, and work out any team logistics (including selecting a team leader, frequency of meetings, location of meetings, tools to be used, and roles in the team). Space will be available for teams to get started on exploring the data and familiarize themselves with the research topics and tools. 
     
-**Every Tuesday, Feb 11 - March 10, 2020: Hack Nights** 
+**Every Tuesday, Feb 11 - March 10, 2020: [Hack Nights](https://www.meetup.com/Code-for-Philly/events/)** 
     - Space and pizza will be provided for participants to get together in person and work on the project. There is no attendance requirement, but everyone is welcome. Teams are also welcome to get together at other locations and at other times, but will need to organize these meetings themselves. Teams are also welcome to consider remote work options. 
 
 **March 3, 2020: Wrap up analyses and start writing up report and presentation**
     - By this point, teams should be concluding their analyses and should begin drafting their reports for partners. Teams should expect going through several iterations of these reports, and should therefore allow ample time before the final presentation night to make edits, tweaks and corrections. 
 
-**March 17, 2020 (Tuesday): Presentation night**
+**March 17, 2020 (Tuesday): [Presentation night](https://www.meetup.com/Code-for-Philly/events/268353058/)**
     - Teams will present their findings in front of their fellow hack participants, partner representatives and other data enthusiasts from the general public. Teams should decide on their own the presenter responsibilities, but all presentations are expected to be no longer than 7 minutes long and follow a predefined structure. Teams will have the option to make minor changes to their reports based on discussion at this event.
     
 **March 24, 2020**: Final reports due on GitHub. 
@@ -64,7 +64,7 @@ Each team is expected to submit a final report, that will follow the structure b
 
 ## Data
 
-**Physician Locator**
+**Datasets and Codebooks**
 
 - table name in DB: "PhysicianLocator_Test"
 - description: Practitioners authorized to treat opioid dependency with buprenorphine ([view data source](https://www.samhsa.gov/medication-assisted-treatment/practitioner-program-data/treatment-practitioner-locator))
@@ -74,6 +74,41 @@ Each team is expected to submit a final report, that will follow the structure b
 - [State Population Totals and Components of Change: 2010-2018](https://www.census.gov/data/datasets/time-series/demo/popest/2010s-state-total.html#par_textimage_1873399417)
 - [Overdose Information Network Data CY January 2018 - Current Monthly County State Police](https://data.pa.gov/Opioid-Related/Overdose-Information-Network-Data-CY-January-2018-/hbkk-dwy3)
 - [Opioid Data Analysis and Resources](https://www.cdc.gov/drugoverdose/data/analysis.html)
+
+**How to access the data**
+
+1. Log into Code for Philly Slack and join channel #data-hack-chat -> database username and password are a pinned topic in there
+2. Using R: 
+
+    Option 1: 
+    
+    - [Install RStudio](https://rstudio.com/products/rstudio/download/)
+    - New Project -> Version Control -> Git -> Repository URL: https://github.com/CodeForPhilly/datahack2020.git (make sure you choose your preferred project directory, and then click "Create Project")
+    - Set 2 system variables to allow access to the database; type this in the Console: 
+    
+    ```
+    Sys.setenv(DATAHACK_DB_USER = "reader") 
+    Sys.setenv(DATAHACK_DB_PASS = "[pwd]") # replace [pwd] with the the password you got from the Slack channel
+    
+    ```
+    - Run the script /home/connect_to_db_rstudio.Rmd; if you get authentication errors, set the environment variables again via the code above. 
+    
+    Option 2: Rocker
+    
+    - [Install Docker](https://docs.docker.com/install/)
+    - Via Docker Quickstart Terminal, cd to ~/datahack2020/docker
+    - Run: 
+    
+    ```
+    docker-compose up
+    ```
+    - When that is done processing, open a browser and go to: 192.168.99.100:8787 (on Windows) or localhost:8787 (on Mac) (if this doesn't work, open up another Docker Quistart Terminal and see what IP is listed there; use that IP address instead of 192.168.99.100)
+    - When asked for username and pwd, enter rstudio/datahack
+    - Run the 2 Sys.setenv commands from above
+    - Run the script /home/connect_to_db_rstudio.Rmd
+    
+    
+
 
 ## Additional information
 
