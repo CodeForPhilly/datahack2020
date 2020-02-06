@@ -2,7 +2,7 @@
 
 ## Description
 
-Code for Philly, DataPhilly, R Ladies Philly, the Philly Data Jawn, Health Federation of Philadelphia, Prevention Point, the City of Philadelphia are hosting a data science hackathon to answer pertinent questions around the Opioid Crisis in Philadelphia. The goals of this event are to provide health organizations with insights that may normally be unavailable to them and to create analyses that help inform the public about the opioid epidemic in our city.
+[Code for Philly](https://codeforphilly.org/), [DataPhilly](https://www.meetup.com/DataPhilly/), [R Ladies Philly](https://www.rladiesphilly.org/), the [Philly Data Jawn](https://www.phillydatajawn.com/), [Health Federation of Philadelphia](http://www.healthfederation.org), [Prevention Point](http://www.ppponline.org), the [City of Philadelphia](https://www.phila.gov/programs/combating-the-opioid-epidemic/) are hosting a data science hackathon to answer pertinent questions around the Opioid Crisis in Philadelphia. The goals of this event are to provide health organizations with insights that may normally be unavailable to them and to create analyses that help inform the public about the opioid epidemic in our city.
 
 ## Partner Organizations
 
@@ -47,8 +47,7 @@ Each team is expected to submit a final report, that will follow the structure b
 
 #### Contributors
 
-*This section should list the names and 1-2 sentence descriptions of everyone who worked on the submission. E.g. "Party Parrot is a data scientist with Philly's DataForGood nonprofit, and a student of applied statistics at Drexel. In both roles, she enjoys conducting predictive analyses and natural language processing.*</span>
-
+*This section should list the names and 1-2 sentence descriptions of everyone who worked on the submission. E.g. "Party Parrot is a data scientist with Philly's DataForGood nonprofit, and a student of applied statistics at Drexel. In both roles, she enjoys conducting predictive analyses and natural language processing.*
 #### Problem definition and dataset
 
 *This section should summarize the question your group has worked on, as well as any working definitions that you used (beyond what was outlined in the general description). Additionally, this section should contain any issues or challenges that you noticed in the data, that may be relevant.*
@@ -64,7 +63,7 @@ Each team is expected to submit a final report, that will follow the structure b
 
 ## Data
 
-**Datasets and Codebooks**
+### Datasets and Codebooks
 
 - table name in DB: "PhysicianLocator_Test"
 - description: Practitioners authorized to treat opioid dependency with buprenorphine ([view data source](https://www.samhsa.gov/medication-assisted-treatment/practitioner-program-data/treatment-practitioner-locator))
@@ -75,7 +74,7 @@ Each team is expected to submit a final report, that will follow the structure b
 - [Overdose Information Network Data CY January 2018 - Current Monthly County State Police](https://data.pa.gov/Opioid-Related/Overdose-Information-Network-Data-CY-January-2018-/hbkk-dwy3)
 - [Opioid Data Analysis and Resources](https://www.cdc.gov/drugoverdose/data/analysis.html)
 
-**How to access the data**
+### How to access the data
 
 1. Log into Code for Philly Slack and join channel #data-hack-chat -> database username and password are a pinned topic in there
 2. Using R: 
@@ -108,7 +107,20 @@ Each team is expected to submit a final report, that will follow the structure b
     - Run the script /home/connect_to_db_rstudio.Rmd
     
     
+## Collaborating using Git: Guidelines
 
+- For those that don't yet have Git installed on their machines, follow [this link](https://gist.github.com/derhuerst/1b15ff4652a867391f03) for installation
+- For those that are R users and are new to Git and GitHub, we recommend [this resource](https://happygitwithr.com) as well as these instructions from [a past datathon](https://docs.google.com/document/d/1m0dXQvt7U4bR6Zie3VlwKv25idZW-MbiLxJV2uG9q7I/edit?usp=sharing)
+- For any contributions, please only work/modify within the analyses/ directory specific to the group you are contributing to. In other words, don’t add files to places other than analyses, unless you ask first. This is meant to help avoid unnecessary conflicts.
+
+To contribute, you will need to:
+
+- Fork the repo (optional)
+- Clone the repo
+- Create a new branch (branch names should have descriptive names and should end with your initials, eg. if Party Parrot is in Team 2 and is working on a network analysis, she would create a branch under the folder /analyses/team02 and call it "network_analysis_pp")
+- Do work in your branch
+- When ready, commit and push all your changes to GitHub
+- When ready, make a pull request to the upstream repo (this will notify admins to review your pull request before merging it into master)
 
 ## Additional information
 
@@ -177,3 +189,13 @@ If a participant is found to be in violation of this code of conduct, they will 
 
 If you feel you have been falsely or unfairly accused of violating this Code of Conduct, you should notify the leadership team with a concise description of your grievance.
 
+## Leadership Team
+
+Should you need to get in touch with the leadership team, you can reach out to us over Code for Philly Slack:
+
+- Marieke Jackson, Code for Philly (`marieke`)
+- Karla Fettich, R Ladies Philly (`karla`)
+- Michael Chow, Code for Philly (`machow`)
+- Joey Logan, CHOP (`joey_logan`)
+- Michael Becker, DataPhilly (`beckerfuffle`)
+- Dan Larson, Data Jawn (`dwlarson10`)

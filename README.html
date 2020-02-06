@@ -196,7 +196,7 @@ $(document).ready(function () {
 <h1>2020 Opioid Data Hackathon</h1>
 <div id="description" class="section level2">
 <h2>Description</h2>
-<p>Code for Philly, DataPhilly, R Ladies Philly, the Philly Data Jawn, Health Federation of Philadelphia, Prevention Point, the City of Philadelphia are hosting a data science hackathon to answer pertinent questions around the Opioid Crisis in Philadelphia. The goals of this event are to provide health organizations with insights that may normally be unavailable to them and to create analyses that help inform the public about the opioid epidemic in our city.</p>
+<p><a href="https://codeforphilly.org/">Code for Philly</a>, <a href="https://www.meetup.com/DataPhilly/">DataPhilly</a>, <a href="https://www.rladiesphilly.org/">R Ladies Philly</a>, the <a href="https://www.phillydatajawn.com/">Philly Data Jawn</a>, <a href="http://www.healthfederation.org">Health Federation of Philadelphia</a>, <a href="http://www.ppponline.org">Prevention Point</a>, the <a href="https://www.phila.gov/programs/combating-the-opioid-epidemic/">City of Philadelphia</a> are hosting a data science hackathon to answer pertinent questions around the Opioid Crisis in Philadelphia. The goals of this event are to provide health organizations with insights that may normally be unavailable to them and to create analyses that help inform the public about the opioid epidemic in our city.</p>
 </div>
 <div id="partner-organizations" class="section level2">
 <h2>Partner Organizations</h2>
@@ -234,10 +234,7 @@ $(document).ready(function () {
 </div>
 <div id="contributors" class="section level4">
 <h4>Contributors</h4>
-<p>*This section should list the names and 1-2 sentence descriptions of everyone who worked on the submission. E.g. “Party Parrot is a data scientist with Philly’s DataForGood nonprofit, and a student of applied statistics at Drexel. In both roles, she enjoys conducting predictive analyses and natural language processing.*</span></p>
-</div>
-<div id="problem-definition-and-dataset" class="section level4">
-<h4>Problem definition and dataset</h4>
+<p>*This section should list the names and 1-2 sentence descriptions of everyone who worked on the submission. E.g. “Party Parrot is a data scientist with Philly’s DataForGood nonprofit, and a student of applied statistics at Drexel. In both roles, she enjoys conducting predictive analyses and natural language processing.* #### Problem definition and dataset</p>
 <p><em>This section should summarize the question your group has worked on, as well as any working definitions that you used (beyond what was outlined in the general description). Additionally, this section should contain any issues or challenges that you noticed in the data, that may be relevant.</em></p>
 </div>
 <div id="results" class="section level4">
@@ -251,7 +248,8 @@ $(document).ready(function () {
 </div>
 <div id="data" class="section level2">
 <h2>Data</h2>
-<p><strong>Datasets and Codebooks</strong></p>
+<div id="datasets-and-codebooks" class="section level3">
+<h3>Datasets and Codebooks</h3>
 <ul>
 <li>table name in DB: “PhysicianLocator_Test”</li>
 <li>description: Practitioners authorized to treat opioid dependency with buprenorphine (<a href="https://www.samhsa.gov/medication-assisted-treatment/practitioner-program-data/treatment-practitioner-locator">view data source</a>)</li>
@@ -261,7 +259,9 @@ $(document).ready(function () {
 <li><a href="https://data.pa.gov/Opioid-Related/Overdose-Information-Network-Data-CY-January-2018-/hbkk-dwy3">Overdose Information Network Data CY January 2018 - Current Monthly County State Police</a></li>
 <li><p><a href="https://www.cdc.gov/drugoverdose/data/analysis.html">Opioid Data Analysis and Resources</a></p></li>
 </ul>
-<p><strong>How to access the data</strong></p>
+</div>
+<div id="how-to-access-the-data" class="section level3">
+<h3>How to access the data</h3>
 <ol style="list-style-type: decimal">
 <li>Log into Code for Philly Slack and join channel #data-hack-chat -&gt; database username and password are a pinned topic in there</li>
 <li><p>Using R:</p>
@@ -291,6 +291,24 @@ Sys.setenv(DATAHACK_DB_PASS = &quot;[pwd]&quot;) # replace [pwd] with the the pa
 <li>Run the script /home/connect_to_db_rstudio.Rmd</li>
 </ul></li>
 </ol>
+</div>
+</div>
+<div id="collaborating-using-git-guidelines" class="section level2">
+<h2>Collaborating using Git: Guidelines</h2>
+<ul>
+<li>For those that don’t yet have Git installed on their machines, follow <a href="https://gist.github.com/derhuerst/1b15ff4652a867391f03">this link</a> for installation</li>
+<li>For those that are R users and are new to Git and GitHub, we recommend <a href="https://happygitwithr.com">this resource</a> as well as these instructions from <a href="https://docs.google.com/document/d/1m0dXQvt7U4bR6Zie3VlwKv25idZW-MbiLxJV2uG9q7I/edit?usp=sharing">a past datathon</a></li>
+<li>For any contributions, please only work/modify within the analyses/ directory specific to the group you are contributing to. In other words, don’t add files to places other than analyses, unless you ask first. This is meant to help avoid unnecessary conflicts.</li>
+</ul>
+<p>To contribute, you will need to:</p>
+<ul>
+<li>Fork the repo (optional)</li>
+<li>Clone the repo</li>
+<li>Create a new branch (branch names should have descriptive names and should end with your initials, eg. if Party Parrot is in Team 2 and is working on a network analysis, she would create a branch under the folder /analyses/team02 and call it “network_analysis_pp”)</li>
+<li>Do work in your branch</li>
+<li>When ready, commit and push all your changes to GitHub</li>
+<li>When ready, make a pull request to the upstream repo (this will notify admins to review your pull request before merging it into master)</li>
+</ul>
 </div>
 <div id="additional-information" class="section level2">
 <h2>Additional information</h2>
@@ -357,6 +375,14 @@ Sys.setenv(DATAHACK_DB_PASS = &quot;[pwd]&quot;) # replace [pwd] with the the pa
 <p>If a participant is found to be in violation of this code of conduct, they will be informed verbally and/or in writing by the leadership team. Participants asked to stop any harassing behavior are expected to comply immediately. If the individual is not an immediate threat to the community, they will be issued a warning. If, after receiving an initial warning, the individual is found to have violated the code of conduct a second time, that individual can be expelled from the hackathon. When expelled, they will not be granted access to in-person events and will be removed from all hackathon-related social media platforms. Consideration will be given at all times to the severity of a given code of conduct violation. If it is in the best interest of the community for an individual to immediately be expelled from the hackathon, it is the discretion of the leadership team to do so.</p>
 <p>If you feel you have been falsely or unfairly accused of violating this Code of Conduct, you should notify the leadership team with a concise description of your grievance.</p>
 </div>
+</div>
+<div id="leadership-team" class="section level2">
+<h2>Leadership Team</h2>
+<p>Should you need to get in touch with the leadership team, you can reach out to us over Code for Philly Slack:</p>
+<ul>
+<li>Marieke Jackson, Code for Philly (<code>marieke</code>)</li>
+<li>Karla Fettich, R Ladies Philly Michael Chow, Code for Philly Joey Logan, CHOP Michael Becker, DataPhilly Dan Larson, Data Jawn</li>
+</ul>
 </div>
 </div>
 
