@@ -101,7 +101,7 @@ Physicians with active Bupernorphine waivers are listed on the [SAMHSA](https://
 
 These datasets were received as two separate excel files, by submitting a [Health Data Request Form](https://www.phila.gov/services/mental-physical-health/medical-professionals/request-health-data/). Requests are reviewed by the Philadelphia Department of Health.  Any clarifications on the request needed are then obtained and data is then generated and delivered to the recipient. Anyone can request health data from the PDPH, including members of the public.
 
-This dataset includes quarterly overdose mortality rates by resident zip code ()
+This dataset includes quarterly overdose mortality rates by resident zip code (address of the individual) and also by incident zip code (address of the incident).  Counts lower than 6 have been suppressed. 
 
 ### Tableau dashboards (dph_dash)
 
