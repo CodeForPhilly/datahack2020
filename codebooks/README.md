@@ -13,7 +13,7 @@ Acronyms:
 | ---- | ----------- |
 | pp_refill_events | Individual refills of Naloxone from PP. [(info)](#refills-pp_refill) |
 | pp_refill_zipcode_metrics | pp_refill_events measures aggregated by participant zipcode. [(info)](#refills-pp_refill) |
-| hf_physician_locator | Contact information of physicians in Philly, for clarifying who can prescribe Buprenorphine |
+| hf_physician_locator | Contact information of physicians in Philly, for clarifying who can prescribe Buprenorphine [(info)](#physicians-hf_physician) |
 | residentzipcodecounts | overdose mortality by residential zip |
 | incidentzipcodecounts | overdose mortality by incident zip |
 | n_EDtransfer_postNaloxone_byHospital | Number of ED Transfers After Naloxone Administrations by Hospital (2014-2019). [(source)](https://public.tableau.com/profile/pdph#!/vizhome/NaloxoneAdministrationsbyFirstResponders/NumberofNaloxoneAdministrationsbyLawEnforcementandFirstRespondersbyQuarter) |
@@ -31,7 +31,11 @@ Data Providers and Details
 
 ### Syringe exchanges (pp_sep)
 
-## Health Federation (HF)
+## Health Federation
+
+### Physicians (hf_physician)
+
+
 
 ## Department of Public Health Tableau
 
