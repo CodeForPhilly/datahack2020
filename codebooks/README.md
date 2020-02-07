@@ -25,7 +25,7 @@ Acronyms:
 Data Providers and Details
 ==========================
 
-## Prevention Point (PP)
+## Prevention Point
 
 ### Refills (pp_refill)
 
@@ -33,11 +33,13 @@ Data Providers and Details
 
 ## Health Federation (HF)
 
-## Department of Public Health (DPH) Tableau Data
+## Department of Public Health Tableau
 
 https://public.tableau.com/profile/pdph#!/
 
-### Summary dashboard
+### Opioid summary dashboard (dph_main)
+
+https://public.tableau.com/profile/pdph#!/vizhome/SummaryPage_0/SummaryPage
 
 
 Contributing to this README
