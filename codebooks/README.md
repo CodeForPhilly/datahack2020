@@ -7,6 +7,9 @@ Acronyms:
 * SEP: Syringe Exchange Program
 * HF: Health Federation
 * DPH: Department of Public Health
+* ED: Emergency Department
+* EMS: Emergency Medical Services
+* OD: Overdose
 
 
 | data | description |
