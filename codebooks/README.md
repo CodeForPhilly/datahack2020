@@ -44,12 +44,12 @@ Contributing to this README
 ===========================
 
 
-Each data source in the table should be formatted `{provider}_{domain}_{details}`.
+**Table names** should be formatted `{provider}_{domain}_{details}`.
 
 * eg. `pp_refill_events` is Prevention Point refills, at the individual refill event level.
 * eg. `hf_physician_locator` is Health Federation physician data.
  
-Each data source should have additional information in the Data Providers section, including..
+**Additional information** should be included in the Data Providers section, with two levels of headings:
 
 * Section with their name. Eg. `## Prevention Point`
 * Section for each domain. Eg. `### Refills (pp_refill)`
