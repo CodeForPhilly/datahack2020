@@ -32,6 +32,8 @@ Data Providers and Details
 
 ### Syringe exchanges (pp_sep)
 
+TODO Marieke: a couple sentences. What is this data? Why is PP interested in it? From discussion it sounds like PP would benefit from estimating IV drug users--so we should answer, "how will this estimate allow PP to support their community?".
+
 ## Health Federation
 
 ### Physicians (hf_physician)
