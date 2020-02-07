@@ -16,8 +16,8 @@ Acronyms:
 | ---- | ----------- |
 | pp_refill_events | Information collected at time of naloxone refills of Naloxone at PP. [(info)](#refills-pp_refill) |
 | pp_refill_zipcode_metrics | pp_refill_events measures aggregated by participant zipcode. [(info)](#refills-pp_refill) |
-| pp_sep_site_participants | TODO Marieke fill in. [(info)](#syringe-exchanges-pp_sep). |
-| pp_sep_site_exchanges | TODO Marieke fill in. [(info)](#syringe-exchanges-pp_sep). |
+| pp_sep_site_exchanges | Counts of needles exchanged/received at PP sites [(info)](#syringe-exchanges-pp_sep).
+| pp_sep_site_participants | Counts of participants that have exchanged syringes at PP sites [(info)](#syringe-exchanges-pp_sep).
 | hf_physician_locator | Contact information of physicians in Philly, for clarifying who can prescribe Buprenorphine [(info)](#physicians-hf_physician) |
 | hf_samsha_programs | SAMSHA data on treatment programs using Buprenorphine. [(info)](#physicians-hf_physician) |
 | hf_samsha_providers | SAMSHA data on providers and their Buprenorphine limits. [(info)](#physicians-hf_physician) |
@@ -97,11 +97,11 @@ Physicians with active Bupernorphine waivers are listed on the [SAMHSA](https://
 
 ## Department of Public Health
 
-### Overdose data (dph_od)
+### Overdose Mortality Rates (dph_od)
 
-This data was an excel file, obtained through the following email request to the DPH.
+These datasets were received as two separate excel files, by submitting a [Health Data Request Form](https://www.phila.gov/services/mental-physical-health/medical-professionals/request-health-data/). Requests are reviewed by the Philadelphia Department of Health.  Any clarifications on the request needed are then obtained and data is then generated and delivered to the recipient. Anyone can request health data from the PDPH, including members of the public.
 
-> TODO: Marieke paste in relevant text from request, so we know the instructions the person generating the data used.
+This dataset includes quarterly overdose mortality rates by resident zip code ()
 
 ### Tableau dashboards (dph_dash)
 
