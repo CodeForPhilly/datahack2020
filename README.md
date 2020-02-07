@@ -75,38 +75,37 @@ Other userful data sources:
 - [PA.gov: Overdose Information Network Data CY January 2018 - Current Monthly County State Police](https://data.pa.gov/Opioid-Related/Overdose-Information-Network-Data-CY-January-2018-/hbkk-dwy3)
 - [CDC: Opioid Data Analysis and Resources](https://www.cdc.gov/drugoverdose/data/analysis.html)
 
-### How to access the data
+### Access the data in R
 
-1. Log into Code for Philly Slack and join channel #data-hack-chat -> database username and password are a pinned topic in there
-2. Using R: 
+First, log into Code for Philly Slack and join channel #data-hack-chat -> database username and password are a pinned topic in there
 
-    Option 1: 
-    
-    - [Install RStudio](https://rstudio.com/products/rstudio/download/)
-    - New Project -> Version Control -> Git -> Repository URL: https://github.com/CodeForPhilly/datahack2020.git (make sure you choose your preferred project directory, and then click "Create Project")
-    - Set 2 system variables to allow access to the database; type this in the Console: 
-    
+#### Option 1: 
+
+- [Install RStudio](https://rstudio.com/products/rstudio/download/)
+- New Project -> Version Control -> Git -> Repository URL: https://github.com/CodeForPhilly/datahack2020.git (make sure you choose your preferred project directory, and then click "Create Project")
+- Set 2 system variables to allow access to the database; type this in the Console: 
+
     ```
     Sys.setenv(DATAHACK_DB_USER = "reader") 
     Sys.setenv(DATAHACK_DB_PASS = "[pwd]") # replace [pwd] with the the password you got from the Slack channel
-    
+
     ```
-    - Run the script /home/connect_to_db_rstudio.R; if you get authentication errors, set the environment variables again via the code above. 
-    
-    Option 2: Rocker
-    
-    - [Install Docker](https://docs.docker.com/install/)
-    - Via Docker Quickstart Terminal, cd to ~/datahack2020/docker
-    - Run: 
-    
-    ```
-    docker-compose up
-    ```
-    - When that is done processing, open a browser and go to: 192.168.99.100:8787 (on Windows) or localhost:8787 (on Mac) (if this doesn't work, open up another Docker Quistart Terminal and see what IP is listed there; use that IP address instead of 192.168.99.100)
-    - When the Rstudio in your browser asks for credentials: username = rstudio, password = datahack
-    - Run the 2 Sys.setenv commands from above
-    - Run the script /home/connect_to_db_rstudio.Rmd
-    
+- Run the script /home/connect_to_db_rstudio.R; if you get authentication errors, set the environment variables again via the code above. 
+
+#### Option 2: Rocker
+
+- [Install Docker](https://docs.docker.com/install/)
+- Via Docker Quickstart Terminal, cd to ~/datahack2020/docker
+- Run: 
+
+```
+docker-compose up
+```
+- When that is done processing, open a browser and go to: 192.168.99.100:8787 (on Windows) or localhost:8787 (on Mac) (if this doesn't work, open up another Docker Quistart Terminal and see what IP is listed there; use that IP address instead of 192.168.99.100)
+- When the Rstudio in your browser asks for credentials: username = rstudio, password = datahack
+- Run the 2 Sys.setenv commands from above
+- Run the script /home/connect_to_db_rstudio.Rmd
+
     
 ## Collaborating using Git: Guidelines
 
