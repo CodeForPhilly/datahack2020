@@ -67,14 +67,13 @@ Each team is expected to submit a final report, that will follow the structure b
 
 ### Datasets and Codebooks
 
-- table name in DB: "PhysicianLocator_Test"
-    - description: Practitioners authorized to treat opioid dependency with buprenorphine ([view data source](https://www.samhsa.gov/medication-assisted-treatment/practitioner-program-data/treatment-practitioner-locator))
-    - [codebook for PhysicianLocator_Test](/codebooks/Codebook_PhysicianLocator_Test.pdf)
+> 📢: Visit the [codebooks section](https://github.com/CodeForPhilly/datahack2020/tree/master/codebooks) for a detailed list of database data.
 
-- Data from Prevention Point
-- [State Population Totals and Components of Change: 2010-2018](https://www.census.gov/data/datasets/time-series/demo/popest/2010s-state-total.html#par_textimage_1873399417)
-- [Overdose Information Network Data CY January 2018 - Current Monthly County State Police](https://data.pa.gov/Opioid-Related/Overdose-Information-Network-Data-CY-January-2018-/hbkk-dwy3)
-- [Opioid Data Analysis and Resources](https://www.cdc.gov/drugoverdose/data/analysis.html)
+Other userful data sources:
+
+- [Census.gov: State Population Totals and Components of Change: 2010-2018](https://www.census.gov/data/datasets/time-series/demo/popest/2010s-state-total.html#par_textimage_1873399417)
+- [PA.gov: Overdose Information Network Data CY January 2018 - Current Monthly County State Police](https://data.pa.gov/Opioid-Related/Overdose-Information-Network-Data-CY-January-2018-/hbkk-dwy3)
+- [CDC: Opioid Data Analysis and Resources](https://www.cdc.gov/drugoverdose/data/analysis.html)
 
 ### How to access the data
 
