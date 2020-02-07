@@ -6,21 +6,18 @@ services:
       dockerfile: Dockerfile-python
     environment:
       - "PASSWORD=datahack"
-      - "DATAHACK_DB_PASS=${DATAHACK_DB_PASS}"
-      - "DATAHACK_DB_USER=${DATAHACK_DB_USER}"
+      - "JUPYTER_ENABLE_LAB=1"
     ports:
       - "8999:8999"
     volumes:
       - './home:/home/jovyan'
-    command: ["start-notebook.sh", "--port", "8999"]
+    command: ["start-notebook.sh", "--FileContentsManager.allow_hidden=True", "--port", "8999"]
   rstudio:
     build:
       context: docker
       dockerfile: Dockerfile-r
     environment:
       - "PASSWORD=datahack"
-      - "DATAHACK_DB_PASS=${DATAHACK_DB_PASS}"
-      - "DATAHACK_DB_USER=${DATAHACK_DB_USER}"
     volumes:
       - './home:/home/rstudio'
     ports:
