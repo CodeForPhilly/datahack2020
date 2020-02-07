@@ -31,7 +31,9 @@ Data Providers and Details
 ### Refills (pp_refill)
 
 #### Naloxone refill_events
-| data | description |
+In many states, individuals must receive a prescription to carry overdose reversal drugs like Narcan (Naloxone). In 2014, Pennsylvania passed legislation allowing any citizen who could be in the position to administer overdose reversal drugs to receive, carry, and administer such drugs. Prevention Point, among other locations, trains and hands out refills for Narcan (Naloxone).  Narcan is an overdose reversal drug administered either intravenously or intranalasally. Paramedics 
+
+<!-- | data | description |
 | age | participant age at time of refill |
 | gender | participant identified gender | 
 | race | particpant race | 
@@ -61,16 +63,22 @@ Data Providers and Details
 | od_present_unresponsive | OD identified: individual was unresponsive or unconcious |
 | od_present_coloring | OD identified by skin color (blue or purple) |
 | od_present_other | OD identified through other means |
-| data_date_range | quarters of 2019 in which refills occurred |
+| data_date_range | quarters of 2019 in which refills occurred | -->
 
 
 ### Syringe exchanges (pp_sep)
 #### Data collected through the Prevention Point Syringe Exchange Program (SEP)
 Prevention Point is the only syringe exchange program in Philadelphia, serving a wide range of participants through programming at their main headquarters (in Kensington), mobile units, and partner programs. As of 2020, Prevention Point is the only resource for individuals seeking clean syringes who may not be able to purchase them safely.
 
-| site_id | site at which syringes were received/exchanged |
-| 
+We (the organizers) have the event data at a lower grain but due to HIPAA concerns and the concerns of SEP participants, we are only releasing aggregated forms of this data.  If there is a different aggregation you think would be useful, feel free to submit an issue (as early as possible).
 
+sep_participants_month_site
+|data | description | 
+| site_id | site at which syringes were received/exchanged |
+| visit_month | month in which syringes were received/exchanged |
+| count_distinct_participants | number of distinct participants at that site during that month | 
+
+sep_
 
 
 ## Health Federation
