@@ -106,6 +106,25 @@ docker-compose up
 - Run the 2 Sys.setenv commands from above
 - Run the script /home/connect_to_db_rstudio.Rmd
 
+### Access the data in Python
+
+#### Option 2: Rocker
+
+Here is a [2 minute screencast of this approach, with unfortunately no sound](https://v.usetapes.com/GlsLP4I8LB).
+
+- [Install Docker](https://docs.docker.com/install/)
+- Via Docker Quickstart Terminal, cd to ~/datahack2020/docker
+- Run: 
+```
+docker-compose up
+```
+- When that is done processing, open a browser and go to: 192.168.99.100:8999 (on Windows) or localhost:8999 (on Mac) (if this doesn't work, open up another Docker Quistart Terminal and see what IP is listed there; use that IP address instead of 192.168.99.100)
+- Open the file `_env` and set your credentials. Rename it to `.env`
+- Run the notebook `/home/test_notebook.ipynb`
+
+
+
+https://v.usetapes.com/GlsLP4I8LB
     
 ## Collaborating using Git: Guidelines
 
