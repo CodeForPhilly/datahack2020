@@ -39,10 +39,13 @@ TODO Marieke: a couple sentences. What is this data? Why is PP interested in it?
 ### Physicians (hf_physician)
 
 
-
 ## Department of Public Health
 
 ### Overdose data (dph_od)
+
+This data was an excel file, obtained through the following email request to the DPH.
+
+> TODO: Marieke paste in relevant text from request, so we know the instructions the person generating the data used.
 
 ### Tableau dashboards (dph_dash)
 
