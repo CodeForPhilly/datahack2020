@@ -19,6 +19,10 @@ con <- DBI::dbConnect(
   dbname = "postgres"
 )
 
-# extract table mtcars from the database
+# extract the full table PhysicianLocator_Test from the database
 
-df <- tbl(con, 'mtcars')
+df <- as.data.frame(tbl(con, 'PhysicianLocator_Test'))
+head(df)
+# check out RPostgres documentation here: https://cran.r-project.org/web/packages/RPostgres/RPostgres.pdf
+
+# do the same for the other tables, and proceed with analyses as usual
