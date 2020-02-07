@@ -1,5 +1,7 @@
 # 2020 Opioid Data Hackathon
 
+> 📢: See this page with a table of contents at https://codeforphilly.github.io/datahack2020/
+
 ## Description
 
 [Code for Philly](https://codeforphilly.org/), [DataPhilly](https://www.meetup.com/DataPhilly/), [R Ladies Philly](https://www.rladiesphilly.org/), the [Philly Data Jawn](https://www.phillydatajawn.com/), [Health Federation of Philadelphia](http://www.healthfederation.org), [Prevention Point](http://www.ppponline.org), the [City of Philadelphia](https://www.phila.gov/programs/combating-the-opioid-epidemic/) are hosting a data science hackathon to answer pertinent questions around the Opioid Crisis in Philadelphia. The goals of this event are to provide health organizations with insights that may normally be unavailable to them and to create analyses that help inform the public about the opioid epidemic in our city.
