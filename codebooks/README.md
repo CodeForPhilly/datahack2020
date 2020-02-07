@@ -50,6 +50,8 @@ Contributing to this README
 
 * eg. `pp_refill_events` is Prevention Point refills, at the individual refill event level.
 * eg. `hf_physician_locator` is Health Federation physician data.
+
+**Table descriptions** should include one or two short sentences, and a link to the source data. If the source data is private, link to the section of this readme that provides additional information.
  
 **Additional information** should be included in the Data Providers section, with two levels of headings:
 
