@@ -115,12 +115,12 @@ Each team is expected to submit a final report, that will follow the structure b
 
 To contribute, you will need to:
 
-- Fork the repo (optional)
-- Clone the repo
-- Create a new branch (branch names should have descriptive names and should end with your initials, eg. if Party Parrot is in Team 2 and is working on a network analysis, she would create a branch under the folder /analyses/team02 and call it "network_analysis_pp")
+- Fork the repo (required)
+- Create a new branch in your forked repo (branch names should have descriptive names and should end with your initials, eg. if Party Parrot is in Team 2 and is working on a network analysis, she would create a branch under the folder /analyses/team02 and call it "team02_network_analysis_pp")
+- Clone the repo to your machine
 - Do work in your branch
-- When ready, commit and push all your changes to GitHub
-- When ready, make a pull request to the upstream repo (this will notify admins to review your pull request before merging it into master)
+- When ready, commit and push all your changes to the fork (or your team's fork if you're all working off of one fork) in GitHub
+- When ready, make a pull request to the Code for Philly repo (this will notify admins to review your pull request before merging it into master); NOTE: when making a pull request to the Code for Philly repo, you MUST include your team name, either in the branch of origin, the pull request title or description; if we can't easily figure out which team the pull request belongs to, we will have to send it back for this info to be added (this will allow us to more easily make sure teams only push work to their team's folder)
 
 ## Additional information
 
