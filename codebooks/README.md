@@ -46,10 +46,7 @@ Contributing to this README
 ===========================
 
 
-**Table names** should be formatted `{provider}_{domain}_{details}`.
-
-* eg. `pp_refill_events` is Prevention Point refills, at the individual refill event level.
-* eg. `hf_physician_locator` is Health Federation physician data.
+**Table names** should be formatted `{provider}_{domain}_{details}`. Eg. `pp_refill_events`.
 
 **Table descriptions** should include one or two short sentences, and a link to the source data. If the source data is private, link to the section of this readme that provides additional information.
  
