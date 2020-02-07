@@ -19,6 +19,8 @@ Acronyms:
 | pp_sep_site_participants | TODO Marieke fill in. [(info)](#syringe-exchanges-pp_sep). |
 | pp_sep_site_exchanges | TODO Marieke fill in. [(info)](#syringe-exchanges-pp_sep). |
 | hf_physician_locator | Contact information of physicians in Philly, for clarifying who can prescribe Buprenorphine [(info)](#physicians-hf_physician) |
+| hf_samsha_programs | SAMSHA data on treatment programs using Buprenorphine. [(info)](#physicians-hf_physician) |
+| hf_samsha_providers | SAMSHA data on providers and their Buprenorphine limits. [(info)](#physicians-hf_physician) |
 | dph_od_resident_counts | overdose mortality by residential zip. [(info)](#overdose-data-dph_od) |
 | dph_od_incident_counts | overdose mortality by incident zip [(info)](#overdose-data-dph_od) |
 | dph_dash_n_ed_transfers | Number of ED Transfers After Naloxone Administrations by Hospital (2014-2019). [(source)](https://public.tableau.com/profile/pdph#!/vizhome/NaloxoneAdministrationsbyFirstResponders/NumberofNaloxoneAdministrationsbyLawEnforcementandFirstRespondersbyQuarter) |
