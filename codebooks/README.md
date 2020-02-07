@@ -13,7 +13,8 @@ Acronyms:
 | ---- | ----------- |
 | pp_refill_events | Information collected at time of naloxone refills of Naloxone at PP. [(info)](#refills-pp_refill) |
 | pp_refill_zipcode_metrics | pp_refill_events measures aggregated by participant zipcode. [(info)](#refills-pp_refill) |
-| pp_sep_ | TODO Marieke fill in. [(info)](#syringe-exchanges-pp_sep).
+| pp_sep_site_participants | TODO Marieke fill in. [(info)](#syringe-exchanges-pp_sep). |
+| pp_sep_site_exchanges | TODO Marieke fill in. [(info)](#syringe-exchanges-pp_sep). |
 | hf_physician_locator | Contact information of physicians in Philly, for clarifying who can prescribe Buprenorphine [(info)](#physicians-hf_physician) |
 | dph_od_resident_counts | overdose mortality by residential zip. [(info)](#overdose-data-dph_od) |
 | dph_od_incident_counts | overdose mortality by incident zip [(info)](#overdose-data-dph_od) |
