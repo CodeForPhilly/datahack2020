@@ -78,7 +78,7 @@ Individuals receiving training or refills through Prevention Point are required 
 #### Data collected through the Prevention Point Syringe Exchange Program (SEP)
 Prevention Point is the only syringe exchange program in Philadelphia, serving a wide range of participants through programming at their main headquarters (in Kensington), mobile units, and partner programs. As of 2020, Prevention Point is the only resource for individuals seeking clean syringes who may not be able to purchase them safely.
 
-We (the organizers) have the event data at a lower grain but due to HIPAA concerns and the concerns of SEP participants, we are only releasing aggregated forms of this data.  If there is a different aggregation you think would be useful, feel free to submit an issue (as early as possible).
+We (the organizers) have the event data at a lower grain but due to HIPAA concerns and protecting the privacy of SEP participants, we are only releasing aggregated forms of this data.  If there is a different aggregation you think would be useful, feel free to submit an issue (as early as possible).
 
 <!-- sep_participants_month_site
 |data | description | 
