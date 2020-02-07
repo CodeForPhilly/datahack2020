@@ -37,7 +37,34 @@ Data Providers and Details
 | race | particpant race | 
 | n_pp_refill | number of naloxone refills received at PP | 
 | n_o_refill | number of refills from other locations | 
-| n_ods | number of 
+| n_ods | number of overdoses witnessed by participant |
+| n_admins | number of individuals given narcan by participant |
+| n_revivals | number of individuals revived by narcan adminstered by participant | 
+| used_narcan_type | form of narcan used by participant | 
+| ml_naloxone | amount of naloxone used by participant | 
+| cpr_used | rescue breathing was employed at time of narcan use | 
+| outcome | events following narcan administration | 
+| outcome_ems | was EMS called at time of narcan use | 
+| outcome_police | were police called at time of narcan use | 
+| outcome_ed | was individual taken to emergency room |
+| outcome_death | did individual die after narcan use |
+| outcome_unk | outcome of narcan use unknown |
+| outcome_ok | individual was revived and well after narcan administration |
+| od_drug | drug used at time of overdose | 
+| od_drug_heroin | was heroin in individual's system at time of narcan administration |
+| od_drug_cocaine | was cocaine in individual's system at time of narcan administration |
+| od_drug_fentanyl | was fentanyl in individual's system at time of narcan administration |
+| od_drug_unknown | was drug in individual's system at time of narcan administration unknown |
+| od_drug_other | were drugs not listed above in individual's system at time of narcan administration |
+| od_present | method of identifying overdose in individual |
+| od_present_breath | OD identified by irregular or lack of breath |
+| od_present_unresponsive | OD identified: individual was unresponsive or unconcious |
+| od_present_coloring | OD identified by skin color (blue or purple) |
+| od_present_other | OD identified through other means |
+| data_date_range | quarters of 2019 in which refills occurred |
+
+
+
 
 
 ### Syringe exchanges (pp_sep)
