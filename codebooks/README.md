@@ -11,7 +11,7 @@ Acronyms:
 
 | data | description |
 | ---- | ----------- |
-| pp_refill_events | Individual refills of Naloxone from PP. [(info)](#refills-pp_refill) |
+| pp_refill_events | Information collected at time of naloxone refills of Naloxone at PP. [(info)](#refills-pp_refill) |
 | pp_refill_zipcode_metrics | pp_refill_events measures aggregated by participant zipcode. [(info)](#refills-pp_refill) |
 | pp_sep_ | TODO Marieke fill in. [(info)](#syringe-exchanges-pp_sep).
 | hf_physician_locator | Contact information of physicians in Philly, for clarifying who can prescribe Buprenorphine [(info)](#physicians-hf_physician) |
@@ -29,6 +29,16 @@ Data Providers and Details
 ## Prevention Point
 
 ### Refills (pp_refill)
+
+#### Naloxone refill_events
+| data | description |
+| age | participant age at time of refill |
+| gender | participant identified gender | 
+| race | particpant race | 
+| n_pp_refill | number of naloxone refills received at PP | 
+| n_o_refill | number of refills from other locations | 
+| n_ods | number of 
+
 
 ### Syringe exchanges (pp_sep)
 
