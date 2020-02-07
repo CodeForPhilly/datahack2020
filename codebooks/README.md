@@ -31,7 +31,9 @@ Data Providers and Details
 ### Refills (pp_refill)
 
 #### Naloxone refill_events
-In many states, individuals must receive a prescription to carry overdose reversal drugs like Narcan (Naloxone). In 2014, Pennsylvania passed legislation allowing any citizen who could be in the position to administer overdose reversal drugs to receive, carry, and administer such drugs. Prevention Point, among other locations, trains and hands out refills for Narcan (Naloxone).  Narcan is an overdose reversal drug administered either intravenously or intranalasally. Paramedics 
+In many states, individuals must receive a prescription to carry overdose reversal drugs like Narcan (Naloxone). In 2014, Pennsylvania passed legislation allowing any citizen who could be in the position to administer overdose reversal drugs to receive, carry, and administer such drugs. Prevention Point, among other locations, trains and hands out refills for Narcan (Naloxone).  Narcan is an overdose reversal drug administered either intravenously or intranalasally. 
+
+Individuals receiving training or refills through Prevention Point are required to fill out a questionnaire about their experiences with overdoses and related demographic information. 
 
 <!-- | data | description |
 | age | participant age at time of refill |
@@ -72,19 +74,20 @@ Prevention Point is the only syringe exchange program in Philadelphia, serving a
 
 We (the organizers) have the event data at a lower grain but due to HIPAA concerns and the concerns of SEP participants, we are only releasing aggregated forms of this data.  If there is a different aggregation you think would be useful, feel free to submit an issue (as early as possible).
 
-sep_participants_month_site
+<!-- sep_participants_month_site
 |data | description | 
 | site_id | site at which syringes were received/exchanged |
 | visit_month | month in which syringes were received/exchanged |
 | count_distinct_participants | number of distinct participants at that site during that month | 
 
-sep_
-
+sep_ -->
 
 ## Health Federation
 
 ### Physicians (hf_physician)
+Since October 2002 when the Food and Drug Administration (FDA) approved buprenorphine for clinical use in treating opioid dependency, SAMHSA has worked with practitioners to help them obtain waivers to meet the requirements of the Drug Addiction Treatment Act of 2000 (DATA 2000). DATA 2000 sets eligibility and certification requirements as well as an interagency notification review process for practitioners who apply.
 
+Physicians with active Bupernorphine waivers are listed on the [SAMHSA](https://www.samhsa.gov/medication-assisted-treatment/practitioner-program-data/treatment-practitioner-locator) website. We manually searched for these physicians using the [Bupernorphine Pharmacy Lookup](https://www.samhsa.gov/bupe/lookup-form) form. Physicians can only have 30, 100, or 275 active patients receiving Bupernorphine at any given time. Because the form uses only the last name of the physician and pulls from a national database, it oftentimes returned a different practitioner.  These values were coded to `30`.
 
 
 ## Department of Public Health Tableau
