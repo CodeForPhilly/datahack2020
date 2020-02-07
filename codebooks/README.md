@@ -35,11 +35,11 @@ Data Providers and Details
 
 ## Department of Public Health Tableau
 
-https://public.tableau.com/profile/pdph#!/
+[Dashboards overview](https://public.tableau.com/profile/pdph#!/)
 
 ### Opioid summary dashboard (dph_main)
 
-https://public.tableau.com/profile/pdph#!/vizhome/SummaryPage_0/SummaryPage
+[Main dashboard page](https://public.tableau.com/profile/pdph#!/vizhome/SummaryPage_0/SummaryPage)
 
 
 Contributing to this README
