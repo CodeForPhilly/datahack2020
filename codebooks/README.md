@@ -122,3 +122,5 @@ Contributing to this README
 * Section for each domain. Eg. `### Refills (pp_refill)`
 
 This information should be a short, high-level overview! You can include additional links to resources, for those who want to know more :).
+
+**Codebook files** should put `_codebook` at the end of the table name. Eg. `pp_refill_events_codebook.md`.
