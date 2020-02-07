@@ -64,12 +64,14 @@ Data Providers and Details
 | data_date_range | quarters of 2019 in which refills occurred |
 
 
-
-
-
 ### Syringe exchanges (pp_sep)
+#### Data collected through the Prevention Point Syringe Exchange Program (SEP)
+Prevention Point is the only syringe exchange program in Philadelphia, serving a wide range of participants through programming at their main headquarters (in Kensington), mobile units, and partner programs. As of 2020, Prevention Point is the only resource for individuals seeking clean syringes who may not be able to purchase them safely.
 
-TODO Marieke: a couple sentences. What is this data? Why is PP interested in it? From discussion it sounds like PP would benefit from estimating IV drug users--so we should answer, "how will this estimate allow PP to support their community?".
+| site_id | site at which syringes were received/exchanged |
+| 
+
+
 
 ## Health Federation
 
