@@ -15,8 +15,8 @@ Acronyms:
 | pp_refill_zipcode_metrics | pp_refill_events measures aggregated by participant zipcode. [(info)](#refills-pp_refill) |
 | pp_sep_ | TODO Marieke fill in. [(info)](#syringe-exchanges-pp_sep).
 | hf_physician_locator | Contact information of physicians in Philly, for clarifying who can prescribe Buprenorphine [(info)](#physicians-hf_physician) |
-| residentzipcodecounts | overdose mortality by residential zip |
-| incidentzipcodecounts | overdose mortality by incident zip |
+| residentzipcodecounts | overdose mortality by residential zip. [(info)](overdose-data-dph_od) |
+| incidentzipcodecounts | overdose mortality by incident zip [(info)](overdose-data-dph_od) |
 | n_EDtransfer_postNaloxone_byHospital | Number of ED Transfers After Naloxone Administrations by Hospital (2014-2019). [(source)](https://public.tableau.com/profile/pdph#!/vizhome/NaloxoneAdministrationsbyFirstResponders/NumberofNaloxoneAdministrationsbyLawEnforcementandFirstRespondersbyQuarter) |
 | n_indiv_recNaloxone_LawEnfFirstResp | Number of Individuals Receiving a Naloxone Administration by Law Enforcement and First Responders by Quarter. [(source)](https://public.tableau.com/profile/pdph#!/vizhome/NaloxoneAdministrationsbyFirstResponders/NumberofNaloxoneAdministrationsbyLawEnforcementandFirstRespondersbyQuarter) |
 | ems_NaloxoneByAge | EMS Naloxone Administrations by Age. [(source)](https://public.tableau.com/profile/pdph#!/vizhome/NaloxoneAdministrationsbyFirstResponders/EMSNaloxoneAdministrationsbyAge) |
@@ -40,11 +40,13 @@ TODO Marieke: a couple sentences. What is this data? Why is PP interested in it?
 
 
 
-## Department of Public Health Tableau
+## Department of Public Health
+
+### Overdose data (dph_od)
+
+### Tableau dashboards (dph_dash)
 
 [Dashboards overview](https://public.tableau.com/profile/pdph#!/)
-
-### Opioid summary dashboard (dph_main)
 
 [Main dashboard page](https://public.tableau.com/profile/pdph#!/vizhome/SummaryPage_0/SummaryPage)
 
