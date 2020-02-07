@@ -6,6 +6,7 @@ Acronyms:
 * PP: Prevention Point
 * SEP: Syringe Exchange Program
 * HF: Health Federation
+* DPH: Department of Public Health
 
 
 | data | description |
@@ -29,6 +30,8 @@ Data Providers and Details
 ### Refills (pp_refill)
 
 ### Syringe exchanges
+
+## Health Federation (HF)
 
 ## Department of Public Health (DPH) Tableau Data
 
