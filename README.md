@@ -66,8 +66,8 @@ Each team is expected to submit a final report, that will follow the structure b
 ### Datasets and Codebooks
 
 - table name in DB: "PhysicianLocator_Test"
-- description: Practitioners authorized to treat opioid dependency with buprenorphine ([view data source](https://www.samhsa.gov/medication-assisted-treatment/practitioner-program-data/treatment-practitioner-locator))
-- [codebook for PhysicianLocator_Test](/codebooks/Codebook_PhysicianLocator_Test.pdf)
+    - description: Practitioners authorized to treat opioid dependency with buprenorphine ([view data source](https://www.samhsa.gov/medication-assisted-treatment/practitioner-program-data/treatment-practitioner-locator))
+    - [codebook for PhysicianLocator_Test](/codebooks/Codebook_PhysicianLocator_Test.pdf)
 
 - Data from Prevention Point
 - [State Population Totals and Components of Change: 2010-2018](https://www.census.gov/data/datasets/time-series/demo/popest/2010s-state-total.html#par_textimage_1873399417)
@@ -90,7 +90,7 @@ Each team is expected to submit a final report, that will follow the structure b
     Sys.setenv(DATAHACK_DB_PASS = "[pwd]") # replace [pwd] with the the password you got from the Slack channel
     
     ```
-    - Run the script /home/connect_to_db_rstudio.Rmd; if you get authentication errors, set the environment variables again via the code above. 
+    - Run the script /home/connect_to_db_rstudio.R; if you get authentication errors, set the environment variables again via the code above. 
     
     Option 2: Rocker
     
@@ -102,7 +102,7 @@ Each team is expected to submit a final report, that will follow the structure b
     docker-compose up
     ```
     - When that is done processing, open a browser and go to: 192.168.99.100:8787 (on Windows) or localhost:8787 (on Mac) (if this doesn't work, open up another Docker Quistart Terminal and see what IP is listed there; use that IP address instead of 192.168.99.100)
-    - When asked for username and pwd, enter rstudio/datahack
+    - When the Rstudio in your browser asks for credentials: username = rstudio, password = datahack
     - Run the 2 Sys.setenv commands from above
     - Run the script /home/connect_to_db_rstudio.Rmd
     

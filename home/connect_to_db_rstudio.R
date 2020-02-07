@@ -1,8 +1,8 @@
 # install and load the needed libraries
 
-install.packages("dplyr")
-install.packages("tibble")
-install.packages("RPostgres")
+list.of.packages <- c("dplyr", "tibble", "RPostgres")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
 
 library(dplyr)
 library(tibble)
