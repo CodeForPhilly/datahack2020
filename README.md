@@ -110,6 +110,24 @@ docker-compose up
 
 ### Access the data in Python
 
+#### Option 1:
+
+1. Install these packages
+
+```
+pip install SQLAlchemy python-dotenv
+```
+
+2. Create a file in `/home` named `.env`, with..
+
+```
+DATAHACK_DB_USER=reader
+DATAHACK_DB_PASS=[PASSWORD WE WILL SEND YOU]
+```
+
+3. Run the notebook [test_notebook.ipynb](/home/test_notebook.ipynb)
+
+
 #### Option 2: Jupyter Stacks
 
 Here is a [2 minute screencast of this approach, with unfortunately no sound](https://v.usetapes.com/GlsLP4I8LB).
