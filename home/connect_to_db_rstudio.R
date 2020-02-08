@@ -1,15 +1,15 @@
 # install and load the needed libraries
 
-list.of.packages <- c("dplyr", "tibble", "RPostgres")
+list.of.packages <- c("dplyr", "dbplyr", "tibble", "RPostgres")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
+
 
 library(dplyr)
 library(tibble)
 library(RPostgres)
 
 # configure the DB connection
-
 con <- DBI::dbConnect(
   RPostgres::Postgres(),
   user = Sys.getenv("DATAHACK_DB_USER"),
@@ -19,10 +19,14 @@ con <- DBI::dbConnect(
   dbname = "postgres"
 )
 
-# extract the full table PhysicianLocator_Test from the database
+# see available tables
+dbListTables(con)
 
-df <- as.data.frame(tbl(con, 'PhysicianLocator_Test'))
+# extract the full table hf_physician_locator from the database
+df <- as.data.frame(tbl(con, "hf_physician_locator"))
+
 head(df)
+
 # check out RPostgres documentation here: https://cran.r-project.org/web/packages/RPostgres/RPostgres.pdf
 
 # do the same for the other tables, and proceed with analyses as usual
