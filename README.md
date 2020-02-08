@@ -1,6 +1,8 @@
 # 2020 Opioid Data Hackathon
 
-> 📢: See this page with a table of contents at https://codeforphilly.github.io/datahack2020/. Be sure to join the #data-hack-chat channel of [Code for Philly's Slack](https://codeforphilly.org/chat).
+> 📢: See this page with a table of contents at https://codeforphilly.github.io/datahack2020/.
+
+> 💬: Be sure to join the #data-hack-chat channel of [Code for Philly's Slack](https://codeforphilly.org/chat).
 
 ## Description
 
