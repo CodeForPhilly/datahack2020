@@ -258,6 +258,9 @@ div.tocify {
 
 <div id="opioid-data-hackathon" class="section level1">
 <h1>2020 Opioid Data Hackathon</h1>
+<blockquote>
+<p>📢: See this page with a table of contents at <a href="https://codeforphilly.github.io/datahack2020/" class="uri">https://codeforphilly.github.io/datahack2020/</a></p>
+</blockquote>
 <div id="description" class="section level2">
 <h2>Description</h2>
 <p><a href="https://codeforphilly.org/">Code for Philly</a>, <a href="https://www.meetup.com/DataPhilly/">DataPhilly</a>, <a href="https://www.rladiesphilly.org/">R Ladies Philly</a>, the <a href="https://www.phillydatajawn.com/">Philly Data Jawn</a>, <a href="http://www.healthfederation.org">Health Federation of Philadelphia</a>, <a href="http://www.ppponline.org">Prevention Point</a>, the <a href="https://www.phila.gov/programs/combating-the-opioid-epidemic/">City of Philadelphia</a> are hosting a data science hackathon to answer pertinent questions around the Opioid Crisis in Philadelphia. The goals of this event are to provide health organizations with insights that may normally be unavailable to them and to create analyses that help inform the public about the opioid epidemic in our city.</p>
@@ -314,36 +317,33 @@ div.tocify {
 <h2>Data</h2>
 <div id="datasets-and-codebooks" class="section level3">
 <h3>Datasets and Codebooks</h3>
+<blockquote>
+<p>📢: Visit the <a href="https://github.com/CodeForPhilly/datahack2020/tree/master/codebooks">codebooks section</a> for a detailed list of database data.</p>
+</blockquote>
+<p>Other userful data sources:</p>
 <ul>
-<li>table name in DB: “PhysicianLocator_Test”
-<ul>
-<li>description: Practitioners authorized to treat opioid dependency with buprenorphine (<a href="https://www.samhsa.gov/medication-assisted-treatment/practitioner-program-data/treatment-practitioner-locator">view data source</a>)</li>
-<li><a href="/codebooks/Codebook_PhysicianLocator_Test.pdf">codebook for PhysicianLocator_Test</a></li>
-</ul></li>
-<li>Data from Prevention Point</li>
-<li><a href="https://www.census.gov/data/datasets/time-series/demo/popest/2010s-state-total.html#par_textimage_1873399417">State Population Totals and Components of Change: 2010-2018</a></li>
-<li><a href="https://data.pa.gov/Opioid-Related/Overdose-Information-Network-Data-CY-January-2018-/hbkk-dwy3">Overdose Information Network Data CY January 2018 - Current Monthly County State Police</a></li>
-<li><a href="https://www.cdc.gov/drugoverdose/data/analysis.html">Opioid Data Analysis and Resources</a></li>
+<li><a href="https://www.census.gov/data/datasets/time-series/demo/popest/2010s-state-total.html#par_textimage_1873399417">Census.gov: State Population Totals and Components of Change: 2010-2018</a></li>
+<li><a href="https://data.pa.gov/Opioid-Related/Overdose-Information-Network-Data-CY-January-2018-/hbkk-dwy3">PA.gov: Overdose Information Network Data CY January 2018 - Current Monthly County State Police</a></li>
+<li><a href="https://www.cdc.gov/drugoverdose/data/analysis.html">CDC: Opioid Data Analysis and Resources</a></li>
 </ul>
 </div>
-<div id="how-to-access-the-data" class="section level3">
-<h3>How to access the data</h3>
-<ol style="list-style-type: decimal">
-<li>Log into Code for Philly Slack and join channel #data-hack-chat -&gt; database username and password are a pinned topic in there</li>
-<li><p>Using R:</p>
-<p>Option 1:</p>
+<div id="access-the-data-in-r" class="section level3">
+<h3>Access the data in R</h3>
+<p>First, log into Code for Philly Slack and join channel #data-hack-chat -&gt; database username and password are a pinned topic in there</p>
+<div id="option-1" class="section level4">
+<h4>Option 1:</h4>
 <ul>
 <li><a href="https://rstudio.com/products/rstudio/download/">Install RStudio</a></li>
 <li>New Project -&gt; Version Control -&gt; Git -&gt; Repository URL: <a href="https://github.com/CodeForPhilly/datahack2020.git" class="uri">https://github.com/CodeForPhilly/datahack2020.git</a> (make sure you choose your preferred project directory, and then click “Create Project”)</li>
-<li>Set 2 system variables to allow access to the database; type this in the Console:</li>
-</ul>
+<li><p>Set 2 system variables to allow access to the database; type this in the Console:</p>
 <pre><code>Sys.setenv(DATAHACK_DB_USER = &quot;reader&quot;) 
 Sys.setenv(DATAHACK_DB_PASS = &quot;[pwd]&quot;) # replace [pwd] with the the password you got from the Slack channel
-</code></pre>
-<ul>
-<li>Run the script /home/connect_to_db_rstudio.R; if you get authentication errors, set the environment variables again via the code above.</li>
+</code></pre></li>
+<li><p>Run the script /home/connect_to_db_rstudio.R; if you get authentication errors, set the environment variables again via the code above.</p></li>
 </ul>
-<p>Option 2: Rocker</p>
+</div>
+<div id="option-2-rocker" class="section level4">
+<h4>Option 2: Rocker</h4>
 <ul>
 <li><a href="https://docs.docker.com/install/">Install Docker</a></li>
 <li>Via Docker Quickstart Terminal, cd to ~/datahack2020/docker</li>
@@ -355,8 +355,25 @@ Sys.setenv(DATAHACK_DB_PASS = &quot;[pwd]&quot;) # replace [pwd] with the the pa
 <li>When the Rstudio in your browser asks for credentials: username = rstudio, password = datahack</li>
 <li>Run the 2 Sys.setenv commands from above</li>
 <li>Run the script /home/connect_to_db_rstudio.Rmd</li>
-</ul></li>
-</ol>
+</ul>
+</div>
+</div>
+<div id="access-the-data-in-python" class="section level3">
+<h3>Access the data in Python</h3>
+<div id="option-2-rocker-1" class="section level4">
+<h4>Option 2: Rocker</h4>
+<p>Here is a <a href="https://v.usetapes.com/GlsLP4I8LB">2 minute screencast of this approach, with unfortunately no sound</a>.</p>
+<ul>
+<li><a href="https://docs.docker.com/install/">Install Docker</a></li>
+<li>Via Docker Quickstart Terminal, cd to ~/datahack2020/docker</li>
+<li><p>Run:</p>
+<pre><code>docker-compose up</code></pre></li>
+<li>When that is done processing, open a browser and go to: 192.168.99.100:8999 (on Windows) or localhost:8999 (on Mac) (if this doesn’t work, open up another Docker Quistart Terminal and see what IP is listed there; use that IP address instead of 192.168.99.100)</li>
+<li>Open the file <code>_env</code> and set your credentials. Rename it to <code>.env</code></li>
+<li><p>Run the notebook <code>/home/test_notebook.ipynb</code></p></li>
+</ul>
+<p><a href="https://v.usetapes.com/GlsLP4I8LB" class="uri">https://v.usetapes.com/GlsLP4I8LB</a></p>
+</div>
 </div>
 </div>
 <div id="collaborating-using-git-guidelines" class="section level2">
