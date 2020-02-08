@@ -110,7 +110,7 @@ docker-compose up
 
 ### Access the data in Python
 
-#### Option 2: Rocker
+#### Option 2: Jupyter Stacks
 
 Here is a [2 minute screencast of this approach, with unfortunately no sound](https://v.usetapes.com/GlsLP4I8LB).
 
