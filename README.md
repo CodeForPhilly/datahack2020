@@ -26,7 +26,7 @@ Hackathon planners have been working with our partners to identify and clean rel
 ## [Timeline and Workflow](https://codeforphilly.org/events/datahack2020)
 
 **Feb 7, 2020 (Friday): [Partner presentation night](https://www.meetup.com/Code-for-Philly/events/267524879/)**
-    - Hack participants will have the opportunity to hear directly from partner organizations about the challenges they face and what analyses would be most useful to them. After the talks, participants will be encouraged to sign up to a team via [this Google Doc](https://docs.google.com/document/d/1ztiCetudsQuIAHyyYVHKnBeqI1gsde_l1SvRk2V65bw/edit?usp=sharing). 
+    - Hack participants will have the opportunity to hear directly from partner organizations about the challenges they face and what analyses would be most useful to them. After the talks, participants will be encouraged to sign up to a team via [this Google Doc](https://docs.google.com/document/d/1ztiCetudsQuIAHyyYVHKnBeqI1gsde_l1SvRk2V65bw/edit?usp=sharing). [**VIEW SLIDES FROM PESENTATION NIGHT**](https://docs.google.com/presentation/d/13b7B2cbtGbvr2khBgXWmsVvrmM1Lc2WFgBqmpLp8HEI/edit?usp=sharing)
 
 **Feb 8, 2020 (Saturday): [First hack day](https://www.meetup.com/Code-for-Philly/events/267544650/)**
     - No formal presentations scheduled on this day. Upon arriving, participants will be encouraged to [sign up to a team](https://docs.google.com/document/d/1ztiCetudsQuIAHyyYVHKnBeqI1gsde_l1SvRk2V65bw/edit?usp=sharing) if they have not already done so the previous evening. Teams will then get together to discuss ideas for research questions to pursue, and work out any team logistics (including selecting a team leader, frequency of meetings, location of meetings, tools to be used, and roles in the team). Space will be available for teams to get started on exploring the data and familiarize themselves with the research topics and tools. 
@@ -110,7 +110,25 @@ docker-compose up
 
 ### Access the data in Python
 
-#### Option 2: Rocker
+#### Option 1:
+
+1. Install these packages
+
+```
+pip install SQLAlchemy python-dotenv
+```
+
+2. Create a file in `/home` named `.env`, with..
+
+```
+DATAHACK_DB_USER=reader
+DATAHACK_DB_PASS=[PASSWORD WE WILL SEND YOU]
+```
+
+3. Run the notebook [test_notebook.ipynb](/home/test_notebook.ipynb)
+
+
+#### Option 2: Jupyter Stacks
 
 Here is a [2 minute screencast of this approach, with unfortunately no sound](https://v.usetapes.com/GlsLP4I8LB).
 

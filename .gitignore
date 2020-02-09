@@ -1,3 +1,7 @@
+# possible data files
+.csv
+.tsv
+
 # .env
 .env
 
