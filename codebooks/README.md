@@ -42,7 +42,14 @@ In many states, individuals must receive a prescription to carry overdose revers
 
 Individuals receiving training or refills through Prevention Point are required to fill out a questionnaire about their experiences with overdoses and related demographic information. 
 
-<!-- | data | description |
+**Feb 14th update [(data)](/data/data_pp_refill-14-feb.zip)**: adds anonymized participant id column (h_id), and some accidentally omitted columns: refill_date, refill_reason, med_program_used, train_program. For zipcode data, adds median calculations over participant maximums (e.g. taking the max n_pp_refills per participant, and then calculating the median within a zip code).
+
+<details>
+ <summary>pp_refill_events columns</summary>
+ 
+| data | description |
+| ---- | ----------- |
+| h_id | anonymized participant id |
 | age | participant age at time of refill |
 | gender | participant identified gender | 
 | race | particpant race | 
@@ -54,6 +61,8 @@ Individuals receiving training or refills through Prevention Point are required 
 | used_narcan_type | form of narcan used by participant | 
 | ml_naloxone | amount of naloxone used by participant | 
 | cpr_used | rescue breathing was employed at time of narcan use | 
+| med_program_used | "What program's medication was used for training?" |
+| train_program | "What program did the person you trained come from?" |
 | outcome | events following narcan administration | 
 | outcome_ems | was EMS called at time of narcan use | 
 | outcome_police | were police called at time of narcan use | 
@@ -72,8 +81,9 @@ Individuals receiving training or refills through Prevention Point are required 
 | od_present_unresponsive | OD identified: individual was unresponsive or unconcious |
 | od_present_coloring | OD identified by skin color (blue or purple) |
 | od_present_other | OD identified through other means |
-| data_date_range | quarters of 2019 in which refills occurred | -->
+| data_date_range | quarters of 2019 in which refills occurred |
 
+</details>
 
 ### Syringe exchanges (pp_sep)
 #### Data collected through the Prevention Point Syringe Exchange Program (SEP)
