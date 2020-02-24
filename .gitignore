@@ -1,6 +1,7 @@
 # possible data files
 .csv
 .tsv
+data/data/*
 
 # .env
 .env
@@ -56,3 +57,4 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+.Rproj.user
