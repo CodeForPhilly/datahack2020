@@ -21,7 +21,7 @@ Acronyms:
 | psp_overdose_events | Information on overdose responses and naloxone administrations [(info)](#overdose-events-psp_overdose_events)|
 | hf_physician_locator | Contact information of physicians in Philly, for clarifying who can prescribe Buprenorphine [(info)](#physicians-hf_physician) |
 | hf_samsha_programs | SAMSHA data on treatment programs using Buprenorphine. [(info)](#physicians-hf_physician) |
-| hf_samsha_providers | SAMSHA data on providers and their Buprenorphine limits. [(info)](#physicians-hf_physician) |
+| hf_samsha_providers | SAMSHA data on providers and their Buprenorphine limits. [(info)](#physicians-hf_providers) |
 | dph_od_resident_counts | overdose mortality by residential zip. [(info)](#overdose-data-dph_od) |
 | dph_od_incident_counts | overdose mortality by incident zip [(info)](#overdose-data-dph_od) |
 | dph_dash_n_ed_transfers | Number of ED Transfers After Naloxone Administrations by Hospital (2014-2019). [(source)](https://public.tableau.com/profile/pdph#!/vizhome/NaloxoneAdministrationsbyFirstResponders/NumberofNaloxoneAdministrationsbyLawEnforcementandFirstRespondersbyQuarter) |
@@ -107,7 +107,7 @@ Since October 2002 when the Food and Drug Administration (FDA) approved buprenor
 
 Physicians with active Bupernorphine waivers are listed on the [SAMHSA](https://www.samhsa.gov/medication-assisted-treatment/practitioner-program-data/treatment-practitioner-locator) website. We manually searched for these physicians using the [Bupernorphine Pharmacy Lookup](https://www.samhsa.gov/bupe/lookup-form) form. Physicians can only have 30, 100, or 275 active patients receiving Bupernorphine at any given time. Because the form uses only the last name of the physician and pulls from a national database, it oftentimes returned a different practitioner.  These values were coded to `30`.
 
-### Providers (hf_provider) 
+### Providers (hf_providers) 
 This dataset represents data pulled from SAMHSA's [Behavioral Health Treatment Services Locator](https://findtreatment.samhsa.gov/locator) for services available in Philadelphia.
 
 ## Department of Public Health
