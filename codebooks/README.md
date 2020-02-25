@@ -19,9 +19,9 @@ Acronyms:
 | pp_sep_site_exchanges | Counts of needles exchanged/received at PP sites [(info)](#syringe-exchanges-pp_sep).
 | pp_sep_site_participants | Counts of participants that have exchanged syringes at PP sites [(info)](#syringe-exchanges-pp_sep).
 | psp_overdose_events | Information on overdose responses and naloxone administrations [(info)](#overdose-events-psp_overdose_events)|
-| hf_physician_locator | Contact information of physicians in Philly, for clarifying who can prescribe Buprenorphine [(info)](#physicians-hf_physician) |
-| hf_samsha_programs | SAMSHA data on treatment programs using Buprenorphine. [(info)](#physicians-hf_physician) |
-| hf_samsha_providers | SAMSHA data on providers and their Buprenorphine limits. [(info)](#physicians-hf_providers) |
+| hf_physician_locator | Contact information of physicians in Philly, for clarifying who can prescribe Buprenorphine [(info)](#HF-Physicians ) |
+| hf_samsha_programs | SAMSHA data on treatment programs using Buprenorphine. [(info)](#SAMHSA-Providers-samhsa_providers)|
+| hf_samsha_providers | SAMSHA data on providers and their Buprenorphine limits. [(info)](#SAMHSA-Programs-samhsa_programs) |
 | dph_od_resident_counts | overdose mortality by residential zip. [(info)](#overdose-data-dph_od) |
 | dph_od_incident_counts | overdose mortality by incident zip [(info)](#overdose-data-dph_od) |
 | dph_dash_n_ed_transfers | Number of ED Transfers After Naloxone Administrations by Hospital (2014-2019). [(source)](https://public.tableau.com/profile/pdph#!/vizhome/NaloxoneAdministrationsbyFirstResponders/NumberofNaloxoneAdministrationsbyLawEnforcementandFirstRespondersbyQuarter) |
@@ -101,7 +101,7 @@ sep_ -->
 
 ## Health Federation
 
-### HF Physicians
+### HF Physicians 
 Health Federation has been manually maintaining a list of physicians certified to prescribe bupernorphine.  This list consists of physican addresses and names able to provide bupernorphine as determined through phone calls placed to individual practices.
 
 ### SAMHSA Providers (samhsa_providers)
