@@ -100,14 +100,16 @@ We (the organizers) have the event data at a lower grain but due to HIPAA concer
 sep_ -->
 
 ## Health Federation
-These datasets are related to the Health Federation's ask but were collected by hack organizers. 
 
-### Physicians (hf_physician)
+### HF Physicians
+Health Federation has been manually maintaining a list of physicians certified to prescribe bupernorphine.  This list consists of physican addresses and names able to provide bupernorphine as determined through phone calls placed to individual practices.
+
+### SAMHSA Providers (samhsa_providers)
 Since October 2002 when the Food and Drug Administration (FDA) approved buprenorphine for clinical use in treating opioid dependency, SAMHSA has worked with practitioners to help them obtain waivers to meet the requirements of the Drug Addiction Treatment Act of 2000 (DATA 2000). DATA 2000 sets eligibility and certification requirements as well as an interagency notification review process for practitioners who apply. 
 
 Physicians with active Bupernorphine waivers are listed on the [SAMHSA](https://www.samhsa.gov/medication-assisted-treatment/practitioner-program-data/treatment-practitioner-locator) website. We manually searched for these physicians using the [Bupernorphine Pharmacy Lookup](https://www.samhsa.gov/bupe/lookup-form) form. Physicians can only have 30, 100, or 275 active patients receiving Bupernorphine at any given time. Because the form uses only the last name of the physician and pulls from a national database, it oftentimes returned a different practitioner.  These values were coded to `30`.
 
-### Providers (hf_providers) 
+### SAMHSA Programs (samhsa_programs) 
 This dataset represents data pulled from SAMHSA's [Behavioral Health Treatment Services Locator](https://findtreatment.samhsa.gov/locator) for services available in Philadelphia.
 
 ## Department of Public Health
