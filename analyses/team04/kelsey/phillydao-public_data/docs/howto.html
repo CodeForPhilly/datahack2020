@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>How to Use This Site - PhilaDAO Data Dashboard</title>
+
+<script src="assets/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="assets/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="assets/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="assets/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="assets/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="assets/navigation-1.1/tabsets.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141263577-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141263577-1');
+</script>
+<script type="text/javascript" src="./assets/js/dao-dashboard-mapmaker.js"></script>
+<script type='text/javascript' src='./assets/js/dao-dashboard.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js"></script>
+<script type="text/javascript" src="https://stamen-maps.a.ssl.fastly.net/js/tile.stamen.js"></script>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css' />
+<script type='text/javascript' src='./assets/js/leaflet-choropleth/choropleth.js'></script>
+<script src="https://use.fontawesome.com/42c4092025.js"></script>
+<link rel="shortcut icon" type="image/png" href="./assets/images/favicon.png">
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+<nav class="navbar row" role="navigation">
+  <div class="container-fluid">
+    <div class="row dao_header vertical-align">
+      <div class="col-sm-12 col-md-3 text-sm-center "><img src="assets/images/dao_logo.svg" alt="DAO Logo"></div>
+      <div class="col-sm-12 col-md-6 col-md-offset-3 text-md-right text-sm-center dao_header_title">Public Data Dashboard</div>
+    </div>
+    <div class="dao_navbar">
+      <div class="navbar-header navbar-default dao-hamburger">
+        <button type="button" class="navbar-toggle dao-hamburger collapsed" data-toggle="collapse" data-target="#dao-collapse-navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse dao-menu" id="dao-collapse-navbar">
+        <ul class="dao-nav-menu nav navbar-nav dao-menu btn-group">
+          <li class="dao-nav-menu"><a href="index.html" class="btn btn-dao-menu">Home</a></li>
+          <li class="dropdown dao-nav-menu">
+            <a href="#" class="dropdown-toggle btn btn-dao-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
+            <ul class="dropdown-menu dao_menu">
+            <li class="dropdown-submenu">
+                <a href="#" class="test">Year End Reports <span class="dropdown-submenu right-pointing-triangle"></span></a>
+                  <ul class="dropdown-menu dao_menu">
+                    <li><a href="Incidents_Report_YE.html">Year End Incidents</a></li>
+                    <li><a href="Arrest_Report_YE.html">Year End Arrests</a></li>
+                    <li><a href="Charge_Report_YE.html">Year End Charges</a></li>
+                    <li><a href="Bail_Report_YE.html">Year End Bail</a></li>
+                    <li><a href="Case_Outcomes_Report_YE.html">Year End Outcomes</a></li>
+                    <li><a href="Case_Length_Report_YE.html">Year End Case Length</a></li>
+                    <li><a href="Future_Years_Incarceration_Report_YE.html">Year End Future Years of Incarceration</a></li>
+                    <li><a href="Future_Years_Supervision_Report_YE.html">Year End Future Years of Supervision</a></li>
+                    <li><a href="Summary_Arrest_Report_YE.html">Year End Summary Arrests</a></li>
+                    <li><a href="Summary_Charge_Report_YE.html">Year End Summary Charges</a></li>
+                    <li><a href="Summary_Case_Outcomes_Report_YE.html">Year End Summary Case Outcomes</a></li>
+                    <li><a href="Summary_Case_Length_Report_YE.html">Year End Summary Case Length</a></li>
+                </ul>
+              </li>
+              <li><a href="Incidents_Report.html">Incidents</a></li>
+              <li><a href="Arrest_Report.html">Arrests</a></li>
+              <li><a href="Charge_Report.html">Charges</a></li>
+              <li><a href="Bail_Report.html">Bail</a></li>
+              <li><a href="Case_Outcomes_Report.html">Outcomes</a></li>
+              <li><a href="Case_Length_Report.html">Case Length</a></li>
+              <li><a href="Future_Years_Incarceration_Report.html">Future Years of Incarceration</a></li>
+              <li><a href="Future_Years_Supervision_Report.html">Future Years of Supervision</a></li>
+              <li><a href="Summary_Arrest_Report.html">Summary Arrests</a></li>
+              <li><a href="Summary_Charge_Report.html">Summary Charges</a></li>
+              <li><a href="Summary_Case_Outcomes_Report.html">Summary Case Outcomes</a></li>
+              <li><a href="Summary_Case_Length_Report.html">Summary Case Length</a></li>
+            </ul>
+          </li>
+          <li class="dao-nav-menu"><a href="https://medium.com/philadelphia-justice/tagged/data-stories" class="btn btn-dao-menu">Data Stories</a></li>
+          <li class="dao-nav-menu"><a href="download.html" class="btn btn-dao-menu">Downloads</a></li>
+          <li class="dropdown dao-nav-menu">
+            <a href="#" class="dropdown-toggle btn btn-dao-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Resources <span class="caret"></span></a>
+            <ul class="dropdown-menu dao_menu">
+              <li><a href="about.html">About</a></li>
+              <li><a href="definitions.html">Definitions</a></li>
+              <li><a href="limitations.html">Limitations</a></li>
+              <li><a href="howto.html">How to Use This Site</a></li>
+              <li><a href="updates.html">Updates</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="rmd-container-fluid rmd-container">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">How to Use This Site - PhilaDAO Data Dashboard</h1>
+
+</div>
+
+
+<div class="row dao_page_header col-11">
+<div class="col-md-4 col-md-offset-1 h1">
+How to Use This Site
+</h1>
+</div>
+</div>
+<div>
+ 
+</div>
+<div class="col-md-10 col-md-offset-1">
+<div class="dao-definition-title-word">
+Contents
+</div>
+<ul>
+<li><a href="#home_howto">Home Page</a></li>
+<li><a href="#report_howto">Report Pages</a></li>
+<li><a href="#download_howto">Downloading Data</a></li>
+<li><a href="#constraints">Public Access and Use</a></li>
+</ul>
+<hr />
+<div id="home_howto" class="dao-definition-title-word">
+Home Page
+</div>
+<div class="dao-definition">
+<p>The Home Page of the Philadelphia DAO Public Transparency Dashboard helps you to navigate to the various data reports as well as see key information and data stories that the DAO wants to highlight.</p>
+<p><img type="image/png" src="assets/images/front_page_howtouse.png" alt="Image showing the front page with numbers indicating each section." class="dao_report_flowchart" /></p>
+<h5>
+Components
+</h5>
+<ol>
+<li>
+<h5>
+Menu Bar
+</h5>
+The Menu Bar allows for navigation between individual reports and pages of the dashboard.
+</li>
+<li>
+<h5>
+Major Stories
+</h5>
+This area has links to important notices and stories about the dashboard and the data within.
+</li>
+<li>
+<h5>
+Key Metrics
+</h5>
+The home page has its own key metrics that the DAO feels most strongly reflects the goals of the office. These metrics do not always come directly from data found in the dashboard and are intended to compliment the key metrics found in each report. These metrics are updated daily, just like the reports.
+</li>
+<li>
+<h5>
+Data Stories
+</h5>
+Although raw numbers are important, it is critical to understand the context surrounding criminal justice data to fully understand the raw numbers This area shows the most recent Data Stories from <a href="https://medium.com/philadelphia-justice">The Justice Wire</a> where we consider data and criminal justice issues.
+</li>
+<li>
+<h5>
+Available Reports
+</h5>
+A set of links to the data reports available on the Dashboard.
+</li>
+<li>
+<h5>
+Connect and Contact
+</h5>
+Look here to learn more about the Philadelphia District Attorney’s Office or connect with us on social media.
+</h5>
+</ol>
+<p><a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a></p>
+</div>
+<div id="report_howto" class="dao-definition-title-word">
+Report Pages
+</div>
+<div class="dao-definition">
+<p>On each report page, you will find various data and metrics on the Criminal Justice System as well as graphs and maps showing the trends and geographic distribution of that data.</p>
+<img type="image/png" src="assets/images/report_page_howtouse.png" alt="Image showing the report page with numbers indicating each section." class="dao_report_flowchart"></img>
+<h5>
+Components
+</h5>
+<ol>
+<li>
+<h5>
+Menu Bar
+</h5>
+Allows for navigation between individual reports and pages of the dashboard.
+</li>
+<li>
+<h5>
+Report Title
+</h5>
+The Report Title includes the name of the report, the date of the most recent update, and a brief description of the contents of the report.
+</li>
+<li>
+<h5>
+Key Metrics
+</h5>
+Summary data points related to the report that the District Attorney’s Office is particularly interested in highlighting.
+</li>
+<li>
+<h5>
+Offense Type Tabs
+</h5>
+Each report is broken down by the most serious offense in any given incident or case: all offenses, violent offenses, property offenses, and drug offenses. By clicking on a tab, the report below only shows data for the chosen offense category. For example, All Offenses shows data for all offenses, while “Drug Offenses” only shows data for drug offenses, broken down into different sub-categories like possession and sales.
+</li>
+<li>
+<h5>
+Chart 1: Trend over Time
+</h5>
+An interactive chart showing the data in the report over time. The points represent actual quarterly or monthly data, the line is a trend line (using loess regression for the math nerds our there). Seeing data over time allows us to understand how changes in Philadelphia and policies throughout the criminal justice system affects the data we’re tracking. Mouse over the points in the chart to see monthly totals.
+</li>
+<li>
+<h5>
+Chart 2: Map or Proportional Bar
+</h5>
+Depending on the report, the second chart is either a map or a stacked bar chart. The map shows how the data in the report is spread geographically throughout the city (by policy district) and allows you to compare years to each other. Click the areas on the map to see yearly totals for each geography. The stacked bar chart shows how the data in reports with multiple data categories relate to each other proportionally (e.g. case outsomes and bail). For example, this allows you to compare the proportion of cases that were diverted each year rather than just see that the total number of diverted cases was up or down. This is important because the total may have gone up (or down) because there were more cases in the system overall, not because the DAO was diverting any more cases. Mouse over each portion of the bar to see the rate of each type.
+</li>
+<li>
+<h5>
+Counts and Rates Tabs
+</h5>
+These tabs allow you to toggle the data tables betweenraw counts and proportions. These are only available in some of the reports.
+</li>
+<li>
+<h5>
+Data Table
+</h5>
+The data tables show the Year-to-Date (YTD) totals for each data point in a report. For each police category of offense, we’ve provided YTD totals for the years 2014 through present. We have provided the Year-to-Year change between this year and the previous year (YTD), the average of 2014-2017, the average of 2018-present, and a percentage change between the averages of 2014-2017 and 2018-present. In several reports, such as bail and case outcomes, we also provide proportaional information, showing what percentage of all data categories a single category represents.
+</li>
+</ol>
+<p><a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a></p>
+</div>
+<div id="download_howto" class="dao-definition-title-word">
+Downloading Data
+</div>
+<div class="dao-definition">
+<p>The reports show Year-To-Date numbers, but we understand that this isn’t enough to fully understand the criminal justice system. To that end, we are making available CSV files with the information from each report summarized on a more frequent basis. Daily summaries are available for the whole city, by police district, and by zip code (technically <a href="https://www.census.gov/programs-surveys/geography/guidance/geo-areas/zctas.html">ZCTA</a>). Weekly summaries are available by census tract. If you are interested in analyzing our data yourself you can download these files and analyze them in excel or any other statistics program.</p>
+<img type="image/png" src="assets/images/download_page_howtouse.png" alt="Image showing the download page with numbers indicating each section." class="dao_report_flowchart"></img>
+<h5>
+Components
+</h5>
+<ol>
+<li>
+<h5>
+Menu Bar
+</h5>
+Allows for navigation between individual reports and pages of the dashboard.
+</li>
+<li>
+<h5>
+Title
+</h5>
+Shows the date of the most recent updates to the downloadable data.
+</li>
+<li>
+<h5>
+Datasets
+</h5>
+The names of each available dataset.
+</li>
+<li>
+<h5>
+Data Time Period and Geogrpahy
+</h5>
+Each dataset is available by a few geographies: citywide, police districts, ZIP Codes (ZCTA), and Census tracts. Most are provided as daily totals, though due to file size limitations we’ve restricted Census tracts to weekly totals.
+</li>
+<li>
+<h5>
+Download Links
+</h5>
+Links to the comma separated value (CSV) files. We do not provide a direct download for Police incident data. Instead, we include a link to OpenDataPhilly. We do not create or maintain Incident data, as that is made public by the Police. Unlike to other datasets, Incident data consists of data for each reported crime incidents rather than daily summary information. Further, this data is only incidents that the Federal Bureau of Investigation (FBI) classifies as Parts I &amp; II crimes. See the <a href="limitations.html">Limitations</a> page for more information on FBI classification.
+</li>
+<li>
+<h5>
+Github History
+</h5>
+Our datasets are generated automatically from our database connections. Over time, you may notice small changes to data points, even in past years. This is generally due to reclassification of offenses or database corrections. In order to be as transparent as possible, we’re also publishing each dataset to a <a href="https://github.com/phillydao/phillydao-public-data/tree/master/docs/data">public GitHub repository</a>. If you’d like to download the data there or see the changes to any dataset over time, feel free to use the public repository.
+</li>
+</ol>
+<p><a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a></p>
+</div>
+<div id="constraints" class="dao-definition-title-word">
+Public Access and Use
+</div>
+<div class="dao-definition">
+<p>The City of Philadelphia reserves all rights in the City’s databases and any data contained therein, and the end user’s use of the data does not constitute a transfer of, nor does the end user receive, any title or interest in the database or any other City data. The City of Philadelphia makes no representation about the accuracy of any specific information in this data and is provided “as is” and without Warranty of any kind. The user of this data will assume complete responsibility for any and all occurrences resulting from its use or display and will hold the City of Philadelphia harmless from any and all claims, demands, liabilities, obligations, damages, suits, judgments or settlements, including reasonable costs and attorneys’ fees, that arise from use of this data.</p>
+<p><a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a></p>
+</div>
+</div>
+</div>
+
+</div>
+<footer class="row">
+<div class="container-fluid padding">
+<div class="row text-center">
+	<div class="col-md-4">
+    <h2 class="connectext">Office</h2>
+		<hr class="light">
+		<p>
+		  Three South Penn Square<br/>
+		  Philadelphia, PA 19107-3499<br/>
+		  215-686-8000
+		</p>
+	</div>
+	<div class="col-md-4">
+		<div class="col-12">
+			<h2 class="connectext">Connect</h2>
+		<hr class="light">
+			</div>
+			<div class="col-12 social padding">
+				<a href="https://www.facebook.com/philaDAO/" target="_blank"><i class="fa fa-facebook social-circle-icon" title="facebook"></i></a>
+				<a href="https://www.instagram.com/philadao/?hl=en" target="_blank"><i class="fa fa-instagram social-circle-icon" title="instagram"></i></a>
+				<a href="https://twitter.com/philadao?lang=en" target="_blank"><i class="fa fa-twitter social-circle-icon" title="twitter"></i></a>
+				<a href="mailto:justice@phila.gov"><i class="fa fa-envelope social-circle-icon" title="email us"></i></a>
+			</div>
+		</div>
+	<div class="col-md-4">
+	  <div class="col-12">
+	    <h2 class="connectext">More</h2>
+		<hr class="light">
+      <ul>
+        <li><a href="https://medium.com/philadelphia-justice" target="_blank">The Justice Wire</a></li>
+        <li><a href="https://www.phila.gov/districtattorney/pages/default.aspx" target="_blank">Office of the District Attorney</a></li>
+        <li><a href="howto.html#constraints">Public Access and Use</a></li>
+		  </ul>
+		</div>
+  </div>
+</div>
+<p class="copytext">&copy; City of Philadelphia, Philadelphia District Attorney's Office<p>
+</div>
+</footer>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+</body>
+</html>

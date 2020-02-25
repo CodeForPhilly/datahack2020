@@ -1,0 +1,150 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(magrittr)
+library(conflicted)
+
+library(lubridate)
+
+filter <- dplyr::filter
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Lower Bound IDU Estimate
+
+For a lower-bound estimate of the number of intravenous / injectable drug users (IDUs) in the city, I'll simply add the number of individuals arrested for IDU + the number of overdoses + the number of people in treatment. For the moment, intravenous drug users are defined as users of heroin, fentanyl or fentanyl analogues.
+
+### Read In / Wrangle Data
+
+#### Arrests
+
+From Philly Open Data <https://github.com/phillydao/phillydao-public-data/tree/master/docs>
+
+Read in the data
+
+```{r}
+### read in the table from Philly Open Data for daily arrests
+vroom::vroom('phillydao-public_data/docs/data/arrest_data_daily_by_zip.csv') -> daily_arrests_zip
+
+### read in the table for drug seizures; going to assume people are arrested
+### for using drugs in the same proportion as those drugs are seized
+vroom::vroom('philly_doh_tableau_data/drug_seizures.tsv') %>%
+  mutate(quarter = case_when(quarter == 'Q1' ~ '01-01',
+                             quarter == 'Q2' ~ '04-01',
+                             quarter == 'Q3' ~ '07-01',
+                             quarter == 'Q4' ~ '10-01')) %>%
+  unite(quarter, c('year', 'quarter'), sep = '-') %>%
+  mutate(quarter = as.Date(quarter)) -> drug_seizures
+```
+
+Summarize arrests to the year and quarter (since that's how fine-grained some of the other data is) and estimate IUDs by proportion of drugs seized.
+
+```{r}
+daily_arrests_zip %>%
+  select(date_value, `Drug Possession`) %>%
+  mutate(year = year(date_value),
+         quarter = round_date(date_value, unit = 'quarter')) %>%
+  group_by(year, quarter) %>%
+  summarize(arrests = sum(`Drug Possession`)) %>%
+  left_join(drug_seizures) %>%
+  mutate(iud_perc = fentanyl + fentanyl_analogue + heroin) %>%
+  select(-(cocaine:other)) %>%
+  mutate(arrests_adj = round(arrests * (iud_perc / 100))) -> arrests
+```
+
+#### Overdoses
+
+From Philadelphia Department of Health's public opiod tableau page <https://public.tableau.com/profile/pdph#!/>
+
+```{r}
+vroom::vroom('philly_doh_tableau_data/overdose_deaths.tsv') -> overdose_deaths
+vroom::vroom('philly_doh_tableau_data/hosp_nonfatal_overdoses.tsv') -> nonfatal_over
+```
+
+Combine the data
+
+```{r}
+overdose_deaths %>%
+  group_by(year) %>%
+  summarize(deaths = sum(deaths)) %>%
+  ungroup() %>%
+  left_join(nonfatal_over) %>%
+  mutate(overdoses = deaths + cases) %>%
+  select(year, overdoses) -> overdoses
+```
+
+#### Individuals in Medication Assisted Treatment
+
+From Philadelphia Department of Health's public opiod tableau page <https://public.tableau.com/profile/pdph#!/>
+
+```{r}
+vroom::vroom('philly_doh_tableau_data/medicaid_beneficiaries_in_medication_assisted_treatment.tsv') -> mat_medicaid
+vroom::vroom('philly_doh_tableau_data/prisoners_in_medication_assisted_treatment.tsv') -> mat_prison
+```
+
+Combine the data
+
+```{r}
+mat_medicaid %>%
+  group_by(year) %>%
+  summarize(patients = sum(individuals)) %>%
+  ungroup() %>%
+  left_join(mat_prison) %>%
+  replace(is.na(.), 0) %>%
+  mutate(mat_patients = patients + individuals) %>%
+  select(year, mat_patients) -> mat
+```
+
+#### Combine 3 Types of  Data
+
+```{r}
+arrests %>%
+  group_by(year) %>%
+  summarise(arrests = sum(arrests),
+            iud_perc = mean(iud_perc),
+            arrests_adj = round(arrests * (iud_perc / 100))) %>%
+  left_join(overdoses) %>%
+  left_join(mat) %>%
+  mutate(lb = arrests + overdoses + mat_patients) %>% #lm(lb ~ year, data = .) %>% summary()
+  mutate(est_lb = round((year * 1056.6) - 2115104.8)) -> data
+```
+
+### Visualize
+
+```{r}
+data %>%
+  select(-iud_perc, -arrests_adj) %>%
+  mutate(lb_w_est = ifelse(is.na(lb) == F, lb, est_lb),
+         arrests = ifelse(year <= 2018, arrests, NA)) %>%
+  select(-est_lb) %>%
+  pivot_longer(arrests:lb_w_est, 
+               names_to = 'data_source', 
+               values_to = 'count') %>%
+  mutate(data_source = factor(data_source, 
+                              levels = c('lb_w_est', 'lb', 'arrests',
+                                         'overdoses', 'mat_patients'))) -> data_skinny
+  
+ggplot(data_skinny, aes(x = year, y = count, color = data_source)) +
+  geom_line(linetype = c(rep('dashed', 7), rep('solid', 28))) +
+  geom_point() +
+  scale_color_manual(values = c('black', 'black', 'dodgerblue3', 
+                                'orange3', 'forestgreen')) +
+  ggrepel::geom_label_repel(data = filter(data_skinny, 
+                                          data_source != 'lb', 
+                                          year == 2018), 
+                            aes(label = data_source, x = 2020.5)) +
+  labs(x = 'Year', y = 'Number of Individuals') +
+  theme_classic(base_size = 20) +
+  theme(legend.position = 'none')
+```
+
+
+
+
+
+

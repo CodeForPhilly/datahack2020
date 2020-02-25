@@ -1,0 +1,150 @@
+---
+title: "A Deep Dive into Trial Not Guilty Rate"
+author: "DAO DATA Lab"
+date: "1/27/2020"
+output: html_document
+---
+
+The DATA Lab's data story based off of the [DAO Data Dashboard](https://data.philadao.com). The goal is to look at how single trials that account for a large number of individual cases impact the trial conviction rate. The code here corresponds to the two line charts in the story showing the trial conviction rate for aggravated assault with a gun cases between 2014 and 2019 and the same with the two large outlier cases removed.
+
+The other chart in the data story is a column chart showing the total number of aggravated assault with a gun case docket numbers, highlighting 16 cases in February and 20 cases in October. This is derived from sensitive in-house case data, and cannot be reproduced with the data available on the dashboard.
+
+```{r, include=FALSE}
+library(tidyverse)
+library(lubridate)
+
+# load case outcomes dashboard data
+case_outcomes <- read.csv("https://data.philadao.com/data/case_outcomes_data_daily_citywide.csv")
+```
+
+```{r}
+# use the case_outcomes table from the dashboard
+case_outcomes %>%
+  # select the columns we need: date, disposition type, and aggravated assault/gun
+  select(date_value, dispoType, Aggravated.Assault.Gun) %>%
+  # filter to only cases disposed as Guilty or Not Guilty/Acquittal and when the year is equal to or less than 2019
+  filter(dispoType %in% c("Guilty", "Not Guilty/Acquittal"),
+         year(as.Date(date_value)) <= 2019) %>%
+  # add a column for the year of the disposition
+  mutate(year = floor_date(as.Date(date_value), "year")) %>%
+  # group the data by the year of the dispositon and the type of disposition (guilty or not guilty/acquittal)
+  group_by(year, dispoType) %>%
+  # add all of the cases together within the year and disposition group
+  summarize(total = sum(Aggravated.Assault.Gun)) %>%
+  # make the data wider so we can manipulate columns to get percentages
+  spread(dispoType, total) %>%
+  # remove year/dispoType group
+  ungroup() %>%
+  # add columns for percentages guilty and not guilty/acquittal
+  mutate(Total = Guilty + `Not Guilty/Acquittal`,
+         Guilty = round(Guilty / Total * 100, 2),
+         `Not Guilty/Acquittal` = round(`Not Guilty/Acquittal` / Total * 100, 2)) %>%
+  # remove the total column
+  select(-Total) %>%
+  # now we need to gather the data back into a tall format for graphing
+  gather("dispoType", "pct", -year) %>%
+  # renaming dispoType to Disposition for readabilit
+  rename(Dispositon = dispoType) %>%
+  # sort by year
+  arrange(year) %>%
+  # create line graph
+  ggplot(aes(x=year, y=pct, color=Dispositon))+
+  geom_line() +
+  # add nice labels and a title
+  labs(title = "Aggravated Assault/Gun Outcomes as % of Trials",
+       x = "Year",
+       y = "Percent of Aggravated Assault/Gun Trials",
+       caption = "Source: DAO Analysis of Criminal Justice Data")
+```
+
+```{r}
+# use the case_outcomes table from the dashboard
+case_outcomes %>%
+  # select the columns we need: date, disposition type, and aggravated assault/gun
+  select(date_value, dispoType, Aggravated.Assault.Gun) %>%
+  # filter to only cases disposed as Guilty or Not Guilty/Acquittal and when the year is equal to or less than 2019
+  filter(dispoType %in% c("Guilty", "Not Guilty/Acquittal"),
+         year(as.Date(date_value)) <= 2019) %>%
+  # add a column for the year of the disposition
+  mutate(year = floor_date(as.Date(date_value), "year")) %>%
+  # group the data by the year of the dispositon and the type of disposition (guilty or not guilty/acquittal)
+  group_by(year, dispoType) %>%
+  # add all of the cases together within the year and disposition group
+  summarize(total = sum(Aggravated.Assault.Gun)) %>%
+  # remove year/dispoType group
+  ungroup() %>%
+  # we want to see what happens if the cases were disposed as Guilty instead of Not Guilty/Acquittal.
+  # taking the 2019 cases, we subtract 36 (the total number of cases represented by the two trials) from Not Guilty/Acquittal
+  # This removes those cases from the data entirely.
+  mutate(total = case_when((year == "2019-01-01" & dispoType == "Not Guilty/Acquittal") ~ (as.numeric(total) - 36),
+                           TRUE ~ as.numeric(total))) %>%
+  # make the data wider so we can manipulate columns to get percentages
+  spread(dispoType, total) %>%
+  # add columns for percentages guilty and not guilty/acquittal
+  mutate(Total = Guilty + `Not Guilty/Acquittal`,
+         Guilty = round(Guilty / Total * 100, 2),
+         `Not Guilty/Acquittal` = round(`Not Guilty/Acquittal` / Total * 100, 2)) %>%
+  # remove the total column
+  select(-Total) %>%
+  # now we need to gather the data back into a tall format for graphing
+  gather("dispoType", "pct", -year) %>%
+  # renaming dispoType to Disposition for readability
+  rename(Dispositon = dispoType) %>%
+  # sort by year
+  arrange(year) %>%
+  # create line graph
+  ggplot(aes(x=year, y=pct, color=Dispositon))+
+  geom_line() +
+  # add nice labels and a title
+  labs(title = "Aggravated Assault/Gun Outcomes as % of Trials - two outlier cases removed",
+       x = "Year",
+       y = "Percent of Aggravated Assault/Gun Trials",
+       caption = "Source: DAO Analysis of Criminal Justice Data")
+```
+
+```{r}
+# use the case_outcomes table from the dashboard
+case_outcomes %>%
+  # select the columns we need: date, disposition type, and aggravated assault/gun
+  select(date_value, dispoType, Aggravated.Assault.Gun) %>%
+  # filter to only cases disposed as Guilty or Not Guilty/Acquittal and when the year is equal to or less than 2019
+  filter(dispoType %in% c("Guilty", "Not Guilty/Acquittal"),
+         year(as.Date(date_value)) <= 2019) %>%
+  # add a column for the year of the disposition
+  mutate(year = floor_date(as.Date(date_value), "year")) %>%
+  # group the data by the year of the dispositon and the type of disposition (guilty or not guilty/acquittal)
+  group_by(year, dispoType) %>%
+  # add all of the cases together within the year and disposition group
+  summarize(total = sum(Aggravated.Assault.Gun)) %>%
+  # remove year/dispoType group
+  ungroup() %>%
+  # we want to see what happens if the cases were disposed as Guilty instead of Not Guilty/Acquittal.
+  # taking the 2019 cases, we subtract 36 (the total number of cases represented by the two trials) from Not Guilty/Acquittal
+  # and add them to Guilty.
+  mutate(total = case_when((year == "2019-01-01" & dispoType == "Not Guilty/Acquittal") ~ (as.numeric(total) - 36),
+                           (year == "2019-01-01" & dispoType == "Guilty") ~ as.numeric(total) + 36,
+                           TRUE ~ as.numeric(total))) %>%
+  # make the data wider so we can manipulate columns to get percentages
+  spread(dispoType, total) %>%
+  # add columns for percentages guilty and not guilty/acquittal
+  mutate(Total = Guilty + `Not Guilty/Acquittal`,
+         Guilty = round(Guilty / Total * 100, 2),
+         `Not Guilty/Acquittal` = round(`Not Guilty/Acquittal` / Total * 100, 2)) %>%
+  # remove the total column
+  select(-Total) %>%
+  # now we need to gather the data back into a tall format for graphing
+  gather("dispoType", "pct", -year) %>%
+  # renaming dispoType to Disposition for readability
+  rename(Dispositon = dispoType) %>%
+  # sort by year
+  arrange(year) %>%
+  # create line graph
+  ggplot(aes(x=year, y=pct, color=Dispositon))+
+  geom_line() +
+  # add nice labels and a title
+  labs(title = "Aggravated Assault/Gun Outcomes as % of Trials - if outliers disposed as guilty",
+       x = "Year",
+       y = "Percent of Aggravated Assault/Gun Trials",
+       caption = "Source: DAO Analysis of Criminal Justice Data")
+```
+
