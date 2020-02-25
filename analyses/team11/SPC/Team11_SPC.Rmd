@@ -1,0 +1,36 @@
+---
+title: "Opioid Data Hack 2020"
+author: Silvia P. Canelón
+date: "`r format(Sys.time(), '%Y %B %d (%A)')`"
+output: 
+  html_notebook: 
+    fig_width: 7.2
+    toc: true
+    toc_float: true
+    number_sections: yes
+    theme: lumen
+    highlight: pygments #zenburn is a nice dark themed syntax
+---
+
+
+```{r, echo=FALSE}
+rm(list=ls()) # clears the environment
+
+pkgs = c("RMySQL", "DBI", "tidyverse", "stringr", "dplyr", "formatR", "lubridate", "tictoc", "ggThemeAssist", "RPostgres") # define packages
+
+lapply(pkgs, library, character.only = TRUE) # load packages
+```
+
+```{r}
+con <- DBI::dbConnect(
+     RPostgres::Postgres(),
+     user = Sys.getenv("DATAHACK_DB_USER"),
+     password = Sys.getenv("DATAHACK_DB_PASS"),
+     port = 30001,
+    host = "45.79.16.246",
+     dbname = "postgres"
+)
+df <- as.data.frame(tbl(con, 'PhysicianLocator_Test'))
+```
+
+

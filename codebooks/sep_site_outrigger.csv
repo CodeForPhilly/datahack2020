@@ -1,27 +1,27 @@
-site_id,site_name,site_location
-1,Mobile,3rd & Girard
-2,Mobile,10th & Fairmount
-3,Mobile,11th & Indiana
-4,Mobile,13th & Washington
-5,Headquarters - Friday,"2913-15 Kensington Ave, Philadelphia, PA 19134"
-6,Mobile,37th & Brown
-7,Headquarters - Monday,"2913-15 Kensington Ave, Philadelphia, PA 19134"
-8,Headquarters - Wednesday,"2913-15 Kensington Ave, Philadelphia, PA 19134"
-9,Mobile,Broad & Passyunk
-10,Mobile,54th & Market
-11,Mobile,Bridge & Platt
-12,Headquarters - Tuesday,"2913-15 Kensington Ave, Philadelphia, PA 19134"
-13,Headquarters - Thursday,"2913-15 Kensington Ave, Philadelphia, PA 19134"
-14,Mobile,Front & Wolf
-15,Mobile,Ben Franklin
-16,Mobile,Front & Wolf
-17,PPP Program,MCM
-18,PPP Program,Drop CM
-19,PPP Program,STEP
-20,PPP Program,Nav Center
-21,PPP Program,Respite
-22,PPP Program,Testing
-23,PPP Program,Mobile STEP
-24,PPP Partners,SOL Collective
-25,PPP Partners,Project SAFE
-26,PPP Program,Wound Care
+site_id,site_name,site_location,address,description
+1,Mobile,3rd & Girard,,Mobile Site
+2,Mobile,10th & Fairmount,,Mobile Site 
+3,Mobile,11th & Indiana,,Mobile Site
+4,Mobile,13th & Washington,,Mobile Site
+5,Headquarters - Friday,"2913-15 Kensington Ave, Philadelphia, PA 19134","2913-15 Kensington Ave, Philadelphia, PA 19134",In Building Exchange
+6,Mobile,37th & Brown,,Mobile Site
+7,Headquarters - Monday,"2913-15 Kensington Ave, Philadelphia, PA 19134","2913-15 Kensington Ave, Philadelphia, PA 19134",Emergency Packs
+8,Headquarters - Wednesday,"2913-15 Kensington Ave, Philadelphia, PA 19134","2913-15 Kensington Ave, Philadelphia, PA 19135",Emergency Packs
+9,Mobile,Broad & Passyunk,,Mobile Site
+10,Mobile,54th & Market,,Mobile Site
+11,Mobile,Bridge & Platt,,Mobile Site
+12,Headquarters - Tuesday,"2913-15 Kensington Ave, Philadelphia, PA 19134","2913-15 Kensington Ave, Philadelphia, PA 19134",In Building Exchange
+13,Headquarters - Thursday,"2913-15 Kensington Ave, Philadelphia, PA 19134","2913-15 Kensington Ave, Philadelphia, PA 19135",Emergency Packs
+14,Mobile,Front & Wolf,,Mobile Site
+15,Mobile,Ben Franklin,,Mobile Site
+16,Mobile,Front & Wolf,,Mobile Site
+17,PPP Program,MCM,"2913 Kensington Ave, Philadelphia, PA, 19134",Case management for HIV positive individuals
+18,PPP Program,Drop CM,"2913 Kensington Ave, Philadelphia, PA, 19134",Case management for individuals coming in to our drop-in center
+19,PPP Program,STEP,"2913 Kensington Ave, Philadelphia, PA, 19134",In building Suboxone program 
+20,PPP Program,Nav Center,"2913 Kensington Ave, Philadelphia, PA, 19134",Shelter
+21,PPP Program,Respite,"2913 Kensington Ave, Philadelphia, PA, 19134",Shelter
+22,PPP Program,Testing,"2913 Kensington Ave, Philadelphia, PA, 19134",HIV/HCV Testing
+23,PPP Program,Mobile STEP,"2913 Kensington Ave, Philadelphia, PA, 19134",Mobile Suboxone program
+24,PPP Partners,SOL Collective,19134,Partner Oganization that does on foot outreach/syringe distribution
+25,PPP Partners,Project SAFE,19134,FSW focused harm reduction organization
+26,PPP Program,Wound Care,"2913 Kensington Ave, Philadelphia, PA, 19134",Wound care operates out of mobile Suboxone clinic in Kensington
