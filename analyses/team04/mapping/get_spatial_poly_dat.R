@@ -17,6 +17,8 @@ zips_df <- zips_raw %>%
 zips_df <- as.data.frame(zips_df)
 row.names(zips_df) <- row.names(zips_raw@data)
 zips_sp <- SpatialPolygonsDataFrame(zips_raw, as.data.frame(zips_df))
+# you could write the spatial polygon df to a shp file using the following:
+# writeOGR(obj=zips_sp, dsn='data/zips_output', layer='zips_pp', driver='ESRI Shapefile')
 
 ## census tracts
 census_overlay_df <- create_overlay_dataFrame(outrigger_points, census_raw, c("OBJECTID"))
@@ -33,3 +35,5 @@ census_df <- census_raw %>%
 census_df <- as.data.frame(census_df)
 row.names(census_df) <- row.names(census_raw@data)
 census_sp <- SpatialPolygonsDataFrame(census_raw, as.data.frame(census_df))
+# you could write the spatial polygon df to a shp file using the following:
+# writeOGR(obj=census_sp, dsn='data/census_output', layer='census_pp', driver='ESRI Shapefile')
