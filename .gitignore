@@ -1,6 +1,9 @@
 # possible data files
-.csv
-.tsv
+*.csv
+*.tsv
+
+# from mac
+.DS_Store 
 
 # .env
 .env
@@ -14,6 +17,9 @@ home/.rstudio
 home/.cache
 
 *.swp
+
+# jupyter
+.ipynb_checkpoints/
 
 # R specific ----
 
