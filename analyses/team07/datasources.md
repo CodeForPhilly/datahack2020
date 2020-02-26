@@ -1,0 +1,4 @@
+- http://www.city-data.com/us-cities/The-Northeast/Philadelphia-Economy.html
+- https://www.philadelphiafed.org/research-and-data/regional-economy/
+- https://www.phila.gov/departments/department-of-public-health/data/
+- https://www.cdc.gov/socialdeterminants/data/index.htm
