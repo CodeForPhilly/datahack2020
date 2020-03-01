@@ -13,6 +13,7 @@ home/.jupyter
 home/.local
 home/.rstudio
 home/.cache
+analyses/team04/spm_readings/*
 
 *.swp
 
