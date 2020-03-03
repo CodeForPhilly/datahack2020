@@ -66,6 +66,6 @@ fatal_se <- 0.00533
 fatal_parameters <- estBetaParams(fatal_mu, fatal_se^2)
 fatal_sims <- rbeta(10000, fatal_parameters$alpha, fatal_parameters$beta)
 # use simulated multipliers to get estiamted counts with the observed 996 fatal overdoses
-fatal_estimates_low <- 996 / observed_low
-fatal_estimates_mid <- 996 / observed_mid
-fatal_estimates_high <- 996 / observed_high
+fatal_estimates_low <- observed_low / fatal_sims
+fatal_estimates_mid <- observed_mid / fatal_sims
+fatal_estimates_high <- observed_high / fatal_sims
