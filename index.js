@@ -3,6 +3,7 @@ var main = d3.select("main");
 var scrolly = main.select("#scrolly");
 var figure = scrolly.select("figure");
 var article = scrolly.select("article");
+var image = scrolly.select("image");
 var step = article.selectAll(".step");
 // let subSticky = article.selectAll(".subSticky");
 
@@ -43,6 +44,14 @@ function handleStepEnter(response) {
   //   case 3:
   figure.select("p").text(response.index + 1);
   // }
+
+  console.log(response.index);
+  if (response.index === 5) {
+    document.getElementById("image").className="prior_Phila";
+  }
+  else {
+    document.getElementById("image").className="";
+  }
 }
 
 function setupStickyfill() {

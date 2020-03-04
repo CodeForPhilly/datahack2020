@@ -57,14 +57,15 @@ a:hover {
 article {
   position: relative;
   /* padding: 0 1rem; */
-  max-width: 30rem;
+  max-width: 40rem;
 }
 
 figure {
   position: -webkit-sticky;
   position: sticky;
-  width: 100%;
-  margin: 0;
+  display: inline-block;
+  width: 30%;
+  /* margin: 0; */
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
@@ -84,6 +85,7 @@ figure p {
   font-size: 8rem;
   font-weight: 900;
   color: #fff;
+  z-index: 1000;
 }
 
 .step {
@@ -129,6 +131,22 @@ figure p {
   padding: 20px;
   width: 30%;
   margin-left: 2%;
+}
+
+#image {
+  width: 75%;
+  height: 75%;
+  position: relative;
+  top: 12.5%;
+  left: 12.5%;
+  background-color: lightseagreen;
+}
+
+.prior_Phila {
+  background-image: url("./img/prior_Phila.jpg");
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
 }
 
 @media (max-width: 500px) {
