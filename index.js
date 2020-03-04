@@ -39,18 +39,20 @@ function handleStepEnter(response) {
     return i === response.index;
   });
 
-  // update graphic based on step
-  // switch (response.index) {
-  //   case 3:
   figure.select("p").text(response.index + 1);
-  // }
 
   console.log(response.index);
-  if (response.index === 5) {
-    document.getElementById("image").className="prior_Phila";
-  }
-  else {
-    document.getElementById("image").className="";
+  if (response.index === 4) {
+    document
+      .getElementById("stickyText")
+      .innerHTML(
+        "I think being forced to not use substances made me want to use even more."
+      );
+  } else if (response.index === 5) {
+    document.getElementById("image").className = "prior_Phila";
+  } else {
+    document.getElementById("image").className = "";
+    document.getElementById("image").innerHTML = "";
   }
 }
 
