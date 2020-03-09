@@ -2,6 +2,10 @@
 *.csv
 *.tsv
 
+# allowed data files
+!rates.csv
+!rates-sparse.csv
+
 # from mac
 .DS_Store 
 
