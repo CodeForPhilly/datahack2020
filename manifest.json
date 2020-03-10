@@ -1,0 +1,8 @@
+{
+  "name": "DataHack2020-Team11",
+  "short_name": "DataHack-Team11",
+  "start_url": "index.html",
+  "background_color": "#fdfdfd",
+  "theme_color": "#db4938",
+  "orientation": "portrait-primary"
+}
