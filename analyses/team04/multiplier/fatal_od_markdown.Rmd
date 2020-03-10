@@ -60,7 +60,7 @@ observed_high <- sum(od_incidents_18_num$NUM2018Q1HIGH) +
   sum(od_incidents_18_num$NUM2018Q4HIGH)
 ```
 
-Using the counts of overdoes deaths, we replicated the estimate conducted in ["Estimating the Prevalence of Illicit Opioid Use in New York City using Multiple Data Sources."](https://bmcpublichealth.biomedcentral.com/articles/10.1186/1471-2458-12-443) In the example to follow, the same multiplier was used as in the cited study.
+Using the counts of overdoes deaths, we replicated the estimate conducted in ["Estimating the Prevalence of Opioid use Disorder in the Cincinnati Region using Probabilistic Multiplier Methods and Model Averaging."](https://jheor.org/article/9729-estimating-the-prevalence-of-opioid-use-disorder-in-the-cincinnati-region-using-probabilistic-multiplier-methods-and-model-averaging) In the example to follow, the same multiplier was used as in the cited study.
 
 ```{r include = TRUE}
 # use beta distribution to account for standard error of multiplier

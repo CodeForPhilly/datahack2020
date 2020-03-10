@@ -1,4 +1,5 @@
 library(dplyr)
+library(ggplot2)
 # this file is meant to apply the multiplier method using overdose death counts
 od_incidents <- read.csv("data/data/dph_od_incident_counts.csv")
 
@@ -69,3 +70,12 @@ fatal_sims <- rbeta(10000, fatal_parameters$alpha, fatal_parameters$beta)
 fatal_estimates_low <- observed_low / fatal_sims
 fatal_estimates_mid <- observed_mid / fatal_sims
 fatal_estimates_high <- observed_high / fatal_sims
+
+# set up some items for plotting
+low_df <- data.frame(type=c("low"), estimate=fatal_estimates_low)
+mid_df <- data.frame(type=c("mid"), estimate=fatal_estimates_mid)
+high_df <- data.frame(type=c("high"), estimate=fatal_estimates_high)
+estimates_df <- rbind(low_df, mid_df, high_df)
+estimates_box <- ggplot(estimates_df, aes(x=type, y=estimate))
+estimates_box <- estimates_box + geom_boxplot()
+estimates_box

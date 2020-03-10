@@ -1,6 +1,14 @@
+---
+title: "Truncated Poisson Estimator of "
+author: "Sam May"
+date: "March 9, 2020"
+output: html_document
+---
+
+```{r, include=FALSE}
 library(dplyr)
 library(lubridate)
-# set up
+setwd("C:/Users/spmay/source/c4p/datahack2020")
 base_dir <- paste0(getwd(), "/analyses/team04/poisson", sep="")
 source(paste0(base_dir, "/functions.R", sep=""))
 
@@ -8,17 +16,27 @@ source(paste0(base_dir, "/functions.R", sep=""))
 sep_events <- read.csv(paste0(base_dir,"/data/pp_sep_site_event.csv", sep=""))
 sep_events$DATE <- as.Date(sep_events$DATE, format="%m/%d/%y")
 sep_events$no_exchanging_for <- as.numeric(sep_events$no_exchanging_for)
+```
 
+Initial estimates were performed for broader periods of time that were observed.
+```{r}
 # run estimate for all events
 all_est <- sep_events_truncPoisson(sep_events)
 
-# to do: run estimate for varying time frames to observe how the estimate fluctuates
+# run estimate for varying time frames to observe how the estimate fluctuates
 q1_est <- sep_events_truncPoisson(sep_events, start="2019-01-01", end="2019-03-31")
 q2_est <- sep_events_truncPoisson(sep_events, start="2019-04-01", end="2019-06-30")
 q3_est <- sep_events_truncPoisson(sep_events, start="2019-07-01", end="2019-09-30")
 q4_est <- sep_events_truncPoisson(sep_events, start="2019-10-01", end="2019-12-31")
+c(all_2019=all_est$pop_estimate,
+  quarter_1=q1_est$pop_estimate,
+  quarter_2=q2_est$pop_estimate,
+  quarter_3=q3_est$pop_estimate,
+  quarter_4=q4_est$pop_estimate)
+```
 
-# to do: run estimate for a random set of 5 days
+All possible, consecutive 5-day intervals were investigated to investigate how the estiamte changes with more granular time units. A set of possible dates was determined by finding all of the weekdays during which the needle exchange had at least one visit to a site.
+```{r, include=FALSE}
 # generate vector of possible dates
 possible_dates <- c()
 current_date <- ymd("20190101")
@@ -43,6 +61,9 @@ for(d in possible_dates) {
   }
 }
 possible_dates <- possible_dates[-zero_indexes]
+```
+Using the possible list of dates, the estimate was conducted which each possible consecutive 5-day period for the exchange's operation.
+```{r}
 # pick all 5 date intervals to test
 possible_starts <- length(possible_dates) - 4
 trials <- numeric(possible_starts)
@@ -51,8 +72,10 @@ for(trial in seq(1, possible_starts)) {
   trials[trial] = est
 }
 trials <- trials[ which(!is.infinite(trials) & !is.na(trials)) ]
-
-# to do: bootstrap for any random 5 days of operation
+summary(trials)
+```
+Similarly, a random sample of 5 days was used to generate random samples of any 5 days during which the exchange operated.
+```{r}
 sample_trials_num <- 10000
 sample_trials <- numeric(sample_trials_num)
 for(i in seq(1, sample_trials_num)) {
@@ -60,10 +83,5 @@ for(i in seq(1, sample_trials_num)) {
   est <- sep_events_truncPoisson(sep_events, dates = sample_dates, justEstimate = TRUE)
   sample_trials[i] = est
 }
-sample_trials <- bootstrap_trials[ which(!is.infinite(sample_trials) & !is.na(sample_trials)) ]
-
-# to do: consider creating a varied version of sep_events_truncPoisson that uses no_exchanging_for
-# try with median, mean, and min
-
-# to do: look at results for a single site
-
+summary(sample_trials)
+```

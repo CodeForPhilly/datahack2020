@@ -3,6 +3,7 @@
 .tsv
 data/data/*
 analyses/team04/poisson/data/pp_sep_site_event.csv
+analyses/team04/mapping/data/census/
 
 # .env
 .env
