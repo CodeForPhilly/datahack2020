@@ -1,27 +1,30 @@
 const container = document.querySelector('.container');
 const coffees = [
   {
-    name: 'Persona 1',
-    image: 'images/boy.svg'
+    name: 'Nicole',
+    image: 'images/boy.svg',
+    link: 'personaOne.html'
   },
   {
-    name: 'Persona 2',
-    image: 'images/girl.svg'
+    name: 'Michael',
+    image: 'images/man.svg',
+    link: 'personaTwo.html'
   },
   {
-    name: 'Persona 3',
-    image: 'images/man.svg'
+    name: 'Sandra',
+    image: 'images/girl.svg',
+    link: 'personaThree.html'
   }
 ];
 const showPersonas = () => {
   let output = '';
   coffees.forEach(
-    ({ name, image }) =>
+    ({ name, image, link }) =>
       (output += `
               <div class="card">
                 <img class="card--avatar" src=${image} />
                 <h1 class="card--title">${name}</h1>
-                <a class="card--link" href="personaOne.html">Read More</a>
+                <a class="card--link" href=${link}>Read ${name}'s story</a>
               </div>
               `)
   );

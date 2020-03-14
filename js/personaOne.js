@@ -43,16 +43,20 @@ function handleStepEnter(response) {
 
   console.log(response.index);
   if (response.index === 4) {
-    document
-      .getElementById('stickyText')
-      .innerHTML(
+    // document
+    //   .getElementById('stickyText')
+    //   .innerHTML(
+    figure
+      .select('p')
+      .text(
         'I think being forced to not use substances made me want to use even more.'
       );
+    document.getElementById('image').className = '';
   } else if (response.index === 5) {
     document.getElementById('image').className = 'prior_Phila';
   } else {
     document.getElementById('image').className = '';
-    document.getElementById('image').innerHTML = '';
+    // document.getElementById('stickyText').innerHTML = '';
   }
 }
 
