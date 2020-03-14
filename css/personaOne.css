@@ -43,15 +43,14 @@ a:hover {
 article {
   position: relative;
   /* padding: 0 1rem; */
-  max-width: 40rem;
+
+  max-width: 400px;
 }
 
 figure {
   position: -webkit-sticky;
   position: sticky;
-  display: inline-block;
-  width: 30%;
-  /* margin: 0; */
+  margin: 30px;
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
@@ -83,7 +82,6 @@ figure p {
   display: -ms-flexbox;
   display: flex;
   flex-direction: column;
-  width: 100vw;
   justify-content: center;
 }
 
@@ -103,20 +101,10 @@ figure p {
 }
 
 .subSticky {
-  /* background-color: slateblue;
-  position: -webkit-sticky;
-  position: sticky;
-  width: 100%;
-  margin: 0;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  z-index: 0; */
   background-color: whitesmoke;
   color: black;
   padding: 20px;
-  width: 30%;
-  margin-left: 2%;
+  width: 100%;
 }
 
 #image {
