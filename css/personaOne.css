@@ -40,6 +40,19 @@ a:hover {
   flex: 1;
 }
 
+#progress {
+  visibility: hidden;
+  opacity: 0;
+  height: 70px;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 20px;
+  background-color: aquamarine;
+  transition: visibility 300ms, opacity 300ms;
+}
+
 article {
   position: relative;
   /* padding: 0 1rem; */

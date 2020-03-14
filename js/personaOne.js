@@ -5,6 +5,7 @@ var figure = scrolly.select('figure');
 var article = scrolly.select('article');
 var image = scrolly.select('image');
 var step = article.selectAll('.step');
+var progress = main.select('.progress');
 // let subSticky = article.selectAll(".subSticky");
 
 // initialize the scrollama
@@ -42,7 +43,11 @@ function handleStepEnter(response) {
   figure.select('p').text(response.index + 1);
 
   console.log(response.index);
-  if (response.index === 4) {
+
+  if (response.index === 0) {
+    document.getElementById('progress').style.visibility = 'visible';
+    document.getElementById('progress').style.opacity = '1';
+  } else if (response.index === 4) {
     // document
     //   .getElementById('stickyText')
     //   .innerHTML(
@@ -86,6 +91,15 @@ function init() {
 
   // setup resize event
   window.addEventListener('resize', handleResize);
+
+  window.addEventListener('scroll', () => {
+    let progress = document.getElementById('progress');
+    if (window.scrollY < progress.offsetTop - 100) {
+      progress.style.visibility = 'hidden';
+      progress.style.opacity = '0';
+    }
+    // console.log(window.scrollY, progress.offsetTop);
+  });
 }
 
 // kick things off
