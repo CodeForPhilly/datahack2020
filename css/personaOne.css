@@ -75,7 +75,7 @@ figure p {
 
 .step {
   /* margin: 0 auto 2rem auto; */
-  background-color: #3b3b3b;
+  /* background-color: #3b3b3b; */
   color: #fff;
   position: relative;
   display: -webkit-box;
@@ -89,10 +89,10 @@ figure p {
   margin-bottom: 0;
 }
 
-.step.is-active {
+/* .step.is-active {
   background-color: goldenrod;
   color: #3b3b3b;
-}
+} */
 
 .step p {
   text-align: center;
@@ -105,6 +105,8 @@ figure p {
   color: black;
   padding: 20px;
   width: 100%;
+  font-size: 1.25rem;
+  line-height: 1.5;
 }
 
 #image {

@@ -35,9 +35,9 @@ function handleStepEnter(response) {
   // response = { element, direction, index }
 
   // add color to current step only
-  step.classed('is-active', function(d, i) {
-    return i === response.index;
-  });
+  // step.classed('is-active', function(d, i) {
+  //   return i === response.index;
+  // });
 
   figure.select('p').text(response.index + 1);
 
@@ -49,7 +49,7 @@ function handleStepEnter(response) {
     figure
       .select('p')
       .text(
-        'I think being forced to not use substances made me want to use even more.'
+        '"I think being forced to not use substances made me want to use even more."'
       );
     document.getElementById('image').className = '';
   } else if (response.index === 5) {
