@@ -30,8 +30,8 @@ a:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  background-color: #f3f3f3;
-  /* padding: 1rem; */
+  /* background-color: #f3f3f3; */
+  margin-top: 30px;
 }
 
 #scrolly > * {
@@ -48,9 +48,7 @@ a:hover {
   position: -webkit-sticky;
   top: 0;
   z-index: 1000;
-  padding: 20px;
-  background-color: aquamarine;
-  transition: visibility 300ms, opacity 300ms;
+  transition: visibility 400ms, opacity 400ms;
 }
 
 article {
@@ -67,14 +65,13 @@ figure {
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
-  background-color: #8a8a8a;
+  /* background-color: #8a8a8a; */
   z-index: 0;
 }
 
 figure p {
   text-align: center;
-  padding: 1rem;
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
   -moz-transform: translate(-50%, -50%);
@@ -82,8 +79,9 @@ figure p {
   transform: translate(-50%, -50%);
   font-size: 8rem;
   font-weight: 900;
-  color: #fff;
+  color: black;
   z-index: 1000;
+  font-style: italic;
 }
 
 .step {
@@ -123,23 +121,39 @@ figure p {
 }
 
 #image {
-  width: 75%;
-  height: 75%;
+  width: 100%;
+  height: 100%;
   position: relative;
-  top: 12.5%;
-  left: 12.5%;
-  /* background-color: lightseagreen; */
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#caption {
+  position: absolute;
+  bottom: -10px;
+  font-size: 1rem;
 }
 
 .prior_Phila {
-  background-image: url('../img/prior_Phila.jpg');
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* Do not repeat the image */
-  background-size: cover; /* Resize the background image to cover the entire container */
+  background-image: url('../images/Jane/prior_Phila.jpg');
+  background-position: 50% 25%;
 }
 
-#stickyText {
+.mat1 {
+  background-image: url('../images/Jane/mat1.jpg');
+  background-position: 50% 10%;
+}
+
+.stickyText {
   font-size: 2rem;
+}
+
+.smart-text {
+  font-size: 1.05rem;
+}
+
+#outro {
+  margin-top: 50px;
 }
 
 @media (max-width: 500px) {

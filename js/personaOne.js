@@ -14,10 +14,13 @@ var scroller = scrollama();
 // generic window resize listener event
 function handleResize() {
   // 1. update height of step elements
-  var stepH = Math.floor(window.innerHeight + 50);
-  step.style('height', stepH + 'px');
+  var stepHeight = Math.floor(window.innerHeight + 50);
+  if (stepHeight > 1000) stepHeight = 1000;
+
+  step.style('height', stepHeight + 'px');
 
   var figureHeight = (window.innerHeight * 2) / 3;
+  if (figureHeight > 500) figureHeight = 500;
   var figureMarginTop = (window.innerHeight - figureHeight) / 2;
 
   figure
@@ -40,25 +43,64 @@ function handleStepEnter(response) {
   //   return i === response.index;
   // });
 
-  figure.select('p').text(response.index + 1);
-
   console.log(response.index);
-
   if (response.index === 0) {
-    document.getElementById('progress').style.visibility = 'visible';
-    document.getElementById('progress').style.opacity = '1';
+    figure.select('p').text(response.index);
+  } else if (response.index === 1) {
+    figure.select('p').text(response.index);
+  } else if (response.index === 2) {
+    figure.select('p').text(response.index);
+  } else if (response.index === 3) {
+    figure.select('p').text(response.index);
   } else if (response.index === 4) {
-    // document
-    //   .getElementById('stickyText')
-    //   .innerHTML(
     figure
       .select('p')
       .text(
         '"I think being forced to not use substances made me want to use even more."'
       );
     document.getElementById('image').className = '';
+    figure.select('h4').text('');
   } else if (response.index === 5) {
+    figure.select('p').text('');
     document.getElementById('image').className = 'prior_Phila';
+    figure
+      .select('h4')
+      .text(
+        'More than 80% of residential rehab have been treated previously. ~50% have been in treatment at least 3 times. Nationally, the breakdown is almost the same, but with more people in the 5 or more category.'
+      );
+  } else if (response.index === 6) {
+    document.getElementById('image').className = '';
+    figure.select('h4').text('');
+    figure.select('p').text(response.index);
+  } else if (response.index === 7) {
+    document.getElementById('image').className = '';
+    figure
+      .select('p')
+      .text(
+        '"I continued using and finding ways and means not to go into withdrawal."'
+      );
+    figure.select('h4').text('');
+  } else if (response.index === 8) {
+    figure.select('p').text('');
+    document.getElementById('image').className = 'mat1';
+    figure
+      .select('h4')
+      .text(
+        'Vivitrol is a time-release form of naltrexone. It and other medications, notably buprenorphine, are successful in preventing opioid withdrawal. Despite medically assisted treatment (MAT) gaining increasing acceptance overall, it is much less likely to be offered to people referred to treatment by prisons or courts.'
+      );
+    document.getElementById('stickyText').classList.remove('smart-text');
+  } else if (response.index === 9) {
+    document.getElementById('image').className = '';
+    figure.select('h4').text('');
+    document.getElementById('stickyText').classList.add('smart-text');
+    document.getElementById('stickyText').textContent +=
+      'Self-Management And Recovery Training (SMART) employs a “science-based” approach to help people dealing with any type of addiction to “find and develop the power within themselves to change and lead fulfilling and balanced lives.” It is open to Medication Assisted Treatment (MAT), whereas NA and AA focus more narrowly on abstinence. They tend to see people using MAT as not clean/sober, although a number of people using MAT for their recovery have reportedly found AA more accepting of their situation.';
+  } else if (response.index === 10) {
+    document.getElementById('stickyText').classList.remove('smart-text');
+    document.getElementById('stickyText').textContent = '';
+    figure.select('p').text(response.index);
+  } else if (response.index === 11) {
+    figure.select('p').text(response.index);
   } else {
     document.getElementById('image').className = '';
     // document.getElementById('stickyText').innerHTML = '';
@@ -83,7 +125,7 @@ function init() {
   scroller
     .setup({
       step: '#scrolly article .step',
-      offset: 0.25
+      offset: 0.33
       // ,
       // debug: true
     })
@@ -94,10 +136,19 @@ function init() {
 
   window.addEventListener('scroll', () => {
     let progress = document.getElementById('progress');
+    if (window.scrollY > progress.offsetTop - 100) {
+      document.getElementById('progress').style.visibility = 'visible';
+      document.getElementById('progress').style.opacity = '1';
+    }
+  });
+
+  window.addEventListener('scroll', () => {
+    let progress = document.getElementById('progress');
     if (window.scrollY < progress.offsetTop - 100) {
       progress.style.visibility = 'hidden';
       progress.style.opacity = '0';
     }
+
     // console.log(window.scrollY, progress.offsetTop);
   });
 }

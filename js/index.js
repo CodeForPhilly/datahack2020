@@ -1,8 +1,8 @@
 const container = document.querySelector('.container');
 const coffees = [
   {
-    name: 'Nicole',
-    image: 'images/boy.svg',
+    name: 'Jane',
+    image: 'images/girl.svg',
     link: 'personaOne.html'
   },
   {
@@ -11,8 +11,8 @@ const coffees = [
     link: 'personaTwo.html'
   },
   {
-    name: 'Sandra',
-    image: 'images/girl.svg',
+    name: 'John',
+    image: 'images/boy.svg',
     link: 'personaThree.html'
   }
 ];
