@@ -1,0 +1,14 @@
+.refusal {
+  background-image: url('../images/Michael/refusals.png');
+  background-position: 50% 30%;
+}
+
+.homeless {
+  background-image: url('https://live.staticflickr.com/4099/4945033828_3a8b1777d9_b.jpg');
+  background-position: 50% 50%;
+}
+
+.homeless-pie-charts {
+  background-image: url('../images/Michael/homeless-pie-charts.png');
+  background-position: 50% 50%;
+}
