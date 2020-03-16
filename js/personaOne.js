@@ -74,6 +74,7 @@ function handleStepEnter(response) {
     figure.select('p').text(response.index);
   } else if (response.index === 7) {
     document.getElementById('image').className = '';
+    document.getElementById('caption').classList.remove('vivitrol');
     figure
       .select('p')
       .text(
@@ -88,10 +89,12 @@ function handleStepEnter(response) {
       .text(
         'Vivitrol is a time-release form of naltrexone. It and other medications, notably buprenorphine, are successful in preventing opioid withdrawal. Despite medically assisted treatment (MAT) gaining increasing acceptance overall, it is much less likely to be offered to people referred to treatment by prisons or courts.'
       );
+    document.getElementById('caption').classList.add('vivitrol');
     document.getElementById('stickyText').classList.remove('smart-text');
   } else if (response.index === 9) {
     document.getElementById('image').className = '';
     figure.select('h4').text('');
+    document.getElementById('caption').classList.remove('vivitrol');
     document.getElementById('stickyText').classList.add('smart-text');
     document.getElementById('stickyText').textContent +=
       'Self-Management And Recovery Training (SMART) employs a “science-based” approach to help people dealing with any type of addiction to “find and develop the power within themselves to change and lead fulfilling and balanced lives.” It is open to Medication Assisted Treatment (MAT), whereas NA and AA focus more narrowly on abstinence. They tend to see people using MAT as not clean/sober, although a number of people using MAT for their recovery have reportedly found AA more accepting of their situation.';

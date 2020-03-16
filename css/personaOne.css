@@ -128,10 +128,14 @@ figure p {
   background-size: contain;
 }
 
-#caption {
+.caption {
   position: absolute;
   bottom: -10px;
   font-size: 1rem;
+}
+
+.vivitrol {
+  bottom: -40px;
 }
 
 .prior_Phila {
