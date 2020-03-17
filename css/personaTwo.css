@@ -39,8 +39,13 @@
 }
 
 .treatments {
-  background-image: url('../images/Michael/treatments.jpg');
-  background-position: 50% 50%;
+  background-image: url('../images/Michael/treatments2.jpg');
+  background-position: 50% 33%;
+}
+
+.treatment-text {
+  position: absolute;
+  bottom: -15%;
 }
 
 .support-group {

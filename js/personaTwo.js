@@ -133,6 +133,7 @@ function handleStepEnter(response) {
     figure.select('h4').text('');
     document.getElementById('image').className = 'homeless-icon';
     document.getElementById('caption').classList.remove('insurance-text');
+    document.getElementById('caption').classList.add('treatment-text');
     // progress bar updates
     usingTimeline.map(node => node.classList.add('timeline-highlight'));
     treatmentTimeline.map(node => node.classList.remove('timeline-highlight'));
@@ -145,6 +146,7 @@ function handleStepEnter(response) {
       .text(
         'More than half the recorded treatments for homeless people in Phila in 2017 were for 24-hour detox programs. This was double the rate for people who were not homeless, who also had much higher rates of residential treatment and medically assisted treatment (MAT).'
       );
+    document.getElementById('caption').classList.add('treatment-text');
     usingTimeline.map(node => node.classList.remove('timeline-highlight'));
     treatmentTimeline.map(node => node.classList.add('timeline-highlight'));
     recoveryTimeline.map(node => node.classList.remove('timeline-highlight'));
@@ -154,34 +156,13 @@ function handleStepEnter(response) {
     figure.select('h4').text('');
     document.getElementById('image').className = '';
     document.getElementById('image').className = 'support-group';
+    document.getElementById('caption').classList.add('treatment-text');
+
     recoveryTimeline.map(node => node.classList.add('timeline-highlight'));
     treatmentTimeline.map(node => node.classList.remove('timeline-highlight'));
-  }
-  //   figure.select('p').text('');
-  //   document.getElementById('image').className = 'mat1';
-  //   figure
-  //     .select('h4')
-  //     .text(
-  //       'Vivitrol is a time-release form of naltrexone. It and other medications, notably buprenorphine, are successful in preventing opioid withdrawal. Despite medically assisted treatment (MAT) gaining increasing acceptance overall, it is much less likely to be offered to people referred to treatment by prisons or courts.'
-  //     );
-  //   document.getElementById('stickyText').classList.remove('smart-text');
-  // } else if (response.index === 9) {
-  //   document.getElementById('image').className = '';
-  //   figure.select('h4').text('');
-  //   document.getElementById('stickyText').classList.add('smart-text');
-  //   document.getElementById('stickyText').textContent +=
-  //     'Self-Management And Recovery Training (SMART) employs a “science-based” approach to help people dealing with any type of addiction to “find and develop the power within themselves to change and lead fulfilling and balanced lives.” It is open to Medication Assisted Treatment (MAT), whereas NA and AA focus more narrowly on abstinence. They tend to see people using MAT as not clean/sober, although a number of people using MAT for their recovery have reportedly found AA more accepting of their situation.';
-  // } else if (response.index === 10) {
-  //   document.getElementById('stickyText').classList.remove('smart-text');
-  //   document.getElementById('stickyText').textContent = '';
-  //   figure.select('p').text(response.index);
-  // } else if (response.index === 11) {
-  //   figure.select('p').text(response.index);
-  // }
-  else {
+  } else {
     figure.select('h4').text('');
     document.getElementById('image').className = '';
-    // document.getElementById('stickyText').innerHTML = '';
   }
 }
 
