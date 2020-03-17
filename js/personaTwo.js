@@ -56,26 +56,21 @@ function handleStepEnter(response) {
     figure.select('h4').text('');
   } else if (response.index === 2) {
     document.getElementById('image').className = 'homeless-pie-charts';
+    figure.select('p').text('');
+  } else if (response.index === 3) {
+    document.getElementById('image').className = '';
+    figure
+      .select('p')
+      .text(
+        '"I continued using and finding ways and means not to go into withdrawal. Using drugs was a 24/7/365 job." — A person in recovery'
+      );
+  } else if (response.index === 4) {
+    figure.select('p').text('');
+    document.getElementById('image').className = 'syringe';
+  } else if (response.index === 5) {
+    document.getElementById('image').className = '';
   }
-  // else if (response.index === 3) {
-  //   figure.select('p').text(response.index);
-  // } else if (response.index === 4) {
-  //   figure
-  //     .select('p')
-  //     .text(
-  //       '"I think being forced to not use substances made me want to use even more."'
-  //     );
-  //   document.getElementById('image').className = '';
-  //   figure.select('h4').text('');
-  // } else if (response.index === 5) {
-  //   figure.select('p').text('');
-  //   document.getElementById('image').className = 'prior_Phila';
-  //   figure
-  //     .select('h4')
-  //     .text(
-  //       'More than 80% of residential rehab have been treated previously. ~50% have been in treatment at least 3 times. Nationally, the breakdown is almost the same, but with more people in the 5 or more category.'
-  //     );
-  // } else if (response.index === 6) {
+  // else if (response.index === 6) {
   //   document.getElementById('image').className = '';
   //   figure.select('h4').text('');
   //   figure.select('p').text(response.index);

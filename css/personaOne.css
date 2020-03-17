@@ -128,7 +128,7 @@ figure p {
   background-size: contain;
 }
 
-.caption {
+.figcaption {
   position: absolute;
   bottom: -10px;
   font-size: 1rem;
