@@ -51,6 +51,23 @@ a:hover {
   transition: visibility 400ms, opacity 400ms;
 }
 
+#scroll-progress {
+  position: relative;
+  height: 0;
+  width: 100%;
+  padding: 0;
+  top: 0;
+  padding-bottom: 11.11%;
+}
+
+.progress-svg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
 article {
   position: relative;
   /* padding: 0 1rem; */
@@ -181,14 +198,17 @@ figure p {
   margin-top: 50px;
 }
 
-@media (max-width: 500px) {
-  .github-corner:hover .octo-arm {
-    animation: none;
-  }
+/* progress bar highlights */
+.progress-node {
+  fill: white;
+}
 
-  .github-corner .octo-arm {
-    animation: octocat-wave 560ms ease-in-out;
-  }
+.timeline-highlight {
+  fill: #e74c3c;
+  transition: fill 500ms ease-in;
+}
+
+@media (max-width: 500px) {
 }
 
 #intro {
