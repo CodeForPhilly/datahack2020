@@ -37,6 +37,24 @@ h1 {
   color: #e74c3c;
   margin-bottom: 0.5rem;
 }
+
+.landing-text,
+.landing-subtext {
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.landing-text {
+  font-size: 1.15rem;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.landing-subtext {
+  font-size: 1rem;
+  font-style: italic;
+}
+
 .container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
