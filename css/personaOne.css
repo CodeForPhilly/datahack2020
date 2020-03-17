@@ -96,6 +96,13 @@ figure p {
   justify-content: center;
 }
 
+.step::after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  min-height: 200px;
+}
+
 .step:last-child {
   margin-bottom: 0;
 }
