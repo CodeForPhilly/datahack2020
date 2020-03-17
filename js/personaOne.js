@@ -71,26 +71,28 @@ function handleStepEnter(response) {
   } else if (response.index === 6) {
     document.getElementById('image').className = '';
     figure.select('h4').text('');
-    figure.select('p').text(response.index);
-  } else if (response.index === 7) {
-    document.getElementById('image').className = '';
-    document.getElementById('caption').classList.remove('vivitrol');
+    document.getElementById('caption').classList.remove('pamphlet-text');
     figure
       .select('p')
       .text(
         '"I continued using and finding ways and means not to go into withdrawal."'
       );
+  } else if (response.index === 7) {
+    document.getElementById('image').className = '';
     figure.select('h4').text('');
-  } else if (response.index === 8) {
     figure.select('p').text('');
-    document.getElementById('image').className = 'mat1';
+    document.getElementById('image').className = 'pamphlet';
+    document.getElementById('caption').classList.add('pamphlet-text');
     figure
       .select('h4')
       .text(
-        'Vivitrol is a time-release form of naltrexone. It and other medications, notably buprenorphine, are successful in preventing opioid withdrawal. Despite medically assisted treatment (MAT) gaining increasing acceptance overall, it is much less likely to be offered to people referred to treatment by prisons or courts.'
+        'While NA officially welcomes any person struggling with drug addiction, it specifies abstinence and the spiritual principles contained in the Twelve Steps as the NA approach. “Some NA meetings make no distinction as to whether those receiving medication to treat addiction may share in a meeting, while other NA meetings limit the participation of those who are taking this type of medication. Each group is free to make its own decision [on this].”'
       );
-    document.getElementById('caption').classList.add('vivitrol');
-    document.getElementById('stickyText').classList.remove('smart-text');
+  } else if (response.index === 8) {
+    figure.select('p').text('');
+    figure.select('h4').text('');
+    document.getElementById('image').className = '';
+    document.getElementById('caption').classList.remove('pamphlet-text');
   } else if (response.index === 9) {
     document.getElementById('image').className = '';
     figure.select('h4').text('');

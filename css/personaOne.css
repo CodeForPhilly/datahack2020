@@ -148,6 +148,20 @@ figure p {
   background-position: 50% 10%;
 }
 
+.pamphlet {
+  background-image: url('../images/Jane/NA_pamphlet.png');
+  background-position: 0% 25%;
+}
+
+.pamphlet-text {
+  position: absolute;
+  /* top: 0px; */
+  margin-top: auto;
+  margin-bottom: auto;
+  right: 0px;
+  width: 50%;
+}
+
 .stickyText {
   font-size: 2rem;
 }

@@ -57,32 +57,43 @@ function handleStepEnter(response) {
   } else if (response.index === 2) {
     document.getElementById('image').className = 'homeless-pie-charts';
     figure.select('p').text('');
+    figure.select('h4').text('');
   } else if (response.index === 3) {
-    document.getElementById('image').className = '';
+    document.getElementById('image').className = 'narcan';
     figure
-      .select('p')
+      .select('h4')
       .text(
-        '"I continued using and finding ways and means not to go into withdrawal. Using drugs was a 24/7/365 job." — A person in recovery'
+        'The number of Naloxone, or Narcan, administrations by emergency personnel went down as the number of people refusing transport to a hospital after these administrations went up.'
       );
   } else if (response.index === 4) {
     figure.select('p').text('');
     document.getElementById('image').className = 'syringe';
+    figure.select('h4').text('');
+    document.getElementById('caption').classList.remove('insurance-text');
   } else if (response.index === 5) {
+    document.getElementById('image').className = 'insurance';
+    figure
+      .select('h4')
+      .text(
+        'As of 2017, many people with no insurance were still being treated at publicly funded facilities in Phila in every category, but Medicaid was paying for most treatments. Residential treatment, however, comprised only 20% of total treatments, and almost all of that was short-term, meaning 30 days or less. Long-term residential treatment accounted for only 3% of the total.'
+      );
+    document.getElementById('caption').classList.add('insurance-text');
+  } else if (response.index === 6) {
+    figure.select('h4').text('');
+    document.getElementById('image').className = 'homeless-icon';
+    document.getElementById('caption').classList.remove('insurance-text');
+  } else if (response.index === 7) {
+    document.getElementById('image').className = 'treatments';
+    figure
+      .select('h4')
+      .text(
+        'More than half the recorded treatments for homeless people in Phila in 2017 were for 24-hour detox programs. This was double the rate for people who were not homeless, who also had much higher rates of residential treatment and medically assisted treatment (MAT).'
+      );
+  } else if (response.index === 8) {
+    figure.select('h4').text('');
     document.getElementById('image').className = '';
+    document.getElementById('image').className = 'support-group';
   }
-  // else if (response.index === 6) {
-  //   document.getElementById('image').className = '';
-  //   figure.select('h4').text('');
-  //   figure.select('p').text(response.index);
-  // } else if (response.index === 7) {
-  //   document.getElementById('image').className = '';
-  //   figure
-  //     .select('p')
-  //     .text(
-  //       '"I continued using and finding ways and means not to go into withdrawal."'
-  //     );
-  //   figure.select('h4').text('');
-  // } else if (response.index === 8) {
   //   figure.select('p').text('');
   //   document.getElementById('image').className = 'mat1';
   //   figure
