@@ -1,5 +1,6 @@
 # functions used for helping estimate
 sep_events_truncPoisson <- function(dat, start = NA, end = NA, dates = NA, justEstimate = FALSE) {
+  # returns the estimate of the total population size using a truncated poisson estimator
   # assumes that there is a column in dat that is a unique identifier for the person named id_encode
   # assumes that there is a column in dat that is a class of DATE; used if start and end are defined
   require(dplyr)
@@ -51,9 +52,11 @@ sep_events_truncPoisson <- function(dat, start = NA, end = NA, dates = NA, justE
   if(justEstimate) {
     ret <- estimate
   } else {
+    conf_ints <- zeltermanConfInt(f1, f2, total, as.numeric(grouped_dat$visits))
     ret <- list(pop_estimate = estimate,
                 estimate_params = c(f1=f1, f2=f2, total=total),
                 dateParams = c(start=start, end=end),
+                confidence_intervals = conf_ints,
                 grouped_data = grouped_dat
                 )
   }
@@ -64,6 +67,21 @@ zeltermanEstimate <- function(f1, f2, total) {
   return(floor (total / ( 1 - exp(-2 * f2 / f1) ) ) )
 }
 
+zeltermanStandardDev <- function(f1, f2, total, occurrences) {
+  poisson_fit <- fitdistr(occurrences, "poisson")
+  theta_hat <- poisson_fit$estimate["lambda"]
+  var_relative_freq <- (exp(-theta_hat)*(1-exp(-theta_hat))*(theta_hat + 2)) / total
+  return( sqrt(var_relative_freq) )
+}
+
+zeltermanConfInt <- function(f1, f2, total, occurrences) {
+  std_dev <- zeltermanStandardDev(f1, f2, total, occurrences)
+  q1_est <- exp(-2 * (f2 / f1))
+  ret <- total / (1 - (q1_est + (c(-1,1) * 1.96 * std_dev)) )
+  return(ret)
+}
+
 sep_getByID <- function(id, dat=sep_events) {
+  # just for investigative purposes
   return(filter(dat, id_encode == id))
 }
