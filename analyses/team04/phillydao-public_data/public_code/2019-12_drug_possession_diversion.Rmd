@@ -1,0 +1,148 @@
+---
+title: "A Look at Drug Possession Diversion"
+author: "DAO DATA Lab"
+date: 12/18/2019
+output:
+  html_notebook
+---
+
+A DATA Lab story about diversion of drug possession cases, based off of the [DAO Data Dashboard](https://data.philadao.com).  The goal of this story is to explore diversion in drug possession cases.  At first glance, it looks like diversion in these cases is declining even though the policy of the DAO under DA Krasner has been to divert these cases more frequently.  By taking a look at diversion of possession cases in a number of different lights and by considering the political landscape around decriminalization of drug possession, it becomes apparent that diversion has been on the rise.  This phenomenon is discussed more in depth in our Medium story, which can also be found on the dashboard.
+
+
+```{r include = FALSE}
+library("tidyverse")
+library(lubridate)
+library(ggplot2)
+
+# download outcomes and charges from the dashboard
+outcomes <- read.csv("https://data.philadao.com/data/case_outcomes_data_daily_citywide.csv", stringsAsFactors = FALSE)
+charges <- read.csv("https://data.philadao.com/data/charges_data_daily_citywide.csv", stringsAsFactors = FALSE)
+
+# a tbl of DA Krasner's time in office
+krasnerInOffice <- tibble(
+  start = c(ymd("2018-01-02")),
+  end = c(today())
+)
+
+
+# summarizes charges into monthly counts for a particular offense and then graphs the total.
+get_summarized_charges <- function(df, offense_column ) {
+
+  charges <- df %>% 
+    # select the date and offense category 
+    select(date_value, one_of(offense_column)) %>%
+    # create a column for 'month'
+    mutate(date_value = as.Date(date_value),
+           month = floor_date(date_value, "month")) %>%
+    # group by month
+    group_by(month) %>%
+    # get a count of total cases charged for this offense category
+    summarize(
+      `Total Cases Charged` = sum(!!sym(offense_column))
+    )
+  
+
+}
+
+
+# summarizes case outcomes into monthly counts of diversion for a particular offense and then graphs the specified cacluated column
+get_summarized_diversion_info <- function(df, offense_column) {
+  
+  cases <- df %>%
+    # select only the date, the dispositoin type, and the value for a specified offense type
+    select(date_value, dispoType, one_of(offense_column)) %>%
+    
+    # create a "month" column and rename the offense column to "val" for easier access later
+    mutate(date_value = as.Date(date_value),
+           month = floor_date(date_value, "month")) %>%
+    rename(val = !!enquo(offense_column))
+  
+  diversion <- cases %>%
+    # group the cases by month and disposition type
+    group_by(month, dispoType) %>%
+    # and find the total number of times each dispoType happened in that month
+    summarize(total = sum(val)) %>%
+    ungroup() %>%
+    # make the DF wide to get all of the columns in an easy to access format
+    pivot_wider(names_from = dispoType, values_from = total) %>%
+    # do some calculations
+    mutate(
+      # adjuicated cases are all cases that weren't dismissed
+      `Adjudicated Cases` = Total -  `Dismissed/Withdrawn/Etc`,
+      # diversions / adjudicated cases
+      `Diversions Per Adjudicated Case` = round(Diversion / `Adjudicated Cases`, 2) *
+        100,
+      # diversions / closed case
+      `Diversions Per Closed Case` = round(Diversion / Total, 2) *
+        100,
+    )
+  
+  return(diversion)
+}
+
+# plots a time series of data frame with axes x and y
+# Allows specification of a vertical line to place on the graph with a label.  This is used here for the placing of marijuana legalization.
+plot_df <- function(df, x, y, plot_title, plot_vline_date = NA, plot_vline_label = NA) {
+  # setup a basic time series of cases charged/month
+  plot <- df %>% 
+    ggplot(aes(x = get(x), y = get(y), color = "red"))
+  
+  
+  # add the vertical line, if needed
+  if(!is.na(plot_vline_date)) {
+    plot <- plot + geom_vline(xintercept = plot_vline_date, color = 'grey25', size = 1) +
+      geom_text(aes(x = plot_vline_date, label = plot_vline_label, y = 0), colour='grey25',
+              angle=90, hjust = 0, vjust = -.4, size=3.5)
+  }
+  
+  
+  plot <- plot +
+    # shading for the time that DA Krasner is in office
+    geom_rect(data = krasnerInOffice, aes(xmin = start, xmax = end, ymin = -Inf, ymax = +Inf),
+      fill = "pink", alpha = 0.5, inherit.aes = FALSE
+    ) +
+    # fix the x scale so that the graph starts/ends at the appropriate place
+    scale_x_date(expand = expand_scale(mult = c(0.04, 0))) + 
+    # add in points for each months' charges
+    geom_point() +
+    # add in a smoothed loess curve showing the trend over time
+    geom_smooth(method = "loess", span=.5, se=FALSE, size = 1) +
+    # set up the y axis to start at 0 and have an appropriate title
+    scale_y_continuous("Cases Charged",
+                       limits = c(0, NA)) + 
+    # put a graph titke on
+    labs(title = plot_title) + 
+    theme_minimal() + 
+    theme(axis.title.x=element_blank(),
+          legend.position="none")
+  
+  return(plot)
+}
+
+
+```
+
+
+```{r}
+get_summarized_diversion_info(outcomes, "Drug.Possession") %>%
+  plot_df("month", "Diversions Per Closed Case", "Diversion Per Case Closed: Drug Possession", ymd("2014-10-20"), "Marijuana Decriminalization")
+```
+
+
+ggsave("diversion_per_case_closed.png", width= 6, height = 4)
+
+```{r}
+get_summarized_diversion_info(outcomes, "Drug.Possession") %>%
+  plot_df("month", "Diversions Per Adjudicated Case", "Diversion Per Non-Dropped Case: Drug Possession", ymd("2014-10-20"), "Marijuana Decriminalization")
+
+ggsave("diversion_per_adjudicated.png", width= 6, height = 4)
+```
+
+
+```{r}
+get_summarized_charges(charges, "Drug.Possession") %>%
+  plot_df("month", "Total Cases Charged", "Cases Charged: Drug Possession", ymd("2014-10-20"), "Marijuana Decriminalization") 
+
+ggsave("drug_poss_chages.png", width= 6, height = 4)
+```
+

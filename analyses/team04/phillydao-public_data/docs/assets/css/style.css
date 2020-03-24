@@ -1,0 +1,1062 @@
+@import url("https://use.typekit.net/ayw0rhd.css");
+
+/* remove rounded edges */
+* {
+  -webkit-border-radius: 0 !important;
+     -moz-border-radius: 0 !important;
+          border-radius: 0 !important;
+}
+
+/* hide default rmd titling */
+#header.fluid-row {
+  display:none;
+}
+
+body {
+  font-family: 'nimbus-sans', sans-serif !important;
+}
+
+h1, .h1 {
+  font-family: 'nimbus-sans', sans-serif;
+  font-weight: 700;
+  /*text-transform: uppercase;*/
+  color: #192833;
+  font-size: 2.2rem;
+}
+
+h2, .h2 {
+  font-family: 'nimbus-sans', sans-serif;
+  font-weight: 700;
+  margin: 0;
+  color: #192833;
+  font-size: 1.8rem;
+}
+
+
+h3, .h3 {
+  font-family: 'nimbus-sans', sans-serif;
+  font-weight: 400;
+  margin: 0;
+  color: #A1A1A1;
+  font-size: 1.8rem;
+}
+
+h4, .h4 {
+  font-family: 'nimbus-sans', sans-serif;
+  font-weight: 400;
+  margin: 0;
+  color: #192833;
+  font-size: 1.4rem;
+}
+
+h5, .h5{
+  font-family: 'nimbus-sans', sans-serif;
+  font-weight:600;
+}
+
+a:hover{
+  color: #F15A22;
+  text-decoration: underline;
+}
+
+.table-wrapper{
+  width: 100%;
+  overflow-x: scroll;
+}
+
+.table-wrapper::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.table-wrapper::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+table, .table {
+  font-family: 'nimbus-sans', sans-serif;
+  font-weight: 400;
+  font-size: 1.3rem;
+  color: #444444;
+  padding: 4px;
+}
+
+.table>tbody>tr>td {
+  padding: 4px;
+}
+
+.tab-content {
+  padding-top: 1.1rem;
+}
+
+.clickable[aria-expanded=true] .fa-plus-circle {
+   display: none;
+}
+.clickable[aria-expanded=false] .fa-minus-circle {
+   display: none;
+}
+
+.collapsing {
+  -webkit-transition: height 0.01s;
+  -moz-transition: height 0.01s;
+  -ms-transition: height 0.01s;
+  -o-transition: height 0.01s;
+  transition: height 0.01s;
+}
+
+
+.dao_table_header {
+  padding-top: 20px;
+}
+
+.dao_report_body {
+  font-family: "nimbus-sans";
+  font-weight: 400;
+  font-size: 1.3rem;
+  color: #444;
+}
+
+.dao_report_body_emphasis {
+  color: #4D7DBF;
+}
+
+.dao_metric {
+  font-family: "nimbus-sans";
+  font-weight: 600;
+  color: #192833;
+  font-size: 2.2rem;
+}
+
+.dao_header_title
+{
+  font-family: "nimbus-sans";
+  font-weight: 700;
+  font-size: 3rem;
+  color: #192833;
+  letter-spacing: .1rem;
+  /* text-transform: uppercase;*/
+}
+
+@media (min-width: 992px) {
+    .row.vertical-align {
+        display: flex;
+        align-items: center;
+    }  
+    .text-md-right {
+      text-align: right;
+    }
+}
+
+@media (max-width: 991px) {
+    .text-sm-center {
+      text-align: center;
+    }
+  
+}
+
+.dao_header {
+  padding-bottom: .8rem;
+}
+
+.dao_header > div > img {
+  height: 80px;
+  max-width: none;
+}
+
+/*Set logo to adjust to max width if screen falls below default width of logo (453px)*/
+@media (max-width: 453px) {
+  .dao_header > div > img {
+    width: 100%;
+  }
+}
+
+.dao_menu {
+  background-color: #192833;
+  color: #fff;
+  /*text-transform: uppercase;*/
+  font-family: "nimbus-sans";
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dao_menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+  z-index: 1000;
+}
+
+.dropdown-submenu .right-pointing-triangle {
+  font-size: .9rem;
+}
+
+/* WES: how do I get this to work?  Should remove the border for the dropdown menu ul */
+.dao_menu > ul {
+  border: 0;
+  width: 100%;
+}
+
+.dao_menu > li > a:hover {
+  color: #F15A22;
+  background-color: #192833;
+}
+
+
+.dao_menu > li > a {
+  color: #fff;
+  /* text-transform: uppercase;*/
+  font-family: "nimbus-sans";
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.dao-nav-menu {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.dao-nav-menu .open > a {
+  background-color: #192833;
+}
+
+.dao-nav-menu >li>a:hover, .dao-nav-menu .open > a, 
+.dao-nav-menu .open > a:hover, .dao-nav-menu .open > a:focus {
+  background-color: #192833;
+  border-color: #192833;
+  color: #F15A22;
+}
+
+.dao-nav-menu > li > a
+{
+    line-height: 1.42857143;
+}
+
+.btn-dao-menu {
+    color: #fff;
+    background-color: #192833;
+    border-color: #192833;
+    /* text-transform: uppercase;*/
+    font-family: "nimbus-sans";
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.dao_report_title {
+  margin-top: 1.3rem;
+  margin-bottom: 1.3rem;
+}
+
+.dao_report_title_text {
+  margin: 0;
+}
+
+.dao_page_header {
+  background-color: #DAEDFE;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.dao_key_numbers {
+  background-color: #DAEDFE;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.dao_key_numbers > div, .dao_key_numbers > a > div  {
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+.dao_key_numbers_blank {
+  display: none;
+}
+
+.dao_key_numbers_emphasis {
+  font-weight:600;
+}
+
+@media (max-width: 767px) {
+.dao_key_numbers > div {
+  border-bottom: 1rem solid #ffffff;
+  /*min-width: 50%;
+  max-width: 50%;*/
+  -webkit-flex-grow: 1;
+  -ms-flex-grow:1;
+  flex-grow: 1;
+  flex-basis: 49%
+}
+
+.dao_key_numbers_blank {
+  display: inherit;
+}
+}
+
+.dao_key_number_label {
+  margin-bottom: .3rem;
+  color: #444;
+}
+
+.dao_key_number_value {
+  margin-bottom: .3rem;
+}
+
+.dao_key_number_text {
+  margin-bottom: 0;
+  color: #444;
+}
+
+/* up down and right pointing triangles!*/
+.up-pointing-triangle::after {
+  content: "\25B2 \FE0E";
+}
+
+.down-pointing-triangle::after {
+  content: "\25BC \FE0E";
+}
+
+.right-pointing-triangle::after {
+  content: "\25B6 \FE0E";
+}
+
+.dao-warning {
+  background-color: #DAEDFE;
+  margin-bottom: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.fa-info-circle {
+  color: #F15A22;
+  padding-right: 1rem;
+}
+
+.nav>li>a:focus {
+  background-color: #192833;
+}
+
+.nav-tabs > li {
+    float:none;
+    display:inline-block;
+    margin-bottom: -2px;
+    zoom:1;
+}
+
+.nav-tabs {
+    text-align:center;
+    border-bottom: 2px solid #dddddd;
+}
+
+.navbar-default.dao-hamburger {
+  background-color: #192833;
+  text-align: center;
+}
+
+.level3 > .nav-tabs { 
+    text-align:left;
+    border-bottom: 2px solid #dddddd;
+}
+
+.level3 > .tab-content {
+  padding: 0;
+}
+
+.level4 > .h2 {
+  padding-top: 0;
+  padding-bottom: 2rem;
+}
+
+.nav-tabs>li>a {
+  font-family: 'nimbus-sans';
+  color: #A1A1A1;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.nav-tabs>li>a:hover {
+  color: #F15A22;
+  background-color: #fff;
+}
+
+.nav-tabs>li.active>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.active>a:focus {
+  color: #192833;
+  border: 2px solid #dddddd;
+  border-bottom-color: transparent;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-dfault .navbar-toggle:focus {
+  background-color: #192833;
+}
+
+.navbar-default .navbar-toggle {
+  background-color: #192833;
+  border-color: #192833;
+}
+
+.navbar-default {
+  background-color: white;
+  border-color: white;
+}
+
+@media (max-width: 767px) {
+.navbar-nav .open .dao_menu {
+  background-color: #192833;
+  color: #fff;
+  /* text-transform: uppercase;*/
+  font-family: "nimbus-sans";
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+}
+
+@media (min-width: 768px) {
+.navbar-nav>li>a {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.dao-nav-menu {
+  display: flex;
+  align-items: stretch; /* Default */
+  justify-content: space-between;
+}
+
+.dao-nav-menu li {
+  display: block;
+  flex: 0 1 auto; /* Default */
+  list-style-type: none;
+}
+
+}
+
+.navbar-toggle {
+  float: none;
+}
+
+.navbar-collapse {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.navbar .container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.navbar {
+  margin-bottom: 0;
+}
+
+.dao_visuals {
+  height: 444px;
+  margin-bottom: 1rem;
+}
+
+/* Leafet map styling */
+.mapframe {
+  width:100%;
+  height:calc(100% - 1.8rem);
+}
+
+.leaflet-container {
+  font-family: 'nimbus-sans', sans-serif;
+}
+
+.leaflet-bar {
+  box-shadow: none
+}
+
+.leaflet-bar a{
+  color: #192833;
+  background-color: #FFFFFF
+}
+
+.leaflet-bar  a:hover{
+  background-color: #F0F0F0;
+  color: #192833
+}
+
+.leaflet-control-layers {
+  background-color: #FFFFFF;
+  color: #192833;
+  font-family: 'nimbus-sans', sans-serif;
+}
+
+.leaflet-control-layers label {
+  margin-bottom: 0;
+}
+
+.leaflet-control-layers-scrollbar{
+  overflow-y: hidden;
+}
+
+.leaflet-popup-tip{
+  background: #FFFFFF;
+}
+
+.leaflet-popup-content-wrapper{
+  background: #FFFFFF;
+  font-family: "nimbus-sans", sans-serif;
+  color: #192833;
+  max-width: 180px;
+  size: 1.5rem;
+}
+
+.leaflet-top {
+  z-index: 500 !important;
+}
+
+pop1, .pop1 {
+  font-family: 'nimbus-sans', sans-serif;
+  font-weight: 500;
+  margin: 0;
+  color: #1A2863;
+  display: block;
+}
+
+pop2, .pop2 {
+  font-family: 'nimbus-sans', sans-serif;
+  font-weight: 500;
+  margin: 0;
+  color: #A1A1A1;
+  display: block;
+}
+
+pop3, .pop3 {
+  font-family: 'nimbus-sans', sans-serif;
+  font-weight: 400;
+  margin: 0;
+  color: #444;
+  display: block;
+}
+
+.dao_carousel, .dao_carousel_inner > .item > img {
+  height: 300px;
+  max-width: none;
+}
+
+.dao_data_story img {
+  height: 208px;
+  width: 300px;
+  object-fit: cover;
+  margin: 0;
+}
+
+.dao_data_story {
+  border: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.carousel-caption {
+    background-color: rgba(25, 40, 51, .75); /* this is the same as 192833 */
+    padding: 0;
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    text-align: left;
+    height: 100%;
+}
+
+.dao-carousel-text {
+  padding-top: 20px;
+  padding-left: 20px;
+  font-family: "nimbus-sans";
+  font-weight: 400;
+  font-size: 2rem;
+  color: #f9f7ea;
+}
+
+.dao-carousel-text-emphasis {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.dao-carousel-text > a, .dao-carousel-text > a:hover, .dao-carousel-text > a:active, .dao-carousel-text > a:focus
+{
+  color: inherit;
+}
+
+
+/* remove the left and right paddles from the carousel */
+.right.carousel-control, .left.carousel-control {
+    opacity: 0;
+    filter:alpha(opacity=0); /* IE support */
+}
+.thumbnail {
+  position: relative;
+  text-align: center;
+  display: inline-block;
+  float: none; /* this is the part that makes it work */
+}
+
+.dao-data-story-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 55%;
+  width: 300px;
+  background-color: rgba(25, 40, 51, .75); /* this is the same as 192833 */
+}
+
+.thumbnail .dao-data-story-caption {
+  color: #F9F7EA;
+  font-family: "nimbus-sans";
+  font-weight: 700;
+  font-size: 1.6rem;
+  text-align: left;
+}
+
+.annotation-text {
+  color: #444444;
+  font-size: 1.1rem;
+}
+
+.dao-report-link {
+  font-family: "nimbus-sans";
+  font-weight: 400;
+  font-size: 1.6rem;
+}
+
+/* definitions */
+.dao-definition-letter {
+  font-family: "nimbus-sans";
+  font-weight: 700;
+  text-align:center;
+  color: #fff;
+  font-size: 1.6rem;
+  background: #4D7DBF;
+  border-radius: 50% !important;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  margin: 5px;
+  display: inline-block;
+}
+
+.dao-definition {
+  padding-bottom: 3rem;
+  font-family: "nimbus-sans";
+  font-size: 1.4rem;
+  color: #444;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.dao-definition-letter-links {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.dao-definition-letter-links > p {
+  margin: 0;
+}
+.dao-definition-letter-links > p > a {
+  padding-right: 3rem;
+}
+
+.dao-definition-title-word {
+  color: #192833;
+  text-transform: uppercase;
+  font-family: "nimbus-sans";
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+
+
+.dao-definitions-top-link {
+  font-family: "nimbus-sans";
+  font-weight: 400;
+  font-size: 1.4rem;
+}
+
+/* footer */
+footer {
+  background-color: #192833;
+  color: #F9F7EA;
+  margin-top: 30px;
+}
+
+.connectext {
+  color: #fff;
+  /*text-transform: uppercase;*/
+  font-family: "nimbus-sans";
+  font-weight: 700;
+  font-size: 1.5rem;
+  padding-top: 30px;
+}
+
+footer > hr, .light {
+  border-color: #D3E8FC;
+  width: 30%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+footer p {
+  font-family: "nimbus-sans";
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+
+footer ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+footer ul li {
+  line-height: 15px;
+}
+
+footer a {
+  font-family: "nimbus-sans";
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: #F9F7EA;
+}
+
+.copytext {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.social-circle-icon {
+  color: #192833;
+  font-size: 1.6rem;
+  background: #D3E8FC;
+  border-radius: 50% !important;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  margin: 5px;
+}
+
+.social-circle-icon:hover {
+  background: #F15A22;
+}
+
+.dao-github-icon {
+  color: #000;
+  font-size: 3.5rem;
+}
+
+/* plotly - must be flagged !important to overwrite SVG options*/
+.gtitle {
+  color: #192833 !important;
+  font-family: "nimbus-sans" !important;
+  font-size: 1.8rem !important;
+  font-weight: 700 !important;
+  fill: #192833 !important;
+}
+
+.dao_report_flowchart {
+  width: 70%;
+  display: block;
+  float: right;
+  max-width: 400px;
+  margin-left: 13px;
+}
+
+@media (max-width: 767px) {
+ .dao_report_flowchart{
+   width: 80%;
+   float:none;
+   margin-left: auto;
+   margin-right: auto;
+ }
+}
+
+.text404 {
+  display: block;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "nimbus-sans";
+  text-align: center;
+  vertical-align: middle;
+}
+
+.text404 .big {
+  font-weight: 700;
+  font-size: 4rem;
+}
+
+.text404 .small {
+  font-weight: 400;
+  font-size: 2rem;
+}
+
+.text404 .buttons>button {
+  font-family: 'nimbus-sans';
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.8rem;
+  background-color: #192833;
+  border-color: #192833;
+  padding: 5px;
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.text404 .buttons>button:hover {
+  color: #F15A22;
+}
+
+
+/* style sheet for "letter" printing */
+ @media print {
+    @page {
+        margin: .25in;
+    }
+    
+    /* diplay the title navbar when printing */
+    .navbar {
+      display:block;
+    }
+    
+    /* remove the actual navbar when printin */
+    .dao_navbar {
+      display:none;
+    }
+    
+    /* new page for the data_table */
+    .dao_table_header {
+      break-before: page;
+    }
+    
+    .dao_key_numbers > div {
+      min-width: inherit;
+      max-width: inherit;
+    }
+
+    /* for the proper printing of divs */
+    .col-print-1,.col-print-2,.col-print-3,.col-print-4,.col-print-5,.col-print-6,.col-print-7,.col-print-8,.col-print-9,.col-print-10,.col-print-11,.col-print-12 {
+        float:left
+    }
+
+    .col-print-12 {
+        width: 100%
+    }
+
+    .col-print-11 {
+        width: 91.66666667%
+    }
+
+    .col-print-10 {
+        width: 83.33333333%
+    }
+
+    .col-print-9 {
+        width: 75%
+    }
+
+    .col-print-8 {
+        width: 66.66666667%
+    }
+
+    .col-print-7 {
+        width: 58.33333333%
+    }
+
+    .col-print-6 {
+        width: 50%
+    }
+
+    .col-print-5 {
+        width: 41.66666667%
+    }
+
+    .col-print-4 {
+        width: 33.33333333%
+    }
+
+    .col-print-3 {
+        width: 25%
+    }
+
+    .col-print-2 {
+        width: 16.66666667%
+    }
+
+    .col-print-1 {
+        width: 8.33333333%
+    }
+
+    .col-print-pull-12 {
+        right: 100%
+    }
+
+    .col-print-pull-11 {
+        right: 91.66666667%
+    }
+
+    .col-print-pull-10 {
+        right: 83.33333333%
+    }
+
+    .col-print-pull-9 {
+        right: 75%
+    }
+
+    .col-print-pull-8 {
+        right: 66.66666667%
+    }
+
+    .col-print-pull-7 {
+        right: 58.33333333%
+    }
+
+    .col-print-pull-6 {
+        right: 50%
+    }
+
+    .col-print-pull-5 {
+        right: 41.66666667%
+    }
+
+    .col-print-pull-4 {
+        right: 33.33333333%
+    }
+
+    .col-print-pull-3 {
+        right: 25%
+    }
+
+    .col-print-pull-2 {
+        right: 16.66666667%
+    }
+
+    .col-print-pull-1 {
+        right: 8.33333333%
+    }
+
+    .col-print-pull-0 {
+        right: auto
+    }
+
+    .col-print-push-12 {
+        left: 100%
+    }
+
+    .col-print-push-11 {
+        left: 91.66666667%
+    }
+
+    .col-print-push-10 {
+        left: 83.33333333%
+    }
+
+    .col-print-push-9 {
+        left: 75%
+    }
+
+    .col-print-push-8 {
+        left: 66.66666667%
+    }
+
+    .col-print-push-7 {
+        left: 58.33333333%
+    }
+
+    .col-print-push-6 {
+        left: 50%
+    }
+
+    .col-print-push-5 {
+        left: 41.66666667%
+    }
+
+    .col-print-push-4 {
+        left: 33.33333333%
+    }
+
+    .col-print-push-3 {
+        left: 25%
+    }
+
+    .col-print-push-2 {
+        left: 16.66666667%
+    }
+
+    .col-print-push-1 {
+        left: 8.33333333%
+    }
+
+    .col-print-push-0 {
+        left: auto
+    }
+
+    .col-print-offset-12 {
+        margin-left: 100%
+    }
+
+    .col-print-offset-11 {
+        margin-left: 91.66666667%
+    }
+
+    .col-print-offset-10 {
+        margin-left: 83.33333333%
+    }
+
+    .col-print-offset-9 {
+        margin-left: 75%
+    }
+
+    .col-print-offset-8 {
+        margin-left: 66.66666667%
+    }
+
+    .col-print-offset-7 {
+        margin-left: 58.33333333%
+    }
+
+    .col-print-offset-6 {
+        margin-left: 50%
+    }
+
+    .col-print-offset-5 {
+        margin-left: 41.66666667%
+    }
+
+    .col-print-offset-4 {
+        margin-left: 33.33333333%
+    }
+
+    .col-print-offset-3 {
+        margin-left: 25%
+    }
+
+    .col-print-offset-2 {
+        margin-left: 16.66666667%
+    }
+
+    .col-print-offset-1 {
+        margin-left: 8.33333333%
+    }
+
+    .col-print-offset-0 {
+        margin-left: 0%
+    }
+}
