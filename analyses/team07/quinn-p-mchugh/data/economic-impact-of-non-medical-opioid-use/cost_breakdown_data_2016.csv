@@ -1,0 +1,71 @@
+Link Source,Link Target,Link Value,,Node Index,Node Category,Node Category 2,Node Name,Node Value,Percentage of Total,Node Label,,Node Index (Rows in same order as Figure 4),Node Value (Rows in same order as Figure 4)
+0,1,51731,,0,,,Total Cost ,156398,100.00%,"Total Cost  - $156,398M (100.%)",,25,15761
+0,2,62163,,1,,,Healthcare,51731,33.08%,"Healthcare - $51,731M (33.08%)",,26,19560
+0,3,9155,,2,,,Mortality,62163,39.75%,"Mortality - $62,163M (39.75%)",,27,7402
+0,4,8546,,3,,,Criminal Justice,9155,5.85%,"Criminal Justice - $9,155M (5.85%)",,28,467
+0,5,1335,,4,,,Child and Family Assistance,8546,5.46%,"Child and Family Assistance - $8,546M (5.46%)",,29,5638
+0,6,23468,,5,,,Education,1335,0.85%,"Education - $1,335M (.85%)",,7,48827
+1,7,48827,,6,,,Lost Productivity,23468,15.01%,"Lost Productivity - $23,468M (15.01%)",,30,82
+1,8,681,,7,Healthcare,,For individuals with OUD,48827,31.22%,"For individuals with OUD - $48,827M (31.22%)",,31,N/A
+1,9,2223,,8,Healthcare,,For infants born with NAS or NOWS,681,0.44%,For infants born with NAS or NOWS - $681M (.44%),,32,540
+2,10,225,,9,Healthcare,,For family members of individual with OUD,2223,1.42%,"For family members of individual with OUD - $2,223M (1.42%)",,33,7
+2,11,61938,,10,Mortality,,Medical Costs,225,0.14%,Medical Costs - $225M (.14%),,34,52
+3,12,3186,,11,Mortality,,Lost Lifetime Earnings,61938,39.60%,"Lost Lifetime Earnings - $61,938M (39.6%)",,8,681
+3,13,1417,,12,Criminal Justice,,Police Protection,3186,2.04%,"Police Protection - $3,186M (2.04%)",,35,915
+3,14,942,,13,Criminal Justice,,Legal and Adjudication Activities,1417,0.91%,"Legal and Adjudication Activities - $1,417M (.91%)",,36,524
+3,15,3610,,14,Criminal Justice,,Property Lost Due to Crime,942,0.60%,Property Lost Due to Crime - $942M (.6%),,37,430
+4,16,1269,,15,Criminal Justice,,Correctional Facilities,3610,2.31%,"Correctional Facilities - $3,610M (2.31%)",,38,27
+4,17,3214,,16,Child and Family Assistance Costs,,Child Welfare,1269,0.81%,"Child Welfare - $1,269M (.81%)",,39,327
+4,18,646,,17,Child and Family Assistance Costs,,Food and Nutritional Assistance,3214,2.06%,"Food and Nutritional Assistance - $3,214M (2.06%)",,9,2223
+4,19,3417,,18,Child and Family Assistance Costs,,Income Assistance,646,0.41%,Income Assistance - $646M (.41%),,1,51731
+6,20,19356,,19,Child and Family Assistance Costs,,Housing/Homelessness Assistance,3417,2.18%,"Housing/Homelessness Assistance - $3,417M (2.18%)",,10,225
+6,21,3264,,20,Lost Productivity,,Reduced Labor Force Participation and Absenteeism,19356,12.38%,"Reduced Labor Force Participation and Absenteeism - $19,356M (12.38%)",,11,61938
+6,22,372,,21,Lost Productivity,,Incarceration,3264,2.09%,"Incarceration - $3,264M (2.09%)",,2,62163
+6,23,34,,22,Lost Productivity,,Short-Term Disability,372,0.24%,Short-Term Disability - $372M (.24%),,12,3186
+6,24,442,,23,Lost Productivity,,Long-Term Disability,34,0.02%,Long-Term Disability - $34M (.02%),,13,1417
+7,25,15761,,24,Lost Productivity,,Workers' Compensation,442,0.28%,Workers' Compensation - $442M (.28%),,14,942
+7,26,19560,,25,Healthcare,For individuals with OUD,Commercial,15761,10.08%,"Commercial - $15,761M (10.08%)",,15,3610
+7,27,7402,,26,Healthcare,For individuals with OUD,Medicare,19560,12.51%,"Medicare - $19,560M (12.51%)",,3,9155
+7,28,467,,27,Healthcare,For individuals with OUD,Medicaid,7402,4.73%,"Medicaid - $7,402M (4.73%)",,16,1269
+7,29,5638,,28,Healthcare,For individuals with OUD,Other Public Insurance,467,0.30%,Other Public Insurance - $467M (.3%),,17,3214
+8,30,82,,29,Healthcare,For individuals with OUD,Uninsured,5638,3.60%,"Uninsured - $5,638M (3.6%)",,18,646
+8,31,0,,30,Healthcare,For infants born with NAS or NOWS,Commercial,82,0.05%,Commercial - $82M (.05%),,19,3417
+8,32,540,,31,Healthcare,For infants born with NAS or NOWS,Medicare,N/A,#VALUE!,Medicare - N/A,,4,8546
+8,33,7,,32,Healthcare,For infants born with NAS or NOWS,Medicaid,540,0.35%,Medicaid - $540M (.35%),,5,1335
+8,34,52,,33,Healthcare,For infants born with NAS or NOWS,Other Public Insurance,7,0.00%,Other Public Insurance - $7M (.004%),,20,19356
+9,35,915,,34,Healthcare,For infants born with NAS or NOWS,Uninsured,52,0.03%,Uninsured - $52M (.03%),,21,3264
+9,36,524,,35,Healthcare,For family members of individual with OUD,Commercial,915,0.59%,Commercial - $915M (.59%),,22,372
+9,37,430,,36,Healthcare,For family members of individual with OUD,Medicare,524,0.34%,Medicare - $524M (.34%),,23,34
+9,38,27,,37,Healthcare,For family members of individual with OUD,Medicaid,430,0.27%,Medicaid - $430M (.27%),,24,442
+9,39,327,,38,Healthcare,For family members of individual with OUD,Other Public Insurance,27,0.02%,Other Public Insurance - $27M (.02%),,6,23468
+26,40,19560,,39,Healthcare,For family members of individual with OUD,Uninsured,327,0.21%,Uninsured - $327M (.21%),,0,156398
+27,40,7402,,40,,,"Federal, State, and Local Governments",47049,30.08%,"Federal, State, and Local Governments - $47,049M (30.08%)",,40,47049
+28,40,467,,41,,,Private Sector and Individuals,109349,69.92%,"Private Sector and Individuals - $109,349M (69.92%)",,41,109349
+31,40,0,,,,,,,,,,,
+32,40,540,,,,,,,,,,,
+33,40,7,,,,,,,,,,,
+36,40,524,,,,,,,,,,,
+37,40,430,,,,,,,,,,,
+38,40,27,,,,,,,,,,,
+12,40,3186,,,,,,,,,,,
+13,40,1417,,,,,,,,,,,
+15,40,3610,,,,,,,,,,,
+16,40,1269,,,,,,,,,,,
+17,40,3214,,,,,,,,,,,
+18,40,646,,,,,,,,,,,
+19,40,3417,,,,,,,,,,,
+5,40,1335,,,,,,,,,,,
+25,41,15761,,,,,,,,,,,
+29,41,5638,,,,,,,,,,,
+30,41,82,,,,,,,,,,,
+34,41,52,,,,,,,,,,,
+35,41,915,,,,,,,,,,,
+39,41,327,,,,,,,,,,,
+10,41,225,,,,,,,,,,,
+11,41,61938,,,,,,,,,,,
+14,41,942,,,,,,,,,,,
+20,41,19356,,,,,,,,,,,
+21,41,3264,,,,,,,,,,,
+22,41,372,,,,,,,,,,,
+23,41,34,,,,,,,,,,,
+24,41,442,,,,,,,,,,,
