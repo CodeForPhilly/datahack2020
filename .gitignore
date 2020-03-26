@@ -61,3 +61,6 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 .Rproj.user
+
+# apple
+.DS_Store
