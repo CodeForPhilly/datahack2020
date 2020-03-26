@@ -1,0 +1,190 @@
+---
+title: "A Look at the DAO Case Funnel"
+author: "DAO DATA Lab"
+date: 11/4/2019
+output:
+  html_notebook
+---
+
+The DATA Lab's first data story based off of the [DAO Data Dashboard](https://data.philadao.com).  The goal is to look at the funnel from Incidents to Arrests to Charges.  Usually this is a huge funnel - there are many more incidents than Arrests and a small percentage more arrests than cases Charged.  In some instances, though, like drug offenses, that funnel can be inverted.  This phenomenon is discussed more in depth in our Medium story, which can also be found on the dashboard.  
+
+```{r include = FALSE}
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+library(stringi)
+
+# download the arrests CSV
+arrests <- read.csv("https://data.philadao.com/data/arrest_data_daily_citywide.csv", stringsAsFactors = FALSE) %>%
+  # make the data "tidy"/tall
+  gather(Offense, value, -date_value) %>%
+  # replace "." with spaces in the offense names
+  mutate(Offense = gsub("\\.", " ", Offense),
+         # turn the date into a date
+         date_value = as.Date(date_value),
+         # create a new column that represents the month that an event took place
+         month = floor_date(date_value, "month"))
+
+# download the charges CSV
+charges <- read.csv("https://data.philadao.com/data/charges_data_daily_citywide.csv", stringsAsFactors = FALSE) %>%
+  # make the data "tidy"/tall  
+  gather(Offense, value, -date_value) %>%
+  # replace "." with spaces in the offense names
+  mutate(Offense = gsub("\\.", " ", Offense),
+         # turn the date into a date objedct
+         date_value = as.Date(date_value),
+         # create a new column that represents the month that an event took place
+         month = floor_date(date_value, "month"))
+```
+
+```{r include = FALSE}
+# this function is taken from our cache creation code, but is put in here for public consumption.
+# it downloads all incident data from open data philly based on the start and end dates supplied
+getIncidentData <- function(s_date, e_date) {
+  url_base <- "https://phl.carto.com/api/v2/sql?q="
+  url_select <- "SELECT+objectid,+dc_dist,+psa,+dispatch_date_time,+dispatch_time,+dc_key,+location_block,+ucr_general,text_general_code,+hour_,+ST_Y(the_geom)+AS+lat,+ST_X(the_geom)+AS+lng+FROM+incidents_part1_part2"
+  url_where <- paste0("+WHERE+dispatch_date_time+BETWEEN+%27", s_date,"%27+AND+%27", as.character(e_date), "%27")
+  url_filename <- "&filename=incidents_part1_part2"
+  url_format <- "&format=csv"
+  url_skip <- "&skipfields=cartodb_id"
+  
+  # read csv from url constructed above
+  incidents <- read.csv(paste0(url_base, url_select, url_where, url_filename, url_format, url_skip), stringsAsFactors = FALSE)
+  
+  # create and format a number of fields: 
+  # create common dc_number field for joining to PARS and DAOCMS data, format date/datetime fields
+  incidents <- incidents %>%
+    mutate(dc_number = substring(dc_key, 3),
+           dispatch_date_time = as.POSIXct(dispatch_date_time),
+           dispatch_date = as.Date(dispatch_date_time),
+           dc_dist = stri_pad(as.character(dc_dist), width = 2, pad = "0", side = "left"),
+           month = floor_date(dispatch_date, "month")) %>%
+    rename(dc_district = dc_dist)
+  
+  # reorder columns logically
+  incidents <- incidents[c("objectid", "dc_number", "dc_key", "dispatch_date_time", "dispatch_date",
+                           "month", "dispatch_time", "ucr_general", "text_general_code", "dc_district",
+                           "location_block", "psa", "hour_", "lat", "lng")]
+  
+  return(incidents)
+
+}
+
+# used to shade the graphs
+krasnerInOffice <- tibble(
+  start = c(ymd("2018-01-02")),
+  end = c(today())
+)
+
+
+# graphs just charges; not used in this bit of code anymore, so not commented well
+graph_charges <- function(df, prefix, plot_title, plot_vline_date = NA, plot_vline_label = NA) {
+  cases <- df %>% 
+    select(date_value, starts_with(prefix)) %>%
+    gather(Offense, value, -date_value) %>%
+    mutate(Offense = gsub("\\.", " ", Offense),
+           date_value = as.Date(date_value),
+           month = floor_date(date_value, "month")) %>%
+    filter(month < max(month)) %>%
+    group_by(month, Offense) %>%
+    summarize(
+      `Total Cases Charged` = sum(value),
+    )
+
+  plot <- cases %>% 
+    ggplot(aes(x = month, y = `Total Cases Charged`, color = Offense))
+  
+  if(!is.na(plot_vline_date)) {
+    plot <- plot + geom_vline(xintercept = plot_vline_date, color = 'grey25', size = 1) +
+      geom_text(aes(x = plot_vline_date, label = plot_vline_label, y = 0), colour='grey25',
+              angle=90, hjust = 0, vjust = -.4, size=3.5)
+  }
+  
+  plot <- plot + 
+    geom_rect(data = krasnerInOffice, aes(xmin = start, xmax = end, ymin = -Inf, ymax = +Inf),
+      fill = "pink", alpha = 0.5, inherit.aes = FALSE
+    ) +
+    scale_x_date(expand = expand_scale(mult = c(0.04, 0))) + 
+    geom_point() +
+    geom_smooth(method = "loess", span=.5, se=FALSE, size = 1) + 
+    scale_y_continuous("Cases Charged",
+                       limits = c(0, NA)) + 
+    labs(title = plot_title,
+         y = "Count Per Month") + 
+    theme_minimal() + 
+    theme(axis.title.x=element_blank())
+
+  
+  # remove legend if there is only one grouping; move it to the bottom otherwise
+  if(n_distinct(cases$Offense) > 1) {
+    plot <- plot + theme(legend.position="bottom")
+  } else {
+    plot <- plot + theme(legend.position="none")
+  } 
+  
+  return(plot)
+}
+
+# graphs the funnel of incidents, arrests, and charges; takes a plot title
+graph_incidents_arrests_charges <- function(df_incidents, df_arrests, df_charges, plot_title) {
+  monthly_df <- df_incidents %>%
+    # start by greating a monthly count of each data set and left_joining them together by month
+    count(month, name = "Incidents") %>% 
+    left_join(df_arrests %>% group_by(month) %>% summarize(Arrests = sum(value)),
+              by = "month") %>%
+    left_join(df_charges %>% group_by(month) %>% summarize(Charges = sum(value)),
+              by = "month") %>%
+    # make the data tidy
+    gather(type, value, -month) %>%
+    # get rid of the most recent month since it may not be a complete month
+    filter(month < max(month))
+  
+  # create the plot
+  plot <- monthly_df %>%
+    ggplot(aes(x = month, y = value, color = type)) +
+    # put in a shading for the current DA
+    geom_rect(data = krasnerInOffice, aes(xmin = start, xmax = end, ymin = -Inf, ymax = +Inf),
+      fill = "pink", alpha = 0.5, inherit.aes = FALSE
+    ) +
+    # scaling so that our dots don't touch the edge of the graph
+    scale_x_date(expand = expand_scale(mult = c(0.04, 0))) + 
+    geom_point() +
+    # add a loess curve
+    geom_smooth(method = "loess", span=.5, se=FALSE, size = 1) + 
+    #labels
+    labs(title = plot_title,
+         x = "",
+         y = "Count Per Month",
+         color = "") + 
+    # remove most elements from the plot for a clean finish
+    theme_minimal()  
+
+  return(plot)
+}
+```
+
+```{r, include=FALSE}
+incidents <- getIncidentData("2014-01-01", today())
+```
+
+
+
+**Graph of the overall number of Incidents, Arrests, and Charges per month**
+```{r, echo = FALSE}
+graph_incidents_arrests_charges(incidents, arrests, charges, "The Funnel from Incidents to Charges")
+ggsave("funnel_incidents_charges.png", width=6, height=4)
+```
+
+**Graph of the number of Incidents, Arrests, and Charges per month for Drug Offenses**
+```{r, echo = FALSE}
+graph_incidents_arrests_charges(incidents %>% filter(ucr_general==1800), arrests %>% filter(startsWith(Offense, "Drug")), charges %>% filter(startsWith(Offense, "Drug")), "The Funnel from Incidents to Charges:\nDrug Cases")
+
+ggsave("funnel_incidents_charges_drugs.png", width=6, height=4)
+```
+
+**Graph of the number of Incidents, Arrests, and Charges per month for Robbery With a Firearm Offenses**
+```{r, echo = FALSE}
+graph_incidents_arrests_charges(incidents %>% filter(text_general_code == "Robbery Firearm"), arrests %>% filter(Offense == "Robbery Gun"), charges %>% filter(Offense == "Robbery Gun"), "The Funnel from Incidents to Charges: \nRobbery w/Gun Cases")
+
+ggsave("funnel_incidents_charges_robbery_gun.png", width=6, height=4)
+```

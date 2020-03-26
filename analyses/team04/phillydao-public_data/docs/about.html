@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>About - PhilaDAO Data Dashboard</title>
+
+<script src="assets/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="assets/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="assets/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="assets/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="assets/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="assets/navigation-1.1/tabsets.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141263577-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141263577-1');
+</script>
+<script type="text/javascript" src="./assets/js/dao-dashboard-mapmaker.js"></script>
+<script type='text/javascript' src='./assets/js/dao-dashboard.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js"></script>
+<script type="text/javascript" src="https://stamen-maps.a.ssl.fastly.net/js/tile.stamen.js"></script>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css' />
+<script type='text/javascript' src='./assets/js/leaflet-choropleth/choropleth.js'></script>
+<script src="https://use.fontawesome.com/42c4092025.js"></script>
+<link rel="shortcut icon" type="image/png" href="./assets/images/favicon.png">
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+<nav class="navbar row" role="navigation">
+  <div class="container-fluid">
+    <div class="row dao_header vertical-align">
+      <div class="col-sm-12 col-md-3 text-sm-center "><img src="assets/images/dao_logo.svg" alt="DAO Logo"></div>
+      <div class="col-sm-12 col-md-6 col-md-offset-3 text-md-right text-sm-center dao_header_title">Public Data Dashboard</div>
+    </div>
+    <div class="dao_navbar">
+      <div class="navbar-header navbar-default dao-hamburger">
+        <button type="button" class="navbar-toggle dao-hamburger collapsed" data-toggle="collapse" data-target="#dao-collapse-navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse dao-menu" id="dao-collapse-navbar">
+        <ul class="dao-nav-menu nav navbar-nav dao-menu btn-group">
+          <li class="dao-nav-menu"><a href="index.html" class="btn btn-dao-menu">Home</a></li>
+          <li class="dropdown dao-nav-menu">
+            <a href="#" class="dropdown-toggle btn btn-dao-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
+            <ul class="dropdown-menu dao_menu">
+            <li class="dropdown-submenu">
+                <a href="#" class="test">Year End Reports <span class="dropdown-submenu right-pointing-triangle"></span></a>
+                  <ul class="dropdown-menu dao_menu">
+                    <li><a href="Incidents_Report_YE.html">Year End Incidents</a></li>
+                    <li><a href="Arrest_Report_YE.html">Year End Arrests</a></li>
+                    <li><a href="Charge_Report_YE.html">Year End Charges</a></li>
+                    <li><a href="Bail_Report_YE.html">Year End Bail</a></li>
+                    <li><a href="Case_Outcomes_Report_YE.html">Year End Outcomes</a></li>
+                    <li><a href="Case_Length_Report_YE.html">Year End Case Length</a></li>
+                    <li><a href="Future_Years_Incarceration_Report_YE.html">Year End Future Years of Incarceration</a></li>
+                    <li><a href="Future_Years_Supervision_Report_YE.html">Year End Future Years of Supervision</a></li>
+                    <li><a href="Summary_Arrest_Report_YE.html">Year End Summary Arrests</a></li>
+                    <li><a href="Summary_Charge_Report_YE.html">Year End Summary Charges</a></li>
+                    <li><a href="Summary_Case_Outcomes_Report_YE.html">Year End Summary Case Outcomes</a></li>
+                    <li><a href="Summary_Case_Length_Report_YE.html">Year End Summary Case Length</a></li>
+                </ul>
+              </li>
+              <li><a href="Incidents_Report.html">Incidents</a></li>
+              <li><a href="Arrest_Report.html">Arrests</a></li>
+              <li><a href="Charge_Report.html">Charges</a></li>
+              <li><a href="Bail_Report.html">Bail</a></li>
+              <li><a href="Case_Outcomes_Report.html">Outcomes</a></li>
+              <li><a href="Case_Length_Report.html">Case Length</a></li>
+              <li><a href="Future_Years_Incarceration_Report.html">Future Years of Incarceration</a></li>
+              <li><a href="Future_Years_Supervision_Report.html">Future Years of Supervision</a></li>
+              <li><a href="Summary_Arrest_Report.html">Summary Arrests</a></li>
+              <li><a href="Summary_Charge_Report.html">Summary Charges</a></li>
+              <li><a href="Summary_Case_Outcomes_Report.html">Summary Case Outcomes</a></li>
+              <li><a href="Summary_Case_Length_Report.html">Summary Case Length</a></li>
+            </ul>
+          </li>
+          <li class="dao-nav-menu"><a href="https://medium.com/philadelphia-justice/tagged/data-stories" class="btn btn-dao-menu">Data Stories</a></li>
+          <li class="dao-nav-menu"><a href="download.html" class="btn btn-dao-menu">Downloads</a></li>
+          <li class="dropdown dao-nav-menu">
+            <a href="#" class="dropdown-toggle btn btn-dao-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Resources <span class="caret"></span></a>
+            <ul class="dropdown-menu dao_menu">
+              <li><a href="about.html">About</a></li>
+              <li><a href="definitions.html">Definitions</a></li>
+              <li><a href="limitations.html">Limitations</a></li>
+              <li><a href="howto.html">How to Use This Site</a></li>
+              <li><a href="updates.html">Updates</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="rmd-container-fluid rmd-container">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">About - PhilaDAO Data Dashboard</h1>
+
+</div>
+
+
+<div class="row dao_page_header col-11">
+<div class="col-md-8 col-md-offset-1 h1">
+About Philadelphia’s Criminal Justice System and the Public Data Dashboard
+</h1>
+</div>
+</div>
+<div>
+ 
+</div>
+<div class="col-md-10 col-md-offset-1">
+<div class="dao-definition">
+<p>The purpose of this website is to provide the public with transparent, comprehensive, and centralized data on the Philadelphia criminal justice system. We hope that Philadelphians will visit this website regularly to learn about long-term criminal justice trends and new metrics, read data stories, and <a href="mailto:justice@phila.gov">tell us about the kinds of analysis and information you want to see</a>. The Philadelphia District Attorney’s Office (DAO) Data Dashboard is a work in progress, but it is our hope that it can help the public hold the District Attorney accountable for ending mass incarceration and mass supervision without endangering public safety.</p>
+<object type="image/svg+xml" data="assets/images/Report_Flowchart_links.svg" alt="Chart showing flow of cases from incidents to outcomes." class="dao_report_flowchart">
+</object>
+<p>The DAO Data Dashboard provides an initial data-based framework for understanding how the broad policy efforts that District Attorney Krasner is pursuing relate to the criminal justice system in Philadelphia. For the first time, the public will have access to some basic numbers that describe what is happening in the Philadelphia criminal justice system from the time an <a href="Incidents_Report.html">incident</a> is first reported until a <a href="Case_Outcomes_Report.html">final disposition</a>. For the first time, the aspirational concept of reducing mass supervision and mass incarceration will become more tangible through a new metric that calculates the number of <a href="Future_Years_Incarceration_Report.html">future years of incarceration</a> and <a href="Future_Years_Supervision_Report.html">future years of supervision</a> imposed in actual cases on a daily basis.</p>
+<p>The Philadelphia DAO plays a pivotal role in the criminal justice system, but does not take part in every aspect of the criminal justice system. As shown in the diagram on the right, the DAO usually doesn’t become involved in a case until after an arrest is made. The taking of an incident report, the investigation of the incident, and the arrest are all done by the Philadelphia Police Department (PPD) or other law enforcement agencies such as the State or SEPTA Police. In some cases, in cooperation with other law enforcement agencies, the DAO will be involved in the investigative stage of a case. Examples include homicide cases and cases such as <a href="https://www.inquirer.com/philly/news/crime/kensington-drug-bust-alameda-larry-krasner-district-attorney-philadelphia-20181004.html">large “drug busts”</a> where the DAO works with the PPD and other law enforcement agencies to develop strong evidence in support of arrest and prosecution.</p>
+<p>Following an arrest, the case is then turned over to the DAO, where Assistant District Attorneys (ADAs) in the Charging Unit review the facts of the case to determine if there is sufficient evidence to bring charges and, if so, what charges to bring. Once a case is charged, a Bail Magistrate sets bail based on recommendations by the lawyer for the accused and the DAO. The decisions by the Bail Magistrate determine whether a person will be held without bail (very rare), held with cash bail, or released with only non-monetary conditions (ROR). Those held on cash bail can be released by paying 10% of what they owe. You can see bail breakdowns for various case types in our <a href="Bail_Report.html">Bail Report</a>.</p>
+<p>Another aspect of charging is diversion. While charging a case, the DAO may decide to divert a defendant into one of the <a href="https://www.phila.gov/districtattorney/diversion/Pages/default.aspx">many diversionary programs available</a>. The purpose of these programs is to facilitate community-based alternatives to incarceration for people in need of treatment and support. Diversion can reduce collateral consequences of arrest and reduce recidivism for participants while saving system resources. Diversion is one of several outcomes you can learn more about in our report on <a href="Case_Outcomes_Report.html">Case Outcomes</a>.</p>
+<p>If the case is not diverted, it will progress through the criminal justice system until it is resolved by a verdict, guilty plea, dismissal or withdrawal. If the case is resolved by a guilty plea or guilty verdict, the judge will impose a sentence. One way in which the DAO has tried to reduce future years of incarceration and future years of supervision is by making plea offers and sentencing recommendations that are below the lowest level of the <a href="https://www.pacode.com/secure/data/204/chapter303/chap303toc.html">Pennsylvania Sentencing Guidelines</a>. To monitor our success look at our reports on <a href="Future_Years_Incarceration_Report.html">Future Years of Incarceration</a> and <a href="Future_Years_Supervision_Report.html">Future Years of Supervision</a>.</p>
+<p>Finally, the DAO is aware that “justice delayed is justice denied,” and is constantly striving to find ways to increase efficiency and decrease unnecessary delays within the system. We believe resolving cases more swiftly improves the deterrent effect of the criminal justice system while reducing the burden of the system on victims and witnesses. To see the results of our efforts look at the report on <a href="Case_Length_Report.html">Case Length</a>.</p>
+</div>
+</div>
+</div>
+
+</div>
+<footer class="row">
+<div class="container-fluid padding">
+<div class="row text-center">
+	<div class="col-md-4">
+    <h2 class="connectext">Office</h2>
+		<hr class="light">
+		<p>
+		  Three South Penn Square<br/>
+		  Philadelphia, PA 19107-3499<br/>
+		  215-686-8000
+		</p>
+	</div>
+	<div class="col-md-4">
+		<div class="col-12">
+			<h2 class="connectext">Connect</h2>
+		<hr class="light">
+			</div>
+			<div class="col-12 social padding">
+				<a href="https://www.facebook.com/philaDAO/" target="_blank"><i class="fa fa-facebook social-circle-icon" title="facebook"></i></a>
+				<a href="https://www.instagram.com/philadao/?hl=en" target="_blank"><i class="fa fa-instagram social-circle-icon" title="instagram"></i></a>
+				<a href="https://twitter.com/philadao?lang=en" target="_blank"><i class="fa fa-twitter social-circle-icon" title="twitter"></i></a>
+				<a href="mailto:justice@phila.gov"><i class="fa fa-envelope social-circle-icon" title="email us"></i></a>
+			</div>
+		</div>
+	<div class="col-md-4">
+	  <div class="col-12">
+	    <h2 class="connectext">More</h2>
+		<hr class="light">
+      <ul>
+        <li><a href="https://medium.com/philadelphia-justice" target="_blank">The Justice Wire</a></li>
+        <li><a href="https://www.phila.gov/districtattorney/pages/default.aspx" target="_blank">Office of the District Attorney</a></li>
+        <li><a href="howto.html#constraints">Public Access and Use</a></li>
+		  </ul>
+		</div>
+  </div>
+</div>
+<p class="copytext">&copy; City of Philadelphia, Philadelphia District Attorney's Office<p>
+</div>
+</footer>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+</body>
+</html>

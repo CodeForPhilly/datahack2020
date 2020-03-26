@@ -1,0 +1,90 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Turn Relevant Philadelphia Department of Health Tableau Visualizations into Tables
+
+
+
+### Summary Page
+
+Percentage of drug type found in all drug seizures in Philadelphia, 2016 - 2019 Q1.
+
+```{r}
+tibble(year = c(rep(c(2016, 2017, 2018), each = 4), 2019),
+       quarter = c(rep(c('Q1', 'Q2', 'Q3', 'Q4'), 3), 'Q1'),
+       cocaine = c(46, 48, 46, 44, 37, 36, 30, 27, 24, 31, 33, 32, 31),
+       fentanyl = c(2, 3, 5, 8, 16, 19, 21, 28, 33, 29, 30, 32, 33),
+       fentanyl_analogue = c(1, 0, 1, 1, 1, 1, 3, 3, 4, 4, 5, 6, 7),
+       heroin = c(40, 37, 37, 34, 34, 33, 33, 27, 29, 28, 24, 22, 21),
+       meth = c(1, 2, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 1),
+       other = c(10, 10, 10, 12, 11, 9, 11, 13, 8, 6, 5, 5, 7)) -> drug_seizures
+
+#write_tsv(drug_seizures, 'drug_seizures.tsv')
+```
+
+Unintentional opiod drug related deathes per quarter 2010-2019
+
+```{r}
+tibble(year = c(rep(c(2010, 2011, 2012, 2013, 2014, 
+                    2015, 2016, 2017, 2018), each = 4), 2019),
+       quarter = c(rep(c('Q1', 'Q2', 'Q3', 'Q4'), 9), 'Q1'),
+       deaths = c(68, 67, 70, 92, 89, 97, 101, 102, 96, 112, 
+                  95, 120, 82, 89, 101, 85, 105, 158, 103, 129, 
+                  138, 138, 137, 148, 170, 161, 170, 251, 283, 297, 
+                  278, 216, 219, 242, 258, 220, 230)) -> deaths
+
+write_tsv(deaths, 'overdose_deaths.tsv')
+```
+
+### Unique Medicaid Beneficiaries with a primary diagnosis of OUD receiving treatment
+
+Number of unique beneficiaries receiving medicaiton assisted treatment by year
+
+```{r}
+tibble(year = rep(c(2010, 2011, 2012, 2013, 2014, 
+                    2015, 2016, 2017, 2018), each = 3),
+       treatment = rep(c('methadone', 'buprenorphine', 'naltrexone'), 9),
+       individuals = c(4165, 0, 0, 4527, 0, 0, 4711, 0, 0, 4874, 0, 0,
+                       5056, 0, 0, 5298, 887, 69, 5416, 1652, 192, 
+                       5179, 3331, 368, 5170, 5103, 420)) -> mat
+
+write_tsv(mat, 'medicaid_beneficiaries_in_medication_assisted_treatment.tsv')
+```
+
+### Hospitalizations Attributable to Non-Fatal Opoid Poisoning by Year 2002 - 2018
+
+```{r}
+tibble(year = c(2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
+                2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018),
+       cases = c(263, 253, 279, 362, 478, 420, 422, 433, 460, 523, 653, 
+                 592, 701, 652, 682, 772, 651)) -> nonfatal_over
+
+#write_tsv(nonfatal_over, 'hosp_nonfatal_overdoses.tsv')
+```
+
+### Medication Assisted Treatment in Prison by Year 2011 - 2017
+
+```{r}
+tibble(year = c(2011, 2012, 2013, 2014, 2015, 2016, 2017),
+       individuals = c(616, 606, 591, 530, 579, 520, 402)) -> mat_prison
+
+write_tsv(mat_prison, 'prisoners_in_medication_assisted_treatment.tsv')
+```
+
+
+
+
+
+
+
+
+
+
+
+

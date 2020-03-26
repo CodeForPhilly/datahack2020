@@ -19,9 +19,9 @@ Acronyms:
 | pp_sep_site_exchanges | Counts of needles exchanged/received at PP sites [(info)](#syringe-exchanges-pp_sep).
 | pp_sep_site_participants | Counts of participants that have exchanged syringes at PP sites [(info)](#syringe-exchanges-pp_sep).
 | psp_overdose_events | Information on overdose responses and naloxone administrations [(info)](#overdose-events-psp_overdose_events)|
-| hf_physician_locator | Contact information of physicians in Philly, for clarifying who can prescribe Buprenorphine [(info)](#physicians-hf_physician) |
-| hf_samsha_programs | SAMSHA data on treatment programs using Buprenorphine. [(info)](#physicians-hf_physician) |
-| hf_samsha_providers | SAMSHA data on providers and their Buprenorphine limits. [(info)](#physicians-hf_physician) |
+| hf_physician_locator | Contact information of physicians in Philly, for clarifying who can prescribe Buprenorphine [(info)](#HF-Physicians ) |
+| hf_samsha_programs | SAMSHA data on treatment programs using Buprenorphine. [(info)](#SAMHSA-Providers-samhsa_providers)|
+| hf_samsha_providers | SAMSHA data on providers and their Buprenorphine limits. [(info)](#SAMHSA-Programs-samhsa_programs) |
 | dph_od_resident_counts | overdose mortality by residential zip. [(info)](#overdose-data-dph_od) |
 | dph_od_incident_counts | overdose mortality by incident zip [(info)](#overdose-data-dph_od) |
 | dph_dash_n_ed_transfers | Number of ED Transfers After Naloxone Administrations by Hospital (2014-2019). [(source)](https://public.tableau.com/profile/pdph#!/vizhome/NaloxoneAdministrationsbyFirstResponders/NumberofNaloxoneAdministrationsbyLawEnforcementandFirstRespondersbyQuarter) |
@@ -42,7 +42,14 @@ In many states, individuals must receive a prescription to carry overdose revers
 
 Individuals receiving training or refills through Prevention Point are required to fill out a questionnaire about their experiences with overdoses and related demographic information. 
 
-<!-- | data | description |
+**Feb 14th update [(data)](/data/data_pp_refill-14-feb.zip)**: adds anonymized participant id column (h_id), and some accidentally omitted columns: refill_date, refill_reason, med_program_used, train_program. For zipcode data, adds median calculations over participant maximums (e.g. taking the max n_pp_refills per participant, and then calculating the median within a zip code).
+
+<details>
+ <summary>pp_refill_events columns</summary>
+ 
+| data | description |
+| ---- | ----------- |
+| h_id | anonymized participant id |
 | age | participant age at time of refill |
 | gender | participant identified gender | 
 | race | particpant race | 
@@ -54,6 +61,8 @@ Individuals receiving training or refills through Prevention Point are required 
 | used_narcan_type | form of narcan used by participant | 
 | ml_naloxone | amount of naloxone used by participant | 
 | cpr_used | rescue breathing was employed at time of narcan use | 
+| med_program_used | "What program's medication was used for training?" |
+| train_program | "What program did the person you trained come from?" |
 | outcome | events following narcan administration | 
 | outcome_ems | was EMS called at time of narcan use | 
 | outcome_police | were police called at time of narcan use | 
@@ -72,8 +81,9 @@ Individuals receiving training or refills through Prevention Point are required 
 | od_present_unresponsive | OD identified: individual was unresponsive or unconcious |
 | od_present_coloring | OD identified by skin color (blue or purple) |
 | od_present_other | OD identified through other means |
-| data_date_range | quarters of 2019 in which refills occurred | -->
+| data_date_range | quarters of 2019 in which refills occurred |
 
+</details>
 
 ### Syringe exchanges (pp_sep)
 #### Data collected through the Prevention Point Syringe Exchange Program (SEP)
@@ -91,10 +101,16 @@ sep_ -->
 
 ## Health Federation
 
-### Physicians (hf_physician)
-Since October 2002 when the Food and Drug Administration (FDA) approved buprenorphine for clinical use in treating opioid dependency, SAMHSA has worked with practitioners to help them obtain waivers to meet the requirements of the Drug Addiction Treatment Act of 2000 (DATA 2000). DATA 2000 sets eligibility and certification requirements as well as an interagency notification review process for practitioners who apply.
+### HF Physicians 
+Health Federation has been manually maintaining a list of physicians certified to prescribe bupernorphine.  This list consists of physican addresses and names able to provide bupernorphine as determined through phone calls placed to individual practices.
+
+### SAMHSA Providers (samhsa_providers)
+Since October 2002 when the Food and Drug Administration (FDA) approved buprenorphine for clinical use in treating opioid dependency, SAMHSA has worked with practitioners to help them obtain waivers to meet the requirements of the Drug Addiction Treatment Act of 2000 (DATA 2000). DATA 2000 sets eligibility and certification requirements as well as an interagency notification review process for practitioners who apply. 
 
 Physicians with active Bupernorphine waivers are listed on the [SAMHSA](https://www.samhsa.gov/medication-assisted-treatment/practitioner-program-data/treatment-practitioner-locator) website. We manually searched for these physicians using the [Bupernorphine Pharmacy Lookup](https://www.samhsa.gov/bupe/lookup-form) form. Physicians can only have 30, 100, or 275 active patients receiving Bupernorphine at any given time. Because the form uses only the last name of the physician and pulls from a national database, it oftentimes returned a different practitioner.  These values were coded to `30`.
+
+### SAMHSA Programs (samhsa_programs) 
+This dataset represents data pulled from SAMHSA's [Behavioral Health Treatment Services Locator](https://findtreatment.samhsa.gov/locator) for services available in Philadelphia.
 
 ## Department of Public Health
 
