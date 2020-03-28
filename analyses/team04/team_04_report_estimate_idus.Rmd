@@ -697,7 +697,7 @@ kable(present_dat,
 ```
 
 The estimates based on monthly data can be displayed in a manner that helps indicate the uncertainty of the estimated population size. These estimates tend to overlap, indicating that the population size may be best measure on a monthly basis.
-```{r, echo=FALSE, fig.cap="Each point indicates the estimated number of IDUs in the Philadelphia area based on the visits Prevention Point recorded in a given month. The lines indicate the 95% confidence intervals of the estimates."}
+```{r, include=TRUE, fig.cap="Each point indicates the estimated number of IDUs in the Philadelphia area based on the visits Prevention Point recorded in a given month. The lines indicate the 95% confidence intervals of the estimates."}
 month_est_list <- list(
   jan_est,
   feb_est,

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Updates - PhilaDAO Data Dashboard</title>
+
+<script src="assets/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="assets/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="assets/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="assets/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="assets/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="assets/navigation-1.1/tabsets.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141263577-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141263577-1');
+</script>
+<script type="text/javascript" src="./assets/js/dao-dashboard-mapmaker.js"></script>
+<script type='text/javascript' src='./assets/js/dao-dashboard.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js"></script>
+<script type="text/javascript" src="https://stamen-maps.a.ssl.fastly.net/js/tile.stamen.js"></script>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css' />
+<script type='text/javascript' src='./assets/js/leaflet-choropleth/choropleth.js'></script>
+<script src="https://use.fontawesome.com/42c4092025.js"></script>
+<link rel="shortcut icon" type="image/png" href="./assets/images/favicon.png">
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+<nav class="navbar row" role="navigation">
+  <div class="container-fluid">
+    <div class="row dao_header vertical-align">
+      <div class="col-sm-12 col-md-3 text-sm-center "><img src="assets/images/dao_logo.svg" alt="DAO Logo"></div>
+      <div class="col-sm-12 col-md-6 col-md-offset-3 text-md-right text-sm-center dao_header_title">Public Data Dashboard</div>
+    </div>
+    <div class="dao_navbar">
+      <div class="navbar-header navbar-default dao-hamburger">
+        <button type="button" class="navbar-toggle dao-hamburger collapsed" data-toggle="collapse" data-target="#dao-collapse-navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse dao-menu" id="dao-collapse-navbar">
+        <ul class="dao-nav-menu nav navbar-nav dao-menu btn-group">
+          <li class="dao-nav-menu"><a href="index.html" class="btn btn-dao-menu">Home</a></li>
+          <li class="dropdown dao-nav-menu">
+            <a href="#" class="dropdown-toggle btn btn-dao-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
+            <ul class="dropdown-menu dao_menu">
+            <li class="dropdown-submenu">
+                <a href="#" class="test">Year End Reports <span class="dropdown-submenu right-pointing-triangle"></span></a>
+                  <ul class="dropdown-menu dao_menu">
+                    <li><a href="Incidents_Report_YE.html">Year End Incidents</a></li>
+                    <li><a href="Arrest_Report_YE.html">Year End Arrests</a></li>
+                    <li><a href="Charge_Report_YE.html">Year End Charges</a></li>
+                    <li><a href="Bail_Report_YE.html">Year End Bail</a></li>
+                    <li><a href="Case_Outcomes_Report_YE.html">Year End Outcomes</a></li>
+                    <li><a href="Case_Length_Report_YE.html">Year End Case Length</a></li>
+                    <li><a href="Future_Years_Incarceration_Report_YE.html">Year End Future Years of Incarceration</a></li>
+                    <li><a href="Future_Years_Supervision_Report_YE.html">Year End Future Years of Supervision</a></li>
+                    <li><a href="Summary_Arrest_Report_YE.html">Year End Summary Arrests</a></li>
+                    <li><a href="Summary_Charge_Report_YE.html">Year End Summary Charges</a></li>
+                    <li><a href="Summary_Case_Outcomes_Report_YE.html">Year End Summary Case Outcomes</a></li>
+                    <li><a href="Summary_Case_Length_Report_YE.html">Year End Summary Case Length</a></li>
+                </ul>
+              </li>
+              <li><a href="Incidents_Report.html">Incidents</a></li>
+              <li><a href="Arrest_Report.html">Arrests</a></li>
+              <li><a href="Charge_Report.html">Charges</a></li>
+              <li><a href="Bail_Report.html">Bail</a></li>
+              <li><a href="Case_Outcomes_Report.html">Outcomes</a></li>
+              <li><a href="Case_Length_Report.html">Case Length</a></li>
+              <li><a href="Future_Years_Incarceration_Report.html">Future Years of Incarceration</a></li>
+              <li><a href="Future_Years_Supervision_Report.html">Future Years of Supervision</a></li>
+              <li><a href="Summary_Arrest_Report.html">Summary Arrests</a></li>
+              <li><a href="Summary_Charge_Report.html">Summary Charges</a></li>
+              <li><a href="Summary_Case_Outcomes_Report.html">Summary Case Outcomes</a></li>
+              <li><a href="Summary_Case_Length_Report.html">Summary Case Length</a></li>
+            </ul>
+          </li>
+          <li class="dao-nav-menu"><a href="https://medium.com/philadelphia-justice/tagged/data-stories" class="btn btn-dao-menu">Data Stories</a></li>
+          <li class="dao-nav-menu"><a href="download.html" class="btn btn-dao-menu">Downloads</a></li>
+          <li class="dropdown dao-nav-menu">
+            <a href="#" class="dropdown-toggle btn btn-dao-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Resources <span class="caret"></span></a>
+            <ul class="dropdown-menu dao_menu">
+              <li><a href="about.html">About</a></li>
+              <li><a href="definitions.html">Definitions</a></li>
+              <li><a href="limitations.html">Limitations</a></li>
+              <li><a href="howto.html">How to Use This Site</a></li>
+              <li><a href="updates.html">Updates</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="rmd-container-fluid rmd-container">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Updates - PhilaDAO Data Dashboard</h1>
+
+</div>
+
+
+<div class="row dao_page_header col-11">
+<div class="col-md-2 col-md-offset-1 h1">
+Updates
+</h1>
+</div>
+</div>
+<div>
+ 
+</div>
+<div class="row dao_definition_block">
+<div class="col-md-10 col-md-offset-1">
+<div class="dao-definition">
+<p>In the course of our work at the District Attorney’s Office, we often discover new and better ways to look at, organize, and interpret the data. We make changes and updates to the Public Data Dashboard to keep it as accurate and informative as possible. We also want to be clear to users of this site about the changes we’ve made. This page is a timeline of updates, fixes, and changes that we’ve implemented.</p>
+</div>
+</div>
+</div>
+<div class='row dao_definition_block'>
+<div class='col-md-10 col-md-offset-1'>
+<div class="dao-definition-title-word">
+January 24, 2020
+</div>
+<div class='dao-definition'>
+<p>Updates and fixes, including:</p>
+<ul>
+<li>You can now download daily data by ZIP Code Tabulation Area and weekly data by Census Tract. This was one of the most popularly requested features. Please see the <a href='https://data.philadao.com/limitations.html'>Limitations</a> page for more information on these datasets.</li>
+<li>We have added 8 new offense categories to the misdemeanor/felony reports: Other Assaults, Sexual Assault and Other Sex Offenses, Fraud/Theft of Services, Embezzlement, Possession of Firearms, Prostitution/Sex Work, Patronizing Prostitutes, and Threats of Violence. Similar categories were added to the Incidents report, although the incidents data available on OpenDataPhilly is not as fine-grained as our other data so the new incident categories are a bit more general.</li>
+<li>We have added two new tabs: Firearms and Other.</li>
+<li>We have now added reports on summary offenses for Arrests, Charges, Case Length, and Case Outcomes. These help to fill a hole in the original dashboard, which only reported on felony and misdemeanor offenses and therefore missed an important part of the system. Many of the offense categories reported on are the same as for felony and misdemeanors, although several are not reported on (e.g. violent offenses tend to not be summaries) and others have been added (e.g. Disorderly Conduct). In all, we report on the 9 most common summary offenses.</li>
+<li>You can now view year end data as well as year to date data. Year end reports are available through the navigation menu at the top of the page. Rather than just viewing what has happened since January 1 of each year, these reports allow you to view years as a whole.</li>
+<li>A small error was found in how we have been connecting arrests to case information. This caused a small number, about 0.5%, of cases to be duplicated in the Charges, Bail, Outcomes, Case Length, Future Years of Incarceration, and Future Years of Supervision reports. This error has been fixed, and the total count of cases in these reports have decreased slightly as a result.</li>
+<li>The line chart on the Violent Offenses tab on the Bail Report was reporting by quarter. This has been changed to report by month.</li>
+<li>The Arrests report inadvertantly excluded arrests where there was no date of birth listed for the defendant. These cases are now included.</li>
+<li>A bug causing some Safari users to experience issues when interacting with the report tables has been fixed.
+</div>
+</div>
+</div>
+<div class="row dao_definition_block">
+<div class="col-md-10 col-md-offset-1">
+<div class="dao-definition-title-word">
+January 08, 2020
+</div>
+<div class="dao-definition">
+Hotfix: Fixed the calculation of 18-present year averages related to the start of the new year. Data downloads were not affected by this bug.
+</div>
+</div>
+</div>
+<div class="row dao_definition_block">
+<div class="col-md-10 col-md-offset-1">
+<div class="dao-definition-title-word">
+December 31, 2019
+</div>
+<div class="dao-definition">
+Hotfix: Fixed a calculation issue that would cause the dashboard build to fail at the start of the new year. Users should not notice a difference in functionality.
+</div>
+</div>
+</div>
+<div class="row dao_definition_block">
+<div class="col-md-10 col-md-offset-1">
+<div class="dao-definition-title-word">
+October 24, 2019
+</div>
+<div class="dao-definition">
+Added Updates page.
+</div>
+</div>
+</div>
+<div class="row dao_definition_block">
+<div class="col-md-10 col-md-offset-1">
+<div class="dao-definition-title-word">
+October 22, 2019
+</div>
+<div class="dao-definition">
+We discovered that due to server issues in May and June of 2019, we were missing some sentencing information from that time. This caused artifically low numbers to appear in the Future Years of Supervision and Future Years of Incarceration reports for these months. We have updated how we connect cases to their sentence information, and are now capturing this missing data. We are also capturing more sentencing information in other time frames, though the impact is not as noticeable.
+</div>
+</div>
+</div>
+<div class='row dao_definition_block'>
+<div class='col-md-10 col-md-offset-1'>
+<div class="dao-definition-title-word">
+October 09, 2019
+</div>
+<div class='dao-definition'>
+<p>Various bug fixes, including:</p></li>
+<li>Fixed header scaling on small screens.</li>
+<li>A broken link to our GitHub Repository on the How to Use This Site page has been repaired.</li>
+<li>Fixed how some ‘Key Metrics’ arrow symbols render on iOS devices.</li>
+<li>Changed how many significant figures are shown on the Rates tab on the Future Years of Supervision and Future Years of Incarceration reports.
+</div>
+</div>
+</div>
+<div class="row dao_definition_block">
+<div class="col-md-10 col-md-offset-1">
+<div class="dao-definition-title-word">
+October 03, 2019
+</div>
+<div class="dao-definition">
+The Philadelphia DAO Public Data Dashboard Released! See the District Attorney’s statement here: <a href='https://medium.com/philadelphia-justice/release-philadelphia-district-attorneys-office-launches-public-data-tool-9794c086b11c' target='_blank'>Philadelphia District Attorney’s Office launches public data tool</a>.
+</div>
+</div>
+</div></li>
+</ul>
+
+</div>
+<footer class="row">
+<div class="container-fluid padding">
+<div class="row text-center">
+	<div class="col-md-4">
+    <h2 class="connectext">Office</h2>
+		<hr class="light">
+		<p>
+		  Three South Penn Square<br/>
+		  Philadelphia, PA 19107-3499<br/>
+		  215-686-8000
+		</p>
+	</div>
+	<div class="col-md-4">
+		<div class="col-12">
+			<h2 class="connectext">Connect</h2>
+		<hr class="light">
+			</div>
+			<div class="col-12 social padding">
+				<a href="https://www.facebook.com/philaDAO/" target="_blank"><i class="fa fa-facebook social-circle-icon" title="facebook"></i></a>
+				<a href="https://www.instagram.com/philadao/?hl=en" target="_blank"><i class="fa fa-instagram social-circle-icon" title="instagram"></i></a>
+				<a href="https://twitter.com/philadao?lang=en" target="_blank"><i class="fa fa-twitter social-circle-icon" title="twitter"></i></a>
+				<a href="mailto:justice@phila.gov"><i class="fa fa-envelope social-circle-icon" title="email us"></i></a>
+			</div>
+		</div>
+	<div class="col-md-4">
+	  <div class="col-12">
+	    <h2 class="connectext">More</h2>
+		<hr class="light">
+      <ul>
+        <li><a href="https://medium.com/philadelphia-justice" target="_blank">The Justice Wire</a></li>
+        <li><a href="https://www.phila.gov/districtattorney/pages/default.aspx" target="_blank">Office of the District Attorney</a></li>
+        <li><a href="howto.html#constraints">Public Access and Use</a></li>
+		  </ul>
+		</div>
+  </div>
+</div>
+<p class="copytext">&copy; City of Philadelphia, Philadelphia District Attorney's Office<p>
+</div>
+</footer>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+</body>
+</html>

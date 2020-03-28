@@ -1,0 +1,27 @@
+site_id,site_name,site_location,address,description,zip,lat,lng
+1,Mobile,3rd & Girard,,Mobile Site,,,
+2,Mobile,10th & Fairmount,,Mobile Site ,19123,39.9652655,-75.15374109999999
+3,Mobile,11th & Indiana,,Mobile Site,19133,39.9978266,-75.1482478
+4,Mobile,13th & Washington,,Mobile Site,,39.93020509999999,-75.16624759999999
+5,Headquarters - Friday,"2913-15 Kensington Ave, Philadelphia, PA 19134","2913-15 Kensington Ave, Philadelphia, PA 19134",In Building Exchange,19134,39.9927202,-75.1196516
+6,Mobile,37th & Brown,,Mobile Site,,,
+7,Headquarters - Monday,"2913-15 Kensington Ave, Philadelphia, PA 19134","2913-15 Kensington Ave, Philadelphia, PA 19134",Emergency Packs,,,
+8,Headquarters - Wednesday,"2913-15 Kensington Ave, Philadelphia, PA 19134","2913-15 Kensington Ave, Philadelphia, PA 19135",Emergency Packs,19134,39.9927202,-75.1196516
+9,Mobile,Broad & Passyunk,,Mobile Site,19145,39.9255279,-75.1695039
+10,Mobile,54th & Market,,Mobile Site,,,
+11,Mobile,Bridge & Platt,,Mobile Site,19145,39.8978725,-75.2116913
+12,Headquarters - Tuesday,"2913-15 Kensington Ave, Philadelphia, PA 19134","2913-15 Kensington Ave, Philadelphia, PA 19134",In Building Exchange,19134,39.9927202,-75.1196516
+13,Headquarters - Thursday,"2913-15 Kensington Ave, Philadelphia, PA 19134","2913-15 Kensington Ave, Philadelphia, PA 19135",Emergency Packs,,,
+14,Mobile,Front & Wolf,,Mobile Site,19148,39.9191439,-75.1488971
+15,Mobile,Ben Franklin,,Mobile Site,,,
+16,Mobile,Front & Wolf,,Mobile Site,19148,39.9191439,-75.1488971
+17,PPP Program,MCM,"2913 Kensington Ave, Philadelphia, PA, 19134",Case management for HIV positive individuals,19134,39.9927048,-75.1196476
+18,PPP Program,Drop CM,"2913 Kensington Ave, Philadelphia, PA, 19134",Case management for individuals coming in to our drop-in center,19134,39.9927048,-75.1196476
+19,PPP Program,STEP,"2913 Kensington Ave, Philadelphia, PA, 19134",In building Suboxone program ,,,
+20,PPP Program,Nav Center,"2913 Kensington Ave, Philadelphia, PA, 19134",Shelter,19134,39.9927048,-75.1196476
+21,PPP Program,Respite,"2913 Kensington Ave, Philadelphia, PA, 19134",Shelter,19134,39.9927048,-75.1196476
+22,PPP Program,Testing,"2913 Kensington Ave, Philadelphia, PA, 19134",HIV/HCV Testing,19134,39.9927048,-75.1196476
+23,PPP Program,Mobile STEP,"2913 Kensington Ave, Philadelphia, PA, 19134",Mobile Suboxone program,,,
+24,PPP Partners,SOL Collective,19134,Partner Oganization that does on foot outreach/syringe distribution,19134,39.9863531,-75.1019942
+25,PPP Partners,Project SAFE,19134,FSW focused harm reduction organization,,,
+26,PPP Program,Wound Care,"2913 Kensington Ave, Philadelphia, PA, 19134",Wound care operates out of mobile Suboxone clinic in Kensington,19134,39.9927048,-75.1196476

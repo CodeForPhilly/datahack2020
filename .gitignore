@@ -1,6 +1,9 @@
 # possible data files
 .csv
 .tsv
+data/data/*
+analyses/team04/poisson/data/pp_sep_site_event.csv
+analyses/team04/mapping/data/census/
 
 # .env
 .env
@@ -12,6 +15,7 @@ home/.jupyter
 home/.local
 home/.rstudio
 home/.cache
+analyses/team04/spm_readings/*
 
 *.swp
 
@@ -56,3 +60,7 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+.Rproj.user
+
+# apple
+.DS_Store
