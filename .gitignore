@@ -1,4 +1,14 @@
 # possible data files
+*.csv
+*.tsv
+
+# allowed data files
+!rates.csv
+!rates-sparse.csv
+
+# from mac
+.DS_Store 
+
 .csv
 .tsv
 data/data/*
@@ -18,6 +28,9 @@ home/.cache
 analyses/team04/spm_readings/*
 
 *.swp
+
+# jupyter
+.ipynb_checkpoints/
 
 # R specific ----
 
