@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Data Definitions - PhilaDAO Data Dashboard</title>
+
+<script src="assets/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="assets/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="assets/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="assets/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="assets/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="assets/navigation-1.1/tabsets.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141263577-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141263577-1');
+</script>
+<script type="text/javascript" src="./assets/js/dao-dashboard-mapmaker.js"></script>
+<script type='text/javascript' src='./assets/js/dao-dashboard.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js"></script>
+<script type="text/javascript" src="https://stamen-maps.a.ssl.fastly.net/js/tile.stamen.js"></script>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css' />
+<script type='text/javascript' src='./assets/js/leaflet-choropleth/choropleth.js'></script>
+<script src="https://use.fontawesome.com/42c4092025.js"></script>
+<link rel="shortcut icon" type="image/png" href="./assets/images/favicon.png">
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+<nav class="navbar row" role="navigation">
+  <div class="container-fluid">
+    <div class="row dao_header vertical-align">
+      <div class="col-sm-12 col-md-3 text-sm-center "><img src="assets/images/dao_logo.svg" alt="DAO Logo"></div>
+      <div class="col-sm-12 col-md-6 col-md-offset-3 text-md-right text-sm-center dao_header_title">Public Data Dashboard</div>
+    </div>
+    <div class="dao_navbar">
+      <div class="navbar-header navbar-default dao-hamburger">
+        <button type="button" class="navbar-toggle dao-hamburger collapsed" data-toggle="collapse" data-target="#dao-collapse-navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse dao-menu" id="dao-collapse-navbar">
+        <ul class="dao-nav-menu nav navbar-nav dao-menu btn-group">
+          <li class="dao-nav-menu"><a href="index.html" class="btn btn-dao-menu">Home</a></li>
+          <li class="dropdown dao-nav-menu">
+            <a href="#" class="dropdown-toggle btn btn-dao-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
+            <ul class="dropdown-menu dao_menu">
+            <li class="dropdown-submenu">
+                <a href="#" class="test">Year End Reports <span class="dropdown-submenu right-pointing-triangle"></span></a>
+                  <ul class="dropdown-menu dao_menu">
+                    <li><a href="Incidents_Report_YE.html">Year End Incidents</a></li>
+                    <li><a href="Arrest_Report_YE.html">Year End Arrests</a></li>
+                    <li><a href="Charge_Report_YE.html">Year End Charges</a></li>
+                    <li><a href="Bail_Report_YE.html">Year End Bail</a></li>
+                    <li><a href="Case_Outcomes_Report_YE.html">Year End Outcomes</a></li>
+                    <li><a href="Case_Length_Report_YE.html">Year End Case Length</a></li>
+                    <li><a href="Future_Years_Incarceration_Report_YE.html">Year End Future Years of Incarceration</a></li>
+                    <li><a href="Future_Years_Supervision_Report_YE.html">Year End Future Years of Supervision</a></li>
+                    <li><a href="Summary_Arrest_Report_YE.html">Year End Summary Arrests</a></li>
+                    <li><a href="Summary_Charge_Report_YE.html">Year End Summary Charges</a></li>
+                    <li><a href="Summary_Case_Outcomes_Report_YE.html">Year End Summary Case Outcomes</a></li>
+                    <li><a href="Summary_Case_Length_Report_YE.html">Year End Summary Case Length</a></li>
+                </ul>
+              </li>
+              <li><a href="Incidents_Report.html">Incidents</a></li>
+              <li><a href="Arrest_Report.html">Arrests</a></li>
+              <li><a href="Charge_Report.html">Charges</a></li>
+              <li><a href="Bail_Report.html">Bail</a></li>
+              <li><a href="Case_Outcomes_Report.html">Outcomes</a></li>
+              <li><a href="Case_Length_Report.html">Case Length</a></li>
+              <li><a href="Future_Years_Incarceration_Report.html">Future Years of Incarceration</a></li>
+              <li><a href="Future_Years_Supervision_Report.html">Future Years of Supervision</a></li>
+              <li><a href="Summary_Arrest_Report.html">Summary Arrests</a></li>
+              <li><a href="Summary_Charge_Report.html">Summary Charges</a></li>
+              <li><a href="Summary_Case_Outcomes_Report.html">Summary Case Outcomes</a></li>
+              <li><a href="Summary_Case_Length_Report.html">Summary Case Length</a></li>
+            </ul>
+          </li>
+          <li class="dao-nav-menu"><a href="https://medium.com/philadelphia-justice/tagged/data-stories" class="btn btn-dao-menu">Data Stories</a></li>
+          <li class="dao-nav-menu"><a href="download.html" class="btn btn-dao-menu">Downloads</a></li>
+          <li class="dropdown dao-nav-menu">
+            <a href="#" class="dropdown-toggle btn btn-dao-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Resources <span class="caret"></span></a>
+            <ul class="dropdown-menu dao_menu">
+              <li><a href="about.html">About</a></li>
+              <li><a href="definitions.html">Definitions</a></li>
+              <li><a href="limitations.html">Limitations</a></li>
+              <li><a href="howto.html">How to Use This Site</a></li>
+              <li><a href="updates.html">Updates</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="rmd-container-fluid rmd-container">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Data Definitions - PhilaDAO Data Dashboard</h1>
+
+</div>
+
+
+<div class="row dao_page_header col-12">
+<div class="col-md-2 col-md-offset-1 h1">
+Definitions
+</h1>
+</div>
+<div class="col-md-7 dao-definition-letter-links">
+<p><a href='#A' class='dao-definitions-top-link dao_report_body_emphasis'>A</a><a href='#B' class='dao-definitions-top-link dao_report_body_emphasis'>B</a><a href='#C' class='dao-definitions-top-link dao_report_body_emphasis'>C</a><a href='#D' class='dao-definitions-top-link dao_report_body_emphasis'>D</a><a href='#E' class='dao-definitions-top-link dao_report_body_emphasis'>E</a><a href='#F' class='dao-definitions-top-link dao_report_body_emphasis'>F</a><a href='#G' class='dao-definitions-top-link dao_report_body_emphasis'>G</a><a href='#H' class='dao-definitions-top-link dao_report_body_emphasis'>H</a><a href='#I' class='dao-definitions-top-link dao_report_body_emphasis'>I</a><a href='#M' class='dao-definitions-top-link dao_report_body_emphasis'>M</a><a href='#N' class='dao-definitions-top-link dao_report_body_emphasis'>N</a><a href='#O' class='dao-definitions-top-link dao_report_body_emphasis'>O</a><a href='#P' class='dao-definitions-top-link dao_report_body_emphasis'>P</a><a href='#R' class='dao-definitions-top-link dao_report_body_emphasis'>R</a><a href='#S' class='dao-definitions-top-link dao_report_body_emphasis'>S</a><a href='#T' class='dao-definitions-top-link dao_report_body_emphasis'>T</a><a href='#U' class='dao-definitions-top-link dao_report_body_emphasis'>U</a><a href='#V' class='dao-definitions-top-link dao_report_body_emphasis'>V</a><a href='#Y' class='dao-definitions-top-link dao_report_body_emphasis'>Y</a></p>
+</div>
+</div>
+<div>
+ 
+</div>
+<div id="A" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+A
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+Aggravated Assault
+</div>
+<div class="dao-definition">
+An attack by one person on another with the purpose of inflicting severe or grievous injury. Generally a weapon is involved, although it is possible to have an aggravated assault that does not include a weapon. Attempted murder (e.g. a shooting that does not result in death) is classified as Aggravated Assault by the police.
+</div>
+<div class="dao-definition-title-word">
+Aggravated Assault/Gun
+</div>
+<div class="dao-definition">
+Aggravated assault where a gun is used. The gun does not have to be fired for the offense to be classified as an aggravated assault/gun.
+</div>
+<div class="dao-definition-title-word">
+Aggravated Assault/Other
+</div>
+<div class="dao-definition">
+Any aggravated assault that does not involve a gun.
+</div>
+<div class="dao-definition-title-word">
+Alcohol Possession by Minor
+</div>
+<div class="dao-definition">
+A person under 21 years old in possession of alcohol.
+</div>
+<div class="dao-definition-title-word">
+All Offenses
+</div>
+<div class="dao-definition">
+All Offenses is a summary category for offenses of any crime category.
+</div>
+<div class="dao-definition-title-word">
+Arrest
+</div>
+<div class="dao-definition">
+An arrest is an action by the Philadelphia Police Department (PPD) in which a person is apprehended and taken into custody on the suspicion of the commission of a crime.
+</div>
+<div class="dao-definition-title-word">
+Auto Theft
+</div>
+<div class="dao-definition">
+The theft of an automobile. This does not include armed theft of a vehicle, which would be classified as Robbery.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div id="B" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+B
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+Bail
+</div>
+<div class="dao-definition">
+<p>A set of pre-trial conditions placed upon the accused to allow them to be released from custody while awaiting trial. <a href="https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&amp;ttl=00&amp;div=0&amp;chpt=1&amp;sctn=14&amp;subsctn=0">The purpose of the conditions are to reasonably ensure public safety</a>.</p>
+In Philadelphia, people often receive monetary bail conditions (e.g., $10,000), meaning they must pay the Commonwealth some set amount of money to be released from custody while awaiting trial. When the accused successfully completes their trial without missing any appearances or otherwise violating their bail conditions, their money is returned. If they fail to meet their bail conditions, they may lose their bail money. When a person is given cash bail, they can often pay 10% of the full amount (also called “bond”), but will owe the full amount if they violate their bail conditions.
+</div>
+<div class="dao-definition-title-word">
+Burglary
+</div>
+<div class="dao-definition">
+The unlawful entering of a building with the intention of committing a crime.
+</div>
+<div class="dao-definition-title-word">
+Burglary/Commercial
+</div>
+<div class="dao-definition">
+Burglary of a commercial building.
+</div>
+<div class="dao-definition-title-word">
+Burglary/Residential
+</div>
+<div class="dao-definition">
+Burglary of a residential building.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div id="C" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+C
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+Case Length
+</div>
+<div class="dao-definition">
+Refers to the total number of days between the date of arrest and the date of resolution whether through withdrawal, dismissal, diversion, plea or verdict. It does not include the time to sentence or to the pending resolution of any post-trial proceedings such as direct appeals or collateral attacks on a sentence. If a person wins an appeal or collateral attack and a new resolution is entered on the case, the time to that new disposition is measured in lieu of the time between their arrest and intial resolution.
+</div>
+<div class="dao-definition-title-word">
+Charges
+</div>
+<div class="dao-definition">
+<p>A charge is an accusation by the Commonwealth that a person has committed a crime. Although a case often involves more than one charge, our <a href="Charge_Report.html">Charge Report</a> only looks at the most serious offense charged in each criminal case.</p>
+In Philadelphia, the DAO, not the police, is responsible for deciding whether to charge an individual. Generally speaking, police investigate a case and present their investigation to the DAO. The DAO then determines whether there is enough evidence to file criminal charges and what charges should be filed. It is common that a person is charged with multiple offenses in a single criminal case. For example, Simple Assault is often charged at the same time as Recklessly Endangering Another Person.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div id="D" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+D
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+DAO
+</div>
+<div class="dao-definition">
+<a href="https://www.phila.gov/districtattorney/aboutus/Pages/default.aspx">The Philadelphia District Attorney’s Office</a>
+</div>
+<div class="dao-definition-title-word">
+Dismissed/Withdrawn/Etc
+</div>
+<div class="dao-definition">
+<p>The catchall category in our data for cases that are ‘dropped’ at some point in the process. Some common reasons a case can be dropped include:</p>
+<ul>
+<li><em>Withdrawal/Nolle Prosequi</em>: a voluntary decision by the DAO to end prosecution in an individual case.</li>
+<li><em>Dismissal</em>: a decision by the judge to end prosecution in an individal case.
+</div>
+<div class="dao-definition-title-word">
+Disorderly Conduct
+</div>
+<div class="dao-definition">
+A catchall offense where a person, with the intent to inconvenience, annoy, or alarm members of the public: fights, makes threats, makes loud noises, uses obscene language, or creates a public hazard while serving no purpose to the actor.
+</div>
+<div class="dao-definition-title-word">
+Disposition
+</div>
+<div class="dao-definition">
+Refers to how a case was completed or resolved. This may include a finding of guilt, a guilty plea, diversion, a finding of not guilty, or that the case was dismissed or withdrawn.
+</div>
+<div class="dao-definition-title-word">
+Diversion
+</div>
+<div class='dao-definition'>
+<p>Diversion is a procedure by which the DAO removes cases from the usual path through the criminal justice process of incarceration and probation. Diversion allows the accused to participate in a program that is often court supervised and, if completed successfully, will serve the needs of the criminal justice system. The programs are designed to be rehabilitative rather than punitive and the goal is to redirect individuals who have committed minor crime into a lifestyle that will keep them away from criminal involvement. Some of the benefits of diversionary programs are:</p></li>
+<li>People are able to stay in the community while being held accountable.</li>
+<li>Their specialized nature allows for targeting of specific programs for specific types of people (e.g., drug treatment for people with drug disuse disorders).</li>
+<li>Many allow for the charges to be cleared from the accused’s record after successful program completion. This helps people move on from their contact with the criminal justice system without the lifetime burden a criminal record can pose in finding housing, employment, and other important life activities.</li>
+<li><p>They allow the accused to quickly move out of the criminal justice system, bringing swift resolution of the case and reducing loads on overburdened agencies and system actors.</p></li>
+</ul>
+<p>Some <a href="https://www.phila.gov/districtattorney/diversion/Pages/default.aspx">common diversion programs in Philadelphia include</a>:</p>
+<ul>
+<li>AMP I and AMP II (Accelerated Misdemeanor Program)</li>
+<li>Domestic Violence Diversion</li>
+<li>Veteran’s Court</li>
+<li>ARD (Accelerated Misdemeanor Program)</li>
+<li>Mental Health Court
+</div>
+<div class="dao-definition-title-word">
+Drug Offenses
+</div>
+<div class="dao-definition">
+Drug Offenses is a summary category for offenses categorized as drug crimes.
+</div>
+<div class="dao-definition-title-word">
+Drug Possession
+</div>
+<div class="dao-definition">
+Possession of a drug for personal use and not for the purpose of selling the drug to someone else.
+</div>
+<div class="dao-definition-title-word">
+Drug Sales
+</div>
+<div class="dao-definition">
+Possession of a drug with the intention of selling the drug or the actual sale of the drug. “Intention to sell” can be inferred from the amount possessed when a person possesses more than a user would have for personal use. “Intention to sell” can also be inferred from the possession of other objects associated with sales, such as scales for weighing drugs.
+</div>
+<div class="dao-definition-title-word">
+DUI
+</div>
+<div class="dao-definition">
+Driving a vehicle under the influence of drugs or alcohol.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div class='row dao_definition_block' id='E'>
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+E
+</div>
+</div>
+<div class='col-md-8 dao-definition'>
+<div class="dao-definition-title-word">
+Embezzlement
+</div>
+<div class="dao-definition">
+The use of money or property belonging to another for a person’s own personal gain. The Philadelphia DAO generally charges offenses classified at arrest as ‘embezzlement’ as ‘theft’ under the criminal code.
+</div>
+<div class="dao-definition-title-word">
+Exoneration
+</div>
+<div class='dao-definition'>
+In general, an exoneration occurs when a person who has been convicted of a crime is officially cleared based on new evidence of innocence.</li>
+</ul>
+<p><a href="https://www.law.umich.edu/special/exoneration/Pages/glossary.aspx">The more precise definition is more complicated</a>: A person has been exonerated if he or she was convicted of a crime and, following a post-conviction re-examination of the evidence in the case, was either:</p>
+<ol style="list-style-type: decimal">
+<li>Declared to be factually innocent by a government official or agency with the authority to make that declaration; or</li>
+<li>Relieved of all the consequences of the criminal conviction by a government official or body with the authority to take that action. The official action may be:
+<ol style="list-style-type: lower-roman">
+<li>a complete pardon by a governor or other competent authority, whether or not the pardon is designated as based on innocence;</li>
+<li>an acquittal of all charges factually related to the crime for which the person was originally convicted; or</li>
+<li>a dismissal of all charges related to the crime for which the person was originally convicted, by a court or by a prosecutor with the authority to enter that dismissal.</li>
+</ol></li>
+</ol>
+<p>The pardon, acquittal, or dismissal must have been the result, at least in part, of evidence of innocence that either:</p>
+<pre><code>i. was not presented at the trial at which the person was convicted; or 
+ii. if the person pled guilty, was not known to the defendant and the defense attorney, and to the court, at the time the plea was entered. </code></pre>
+The evidence of innocence need not be an explicit basis for the official action that exonerated the person. A person who otherwise qualifies has not been exonerated if there is unexplained physical evidence of that person’s guilt.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div id="F" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+F
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+Felony Offense
+</div>
+<div class="dao-definition">
+Offenses in Pennsylvania are classified as homicides, felonies, misdemeanors, and summaries. Felony offenses are the most serious non-homicide offenses and may lead to imprisonment of more than ten years.
+</div>
+<div class="dao-definition-title-word">
+First Judicial District (FJD)
+</div>
+<div class="dao-definition">
+The Pennsylvania court system is divided into “judicial districts.” The judicial district that operates in Philadelphia is called the First Judicial District (“FJD”). The Courts that comprise the FJD are the Municipal Court (which includes Traffic Court) and the Court of Common Pleas (which includes both the criminal and family courts). Because Philadelphia is large, the FJD covers just Philadelphia. Other Judicial Districts can cover more than one county.
+</div>
+<div class="dao-definition-title-word">
+Fraud
+</div>
+<div class="dao-definition">
+Intentionally lying or manipulating the truth in order to gain something of value. The Philadelphia DAO generally charges offense classified at arrest as ‘fraud’ as ‘theft’ under the criminal code.
+</div>
+<div class="dao-definition-title-word">
+Fraud/Theft of Services
+</div>
+<div class="dao-definition">
+Fraud is intentionally lying or manipulating the truth in order to gain something of value. Theft of services, similarly, occurs when a person gets the benefit of a service known to cost money (e.g. turnstile jumping). The Philadelphia DAO generally charges offense classified at arrest as ‘fraud’ as ‘theft’ under the criminal code.
+</div>
+<div class="dao-definition-title-word">
+Future Years of Incarceration
+</div>
+<div class="dao-definition">
+<p>All of the years of incarceration imposed on defendants in all cases that ended in a given time period. For example, the future years of incarceration imposed in Philadelphia on a particular day can be calculated by adding up all of the carceral sentences imposed on all defendants in Philadelphia that day.</p>
+<p>To calculate future years of incarceration, we make a few assumptions:</p>
+<ol style="list-style-type: decimal">
+<li>We only track the jail/prison time that we assume a person will serve.</li>
+<li>Anyone serving time in the Philadelphia jails (sentences with a maximum of less than 2 years) will be released at their minimum sentence length.</li>
+<li>Anyone serving time in state prison (sentences with a maximum sentence of 2 years or more) will be released at 130% of their minimum sentence (e.g., a person with a 1-2 year sentence will be released in 1.3 years).</li>
+<li>Consolidated sentences are treated as concurrent, not consecutive. When a person is sentenced in multiple cases on a single day, we assume that these cases have been consolidated and dealt with as a group. For the purpose of future years, we only look at the longest minimum and maximum sentences from that group of cases.</li>
+<li>We only look at original sentences, not violations of parole or probation.</li>
+</ol>
+One of the goals of DA Larry Krasner’s policies is to reduce the number of years of future incarceration and future supervision. Overly long prison sentences and terms of parole and probation cost millions in public dollars without improving public safety. In fact, research show that mass incarceration and over-supervision actually have a negative effect on people and communities. By making plea offers and sentencing recommendations below the low end of the Pennsylvania Sentencing Guidelines, DA Krasner has espoused a different approach to sentencing policy. This will save millions of dollars that could be used to improve education, repair infrastructure and improve living conditions for all Philadelphians, while at the same time insuring that criminal behavior is punished appropriately.
+</div>
+<div class="dao-definition-title-word">
+Future Years of Supervision
+</div>
+<div class="dao-definition">
+<p>All of the years of supervision imposed on defendants in all cases that ended in a given time period. For example, the future years of supervision imposed in Philadelphia on a particular day can be calculated by adding up all of the probation and parole sentences imposed on all defendants in Philadelphia that day.</p>
+<p>To calculate future years of supervision, we make a few assumptions:</p>
+<ol style="list-style-type: decimal">
+<li>We only track the supervision time that a person will actually serve.</li>
+<li>Anyone serving time in the Philadelphia jails (sentences with a maximum of less than 2 years) will be released at their minimum sentence length. The balance of their sentence (max - min) is counted as supervision.</li>
+<li>Anyone serving time in state prison (sentences with a maximum sentence of 2 years or more) will be released at 130% of their minimum sentence (e.g. a person with a 1-2 year sentence will be released in 1.3 years). The balance of their sentence (max - 1.3 x min) is counted as supervision.</li>
+<li>Consolidated sentences are treated as concurrent, not consecutive. When a person is sentenced in multiple cases on a single day, we assume that these cases have been consolidated and dealt with as a group. For the purpose of future years, we only look at the longest minimum and maximum sentences from that group of cases.</li>
+<li>We only look at original sentences, not violations of probation or parole.</li>
+</ol>
+One of the goals of DA Krasner’s policies is to reduce the number of years of Future Supervision. Research shows that periods of probation or parole supervision that last beyond three years without any violations have diminishing returns and instead keep people needlessly ensnared in the system. In making plea offers and sentencing recommendations, the DAO is very cognizant of this finding. Because of the requirements of Pennsylvania’s sentencing laws, it is not always possible to limit parole following an sentence to incarceration for a reasonable amount of time. But, to the extent possible, the DAO is attempting to reduce the amount of time people are required to spend on probation and parole.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div class='row dao_definition_block' id='G'>
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+G
+</div>
+</div>
+<div class='col-md-8 dao-definition'>
+<div class="dao-definition-title-word">
+Guilty
+</div>
+<div class="dao-definition">
+A finding of guilt by a Judge or Jury after trial.
+</div>
+<div class="dao-definition-title-word">
+Guilty Plea/Nolo
+</div>
+<div class='dao-definition'>
+<p>Instead of going to trial, an accused person may choose to admit guilt and go directly to sentence. A guilty plea can be open or negotiated.</p>
+<ul>
+<li>A <strong>negotiated</strong> plea is an agreement between the DAO and the accused on the charges that the accused will admit guilt to, the charges that will be dropped, and the sentence that will be recommended to the judge for the case. The agreement is sometimes called a plea bargain.</li>
+<li>An <strong>open plea</strong> is one where the accused admits guilt and then the judge sets the sentence without a recommendation from the DAO.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div id="H" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+H
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+Harassment
+</div>
+<div class="dao-definition">
+Engaging in a number of different activities designed to annoy, harass, or alarm another person, including touching, following, repeatedly calling or otherwise communicated with, or using lewd or harsh language.
+</div>
+<div class="dao-definition-title-word">
+Held without Bail
+</div>
+<div class="dao-definition">
+In some cases, an accused person can be held without bail pending trial. A person charged with 1st degree murder must be held without bail in Pennsylvania, however, individuals charged with a less lesser crime can also be held without bail, depending on a number of factors.
+</div>
+<div class="dao-definition-title-word">
+Homicide
+</div>
+<div class="dao-definition">
+The killing of one person by another. <a href="https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&amp;ttl=18&amp;div=0&amp;chpt=25">There are many different types of homicide in Pennsylvania</a>, ranging from intentional homicide to negligent homicide to felony homicide.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div id="I" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+I
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+Incarceration
+</div>
+<div class="dao-definition">
+Imprisoning a person. In Pennsylvania, sentences to periods of incarceration include both a minimum and a maximum length. The maximum length is required to be at least twice as long as the minimum sentence (e.g., 1-2 years and 1-5 years are both allowed; 2-3 years is not allowed). Unless paroled early, a person generally isn’t eligible for parole until they have reached their minimum sentence.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div id="M" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+M
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+Minor Violations (Open Container, Public Urination, Smoking Violation)
+</div>
+<div class="dao-definition">
+A catchall for multiple minor offenses.
+</div>
+<div class="dao-definition-title-word">
+Misdemeanor Offense
+</div>
+<div class="dao-definition">
+Offenses in Pennsylvania are classified as homicides, felonies, misdemeanors, and summaries. A misdemeanor offense is an offense that is punishable by up to five years in prison. Misdemeanor offenses are less serious than felony and homicide offenses.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div id="N" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+N
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+Not Guilty/Acquittal
+</div>
+<div class="dao-definition">
+A finding by either jury or judge that the prosecution has failed to prove guilt beyond a reasonable doubt.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div class='row dao_definition_block' id='O'>
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+O
+</div>
+</div>
+<div class='col-md-8 dao-definition'>
+<div class="dao-definition-title-word">
+Offense
+</div>
+<div class="dao-definition">
+Another word for a crime.
+</div>
+<div class="dao-definition-title-word">
+Offense Category
+</div>
+<div class="dao-definition">
+The general classification of an offense. See the <a href="limitations.html">limitations page</a> for more information about some problems that come with using this classification system.
+</div>
+<div class="dao-definition-title-word">
+Other Assaults
+</div>
+<div class="dao-definition">
+A broad category that includes simple assault, stalking, and resisting arrest. Simple assault makes up the bulk of ‘other assaults.’
+</div>
+<div class="dao-definition-title-word">
+Other Offenses
+</div>
+<div class="dao-definition">
+Other Offenses is a summary category for offenses that do not fall into the categorizations of violent, property, or drug, or for which the categorization is unknown.
+</div>
+<div class="dao-definition-title-word">
+Outcomes
+</div>
+<div class='dao-definition'>
+<p>The various ways that a criminal case can end. We have created 5 high level outcome groupings that capture all of the ways a case can end. These are all defined elsewhere on this page:</p></li>
+<li>Dismissed/Withdrawn/Etc</li>
+<li>Diversion</li>
+<li>Not Guilty/Acquittal</li>
+<li>Guilty</li>
+<li>Guilty Plea/Nolo
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div class='row dao_definition_block' id='P'>
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+P
+</div>
+</div>
+<div class='col-md-8 dao-definition'>
+<div class="dao-definition-title-word">
+Parole
+</div>
+<div class="dao-definition">
+The period of community supervision that occurs when a person has been sentenced to prison but is released before serving their maximum incarceration sentence. Parole is served until the person has reached their maximum sentence date.
+</div>
+<div class="dao-definition-title-word">
+Parts I &amp; II Offenses
+</div>
+<div class='dao-definition'>
+As part of the FBI’s Uniform Crime Reporting (UCR) Program, offense types are divided into three categories:</li>
+<li>Part I Crimes, considered the most serious. These include: criminal homicide, forcible rape, robbery, aggravated assault, burglary, larceny, auto theft, and arson.</li>
+<li>Part II Crimes. These include: other assaults, forgery and counterfeiting, fraud, embezzlement, stolen property, vandalism, weapons violations, prostitution and commercialized vice, sex offenses, drug violations, gambling, offenses against family and children, driving under the influence, liquor law violations, public drunkenness, disorderly conduct, and vagrancy.</li>
+<li>All other offenses. This category includes all violations of state and local laws not specifically defined as a Part I or II offense, except traffic violations.
+</div>
+<div class="dao-definition-title-word">
+Patronizing Prostitutes
+</div>
+<div class="dao-definition">
+Hiring a prostitute/sex worker.
+</div>
+<div class="dao-definition-title-word">
+Police District
+</div>
+<div class="dao-definition">
+In Philadelphia, a Police District is a mid-level geographic management area maintained by the Philadelphia Police Department. There are 21 Police Districts in Philadelphia.
+</div>
+<div class="dao-definition-title-word">
+Possession of Firearms
+</div>
+<div class="dao-definition">
+Illegally possessing a firearm. This may include being in a car where a firearm is found, even if the person charged isn’t directly holding it. Possession may be illegal either because the individual does not have a permit to carry or because the person has a previous conviction that forbids them from possessing a firearm.
+</div>
+<div class="dao-definition-title-word">
+Probation
+</div>
+<div class="dao-definition">
+Community supervision that is directly ordered by a judge. This is distinguished from parole, which is supervised released from prison. A person may be sentenced to just probation or may receive a sentence of incarceration followed by a period of probation. The latter is often referred to as a “probation tail.”
+</div>
+<div class="dao-definition-title-word">
+Property Offenses
+</div>
+<div class="dao-definition">
+Property Arrests is a summary category for offenses categorized as property crimes.
+</div>
+<div class="dao-definition-title-word">
+Prostitution/Sex Work
+</div>
+<div class="dao-definition">
+Engaging in sexual activity as a business.
+</div>
+<div class="dao-definition-title-word">
+Public Drunkenness
+</div>
+<div class="dao-definition">
+Being in a public place and under the influence of alcohol or any controlled substance to the point where the person is a danger to persons or property or annoys other people.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div id="R" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+R
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+Rape
+</div>
+<div class="dao-definition">
+Engaging in sexual intercourse through force, the threat of force, with an unconscious or seriously impaired individual, or with an individual who suffers from a mental disability that makes them incapable of consent. <a href="https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&amp;ttl=18&amp;div=0&amp;chpt=31&amp;sctn=21&amp;subsctn=0">See 18 Pa.C.S. 3121</a>. Rape, as used in our website, does not refer to other types of rape or sexual assault.
+</div>
+<div class="dao-definition-title-word">
+Release on Recognizance (ROR)
+</div>
+<div class="dao-definition">
+A bail condition that allows a person to be released from custody without having to pay any money to be released. The person signs a paper stating that they will return for future court listings but is not required to pay any money to be released.
+</div>
+<div class="dao-definition-title-word">
+Retail Theft
+</div>
+<div class="dao-definition">
+Theft of merchandise from a store. This includes altering prices or labels to pay less than the actual price of the merchandise.
+</div>
+<div class="dao-definition-title-word">
+Robbery
+</div>
+<div class="dao-definition">
+A robbery is a theft from a person involving the use of force or threat of force.
+</div>
+<div class="dao-definition-title-word">
+Robbery/Gun
+</div>
+<div class="dao-definition">
+A robbery where the force or threat of force involves a gun.
+</div>
+<div class="dao-definition-title-word">
+Robbery/Other
+</div>
+<div class="dao-definition">
+A robbery where the force or threat of force does not involve a gun.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div id="S" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+S
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+Sexual Assault and Other Sex Offenses
+</div>
+<div class="dao-definition">
+A variety of sexual offenses that do not rise to the level of rape, ranging from improper touching to non-consensual penetration.
+</div>
+<div class="dao-definition-title-word">
+Summary Offense
+</div>
+<div class="dao-definition">
+Offenses in Pennsylvania are classified as homicides, felonies, misdemeanors, and summaries. A summary offense is the most minor type of criminal offense in Pennsylvania, and is often called a non-traffic citation. Summary offenses can include disorderly conduct, loitering, harassment, and low-level retail theft, among others. A conviction for a summary offense usually results in a fine.
+</div>
+<div class="dao-definition-title-word">
+Supervision
+</div>
+<div class="dao-definition">
+For the purposes of this webpage, it refers to supervision over parole and probation.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div id="T" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+T
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+Theft
+</div>
+<div class="dao-definition">
+Illegally taking someone else’s property with the intent of not giving it back. Theft usually does not refer to theft directly from a person, as that would be considered robbery.
+</div>
+<div class="dao-definition-title-word">
+Theft from Auto
+</div>
+<div class="dao-definition">
+The theft of property from a motor vehicle, but not theft of the vehicle itself or the taking of parts of the vehicle.
+</div>
+<div class="dao-definition-title-word">
+Theft from Person
+</div>
+<div class="dao-definition">
+Theft of property from a person, not involving force or the threat of force. Pickpocketing is a common example.
+</div>
+<div class="dao-definition-title-word">
+Theft of Motor Vehicle Tag
+</div>
+<div class="dao-definition">
+The theft of license plates from a motor vehicle.
+</div>
+<div class="dao-definition-title-word">
+Threats of Violence
+</div>
+<div class="dao-definition">
+Making threats to commit a violent crime with the intent to terrorize (make frightened) another person.
+</div>
+<div class="dao-definition-title-word">
+Trespass
+</div>
+<div class="dao-definition">
+Entering or remaining in a place without permission.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div id="U" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+U
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+Unknown Bail
+</div>
+<div class="dao-definition">
+A categorization of bail amount for cases for which we do not have sufficient bail data.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div id="V" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+V
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+Vandalism
+</div>
+<div class="dao-definition">
+Destroying or defacing property without permission to do so (e.g. graffiti).
+</div>
+<div class="dao-definition-title-word">
+Violent Offenses
+</div>
+<div class="dao-definition">
+Violent Offenses is a summary category for offenses categorized as violent crimes.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div>
+<div id="Y" class="row dao_definition_block">
+<div class="col-md-1 col-md-offset-1">
+<div class="dao-definition-letter">
+Y
+</div>
+</div>
+<div class="col-md-8 dao-definition">
+<div class="dao-definition-title-word">
+Yr-Yr Change
+</div>
+<div class="dao-definition">
+Year-over-Year Change refers to the percent change from a prior time period to the current time period.
+</div>
+<div class="dao-definition-title-word">
+YTD
+</div>
+<div class="dao-definition">
+Year-to-Date refers to a total number of instances that occurred between the beginning of the year (Jan 1) and the date of the report.
+</div>
+<a href='#top' class='dao-definitions-top-link dao_report_body_emphasis'>▲ Return to the Top</a>
+</div>
+</div></li>
+</ul>
+
+</div>
+<footer class="row">
+<div class="container-fluid padding">
+<div class="row text-center">
+	<div class="col-md-4">
+    <h2 class="connectext">Office</h2>
+		<hr class="light">
+		<p>
+		  Three South Penn Square<br/>
+		  Philadelphia, PA 19107-3499<br/>
+		  215-686-8000
+		</p>
+	</div>
+	<div class="col-md-4">
+		<div class="col-12">
+			<h2 class="connectext">Connect</h2>
+		<hr class="light">
+			</div>
+			<div class="col-12 social padding">
+				<a href="https://www.facebook.com/philaDAO/" target="_blank"><i class="fa fa-facebook social-circle-icon" title="facebook"></i></a>
+				<a href="https://www.instagram.com/philadao/?hl=en" target="_blank"><i class="fa fa-instagram social-circle-icon" title="instagram"></i></a>
+				<a href="https://twitter.com/philadao?lang=en" target="_blank"><i class="fa fa-twitter social-circle-icon" title="twitter"></i></a>
+				<a href="mailto:justice@phila.gov"><i class="fa fa-envelope social-circle-icon" title="email us"></i></a>
+			</div>
+		</div>
+	<div class="col-md-4">
+	  <div class="col-12">
+	    <h2 class="connectext">More</h2>
+		<hr class="light">
+      <ul>
+        <li><a href="https://medium.com/philadelphia-justice" target="_blank">The Justice Wire</a></li>
+        <li><a href="https://www.phila.gov/districtattorney/pages/default.aspx" target="_blank">Office of the District Attorney</a></li>
+        <li><a href="howto.html#constraints">Public Access and Use</a></li>
+		  </ul>
+		</div>
+  </div>
+</div>
+<p class="copytext">&copy; City of Philadelphia, Philadelphia District Attorney's Office<p>
+</div>
+</footer>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+</body>
+</html>

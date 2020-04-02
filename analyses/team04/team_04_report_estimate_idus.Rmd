@@ -1,0 +1,815 @@
+---
+title: 'Team 04: Estimating the Number of Intravenous Drug Users in Philadelphia'
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, echo = FALSE, include = FALSE}
+library(tidyverse)
+library(magrittr)
+library(conflicted)
+library(vroom)
+
+library(lubridate)
+library(MASS)
+library(knitr)
+
+filter <- dplyr::filter
+select <- dplyr::select
+
+knitr::opts_chunk$set(echo = FALSE, include = FALSE, 
+                      warning=FALSE, message=FALSE)
+```
+
+<br>
+
+## Executive Summary
+* Indirect estimation methods are essential tools for estimating the number of intravenous drug users (IDUs) and opioid users in a population.
+* Addition estimates enable the use of multiple, publicly available data sources, but there is a risk of double-counting a population member.
+* Multiplication method estimates enable the use of a single dataset, but these estimates depend on the accuracy of the multiplier used.
+* Capture-Recapture estimates can be applied to Prevention Point's data recording needle exchange visits by using a Truncated Poisson Estimator, but the estimated population size varies significantly based on the interval of time considered for the data.
+
+<br>
+
+## Contributors
+
+- Cara Cuiule
+- Kelsey Keith
+- Spandana Makeneni
+- Sam May
+
+<br>
+
+## Problem definition and dataset
+
+Our overall question was, "How many intravenous drug users are in the City of Philadelphia?" Data pulled from the City of Philadelphia precluded any methods that relied on granular data detailing a single individual. Data pulled from the City of Philadelphia included on fatal and nonfatal overdoses, medically assisted treatment, and drug arrests. Using these data required indirect estimate methods that relied on figures pulled from the literature to complete the indirect estimates.
+
+Data recording needle exchange visits were provided by Prevention Point. These data enabled us to count distinct individuals who visited a needle exchange site during 2019. Using the needle exchange data, we attempted to estimate the number of intravenous drug users (IDUs) who possibly would have visited a needle exchange site but did not in 2019. By estimating the number of IDUs who attended the needle exchange 0 times, we are able to estimate the total number of IDUs in Philadelphia.
+
+<br>
+
+## Data
+
+### Data for Addition, Multiplier Estimates
+
+#### Arrests
+
+OpenDataPhilly is a collaborative, open-source project that provides access to datasets about the Philadelphia region, including data on arrests. Arrest data comes from the Phildelphia District Attorney's office and OpenDataPhilly provides a table of daily arrest counts that was summarized on a yearly level for this analysis.
+
+```{r}
+### read in the table from Philly Open Data for daily arrests
+vroom('phillydao-public_data/docs/data/arrest_data_daily_by_zip.csv') -> daily_arrests_zip
+
+### read in the table for drug seizures; going to assume people are arrested
+### for using drugs in the same proportion as those drugs are seized
+vroom::vroom('philly_doh_tableau_data/drug_seizures.tsv') %>%
+  mutate(quarter = case_when(quarter == 'Q1' ~ '01-01',
+                             quarter == 'Q2' ~ '04-01',
+                             quarter == 'Q3' ~ '07-01',
+                             quarter == 'Q4' ~ '10-01')) %>%
+  unite(quarter, c('year', 'quarter'), sep = '-') %>%
+  mutate(quarter = as.Date(quarter)) -> drug_seizures
+
+### Summarize arrests to the year and quarter (since that's how fine-grained 
+### some of the other data is) and estimate IUDs by proportion of drugs seized.
+daily_arrests_zip %>%
+  select(date_value, `Drug Possession`) %>%
+  mutate(year = year(date_value),
+         quarter = round_date(date_value, unit = 'quarter')) %>%
+  group_by(year, quarter) %>%
+  summarize(arrests = sum(`Drug Possession`)) %>%
+  left_join(drug_seizures) %>%
+  mutate(iud_perc = fentanyl + fentanyl_analogue + heroin) %>%
+  select(-(cocaine:other)) %>%
+  mutate(arrests_adj = round(arrests * (iud_perc / 100))) -> arrests
+```
+
+#### Overdoses
+
+From Philadelphia Department of Health's public opiod tableau page <https://public.tableau.com/profile/pdph#!/>. There are two sources: fatal and nonfatal overdose deaths.
+
+```{r}
+### read overdose data in
+vroom('philly_doh_tableau_data/overdose_deaths.tsv') -> overdose_deaths
+vroom('philly_doh_tableau_data/hosp_nonfatal_overdoses.tsv') -> nonfatal_over
+
+### Combine the data
+overdose_deaths %>%
+  filter(year != 2019) %>%
+  group_by(year) %>%
+  summarize(deaths = sum(deaths)) %>%
+  ungroup() %>%
+  rbind(tibble(year = 2019, deaths = 950)) %>%
+  left_join(nonfatal_over) %>%
+  mutate(overdoses = deaths + cases) %>%
+  select(year, overdoses) -> overdoses
+```
+
+#### Individuals in Medication Assisted Treatment (MAT)
+
+From Philadelphia Department of Health's public opiod tableau page <https://public.tableau.com/profile/pdph#!/>. The Department of Health has data for individuals receiving Medicaid who are also receiving medication assisted treatment for opiod use disorder and for individuals in Philadelphia jails receiving MAT.
+
+```{r}
+### read data in
+vroom('philly_doh_tableau_data/medicaid_beneficiaries_in_medication_assisted_treatment.tsv') -> mat_medicaid
+vroom('philly_doh_tableau_data/prisoners_in_medication_assisted_treatment.tsv') -> mat_prison
+
+### Combine the data
+mat_medicaid %>%
+  group_by(year) %>%
+  summarize(patients = sum(individuals)) %>%
+  ungroup() %>%
+  left_join(mat_prison) %>%
+  replace(is.na(.), 0) %>%
+  mutate(mat_patients = patients + individuals) %>%
+  select(year, mat_patients) -> mat
+```
+
+```{r}
+### combine the datasets into 1 table
+arrests %>%
+  group_by(year) %>%
+  summarise(arrests = sum(arrests),
+            iud_perc = mean(iud_perc),
+            arrests_adj = round(arrests * (iud_perc / 100))) %>%
+  left_join(overdoses) %>%
+  left_join(mat) %>%
+# estimate future numbers with a simple linear model
+  mutate(lb = arrests + overdoses + mat_patients) %>% #lm(lb ~ year, data = .) %>% summary()
+# manually add the new years and projected results in
+  rbind(tibble(year = 2021:2025,
+               arrests = NA,
+               iud_perc = NA, 
+               arrests_adj = NA,
+               overdoses = NA, 
+               mat_patients = NA,
+               lb = NA)) %>%
+  mutate(est_lb = round((year * 1056.6) - 2115104.8)) -> data
+```
+
+#### Visualize the Data
+
+Visualizing the data used to construct the estimates across the years we were able to find data for. Individuals experiencing an overdose and individuals receiving medication assisted treatment continue to increase, while arrests have generally decreased since 2014 and are now flat or slightly decreasing.
+
+```{r, include = TRUE}
+data %>%
+  select(-iud_perc, -arrests_adj, -lb, -est_lb) %>%
+  pivot_longer(arrests:mat_patients, 
+               names_to = 'data_source', 
+               values_to = 'count') %>%
+  filter(year != 2020) %>%
+  na.omit() -> raw_data_skinny
+  
+ggplot(raw_data_skinny, aes(x = year, y = count, color = data_source)) +
+  geom_line() +
+  geom_point() +
+  scale_color_manual(name = 'Data Source',
+                     values = c('dodgerblue3', 'orange3', 'forestgreen')) +
+  labs(x = 'Year', y = 'Number of Individuals') +
+  theme_classic(base_size = 20) 
+#ggsave('addition_method_opioid_users.png')
+```
+
+### Data for Poisson Estimate
+
+Prevention Point provided a table of anonymized individuals who exchanged needles during 2019 that will be used for the poisson estimate. NOTE: For anyone who wishes to run the code underlying this report, the file with this data is password-protected and you will need to contact Code for Philly in order to access it.
+
+```{r}
+sep_events <- vroom('../../data/pp_sep_site_event.csv')
+sep_events$DATE <- as.Date(sep_events$DATE, format="%m/%d/%y")
+sep_events$no_exchanging_for <- as.numeric(sep_events$no_exchanging_for)
+```
+
+<br>
+
+## Results
+
+### Addition Estimate
+
+For a lower-bound estimate of the number of opioid drug users (IDUs) in the city, we simply added the number of individuals arrested for drug possession + the number of overdoses presumably due to opioids + the number of people receiving medication assisted treatment for opioid use disorder. "Opioid drug user" is defined as an individual using heroin, fentanyl or fentanyl analogues. We didn't find any reliable data for prescription opioid users, so they are not represented here. It was easier to first estimate the number of opioid drug users, then adjust the number down to an estimate of an estimate for intravenous drug users.
+
+#### Estimated Number of Opioid Users
+
+Plot estimated number of opiod users. Note, we mostly were unable to find good data for 2019, so 2019 is estimated as well. The future project is linear, meaning we expect the number of opioid users to increase consistently year over year. However, there wasn't sufficient data to fit the shape of the distribution, so a linear projection was picked as the simplest case.
+
+```{r, fig.width = 5, fig.height = 4, include = TRUE}
+data %>%
+  select(year, lb, est_lb) %>%
+  mutate(est_lb = ifelse(is.na(lb) == F, lb, est_lb)) %>%
+  pivot_longer(lb:est_lb, 
+               names_to = 'estimate_source', values_to = 'estimate') %>%
+
+ggplot(aes(x = year, y = estimate, color = estimate_source)) +
+  geom_line(linetype = rep(c('dashed', 'solid'), each = 12)) +
+  scale_color_manual(values = c('black', 'black')) +
+  geom_point() +
+  labs(x = 'Year', y = 'Number of Individuals') +
+  theme_classic(base_size = 20)  +
+  theme(legend.position = 'none')
+#ggsave('addition_opiod_user_estimate.png')
+```
+
+#### Adjust Addition Estimate for Intravenous Drug Users
+
+Now, we take the estimate for the number of opioid users and adjust it to 30-60% of the total. Based on our research (Data: 1,5), this is the estimated proportion of opioid users who report that they have injected drugs. As you can see in the plot below, we are NOT confident of this estimate, with our confidence interval ranging from 3,000 to 6,000 people over the course of the plot.
+
+```{r, fig.width = 5, fig.height = 4, include = TRUE}
+data %>%
+  select(year, lb, est_lb) %>%
+  mutate(upper_hcv_adjust = round(ifelse(is.na(lb) == F, 
+                                         lb * 0.6, est_lb * 0.6)),
+         middle_hcv_adjust = round(ifelse(is.na(lb) == F, 
+                                         lb * 0.46, est_lb * 0.46)),
+         low_treat_adjust  = round(ifelse(is.na(lb) == F, 
+                                         lb * 0.32, est_lb * 0.32)),
+         ymin = low_treat_adjust,
+         ymax = upper_hcv_adjust) %>%
+  pivot_longer(names_to = 'adjustment', values_to = 'estimate', 
+               upper_hcv_adjust:low_treat_adjust) %>% #mutate(diff = ymax - ymin)
+
+ggplot(aes(x = year, y = estimate, color = adjustment)) +
+  geom_ribbon(aes(ymin = ymin, ymax = ymax), alpha = 0.15, color = 'gray60') +
+  geom_line(aes(linetype = adjustment)) +
+  geom_point() +
+  scale_color_manual(values = rep('black', 3)) +
+  scale_linetype_manual(values = c('dashed', 'solid', 'dashed')) +
+  labs(x = 'Year', y = 'Estimated Number of\nIV Drug Users') +
+  theme_classic(base_size = 20) +
+  theme(legend.position = 'none')
+#ggsave('estimated_iud_users.png')
+```
+
+<br>
+
+### Multiplier Method using Cinncinati Paper
+
+A multiplier estimate takes a known percentage of individuals out of a larger who do something attempts to estimate the size of the larger group based on the subgroup. Because it is extremely difficult to know what percentage of people are engaging in a illegal activity, multipliers are usually estimated based on a survey of the scientific literature. Since we did not have the time or ability to conduct such a survey, we took multipliers from the paper at this link <https://jheor.org/article/9729-estimating-the-prevalence-of-opioid-use-disorder-in-the-cincinnati-region-using-probabilistic-multiplier-methods-and-model-averaging> looking at opioid users in Cinncinati in 2019.
+
+### Multipliers
+
+- Fatal Overdose
+  - Multiplier: 7.182 %
+  - Std. Error: 0.533 %
+- Treatment Admission
+  - Multiplier: 21.376 %
+  - Std. Error: 2.142 %
+- Non-fatal Emergency Department (ED) Visit Overdose
+  - Multiplier: 40.890 %
+  - Std. Error: 5.111 %
+
+```{r}
+### fatal overdose
+overdose_deaths %>%
+  mutate(se_lower = round((deaths * 100) / (7.182 - 0.533)),
+         multiplier = round((deaths * 100) / 7.182),
+         se_upper = round((deaths * 100) / (7.182 + 0.533))) %>%
+  group_by(year) %>%
+  summarize(sum_multiplier = sum(multiplier),
+            sum_se_low = sum(se_lower),
+            sum_se_high = sum(se_upper)) %>%
+  ungroup() %>% #lm(sum_multiplier ~ year, data = .) %>% broom::tidy()
+  filter(year != '2019') %>%
+  rbind(tibble(year = 2019:2025,
+               sum_multiplier = NA,
+               sum_se_low = NA,
+               sum_se_high = NA)) %>%
+  mutate(projection = ifelse(year < 2019, sum_multiplier,
+                             round(((year * 654.2) + -1310155.4))),
+         proj_se_low = ifelse(year < 2019, sum_se_low,
+                              round((projection - (1.96 * 395.8294)))),
+         proj_se_high = ifelse(year < 2019, sum_se_high,
+                              round((projection + (1.96 * 395.8294))))) %>%
+  unite(multiplier, sum_multiplier:sum_se_high, sep = '_') %>%
+  unite(projection, projection:proj_se_high) %>%
+  pivot_longer(multiplier:projection,
+               names_to = 'estimate_source', values_to = 'estimate') %>%
+  separate(estimate, into = c('estimate', 'low', 'high'), 
+           sep = '_', convert = T) %>%
+  na.omit() %>%
+  mutate(data_source = 'fatal_overdoses') -> fatal_overdose_multiplier
+
+### treatment admission
+mat %>%
+  mutate(se_lower = round((mat_patients * 100) / (21.376 - 2.142)),
+         multiplier = round((mat_patients * 100) / 21.376),
+         se_upper = round((mat_patients * 100) / (21.376 + 2.142))) %>%
+  group_by(year) %>%
+  summarize(sum_multiplier = sum(multiplier),
+            sum_se_low = sum(se_lower),
+            sum_se_high = sum(se_upper)) %>%
+  ungroup() %>% #lm(sum_multiplier ~ year, data = .) %>% broom::tidy()
+  filter(year != '2019') %>%
+  rbind(tibble(year = 2019:2025,
+               sum_multiplier = NA,
+               sum_se_low = NA,
+               sum_se_high = NA)) %>%
+  mutate(projection = ifelse(year < 2019, sum_multiplier,
+                             round(((year * 3494.317) + -7006229.989))),
+         proj_se_low = ifelse(year < 2019, sum_se_low,
+                              round((projection - (1.96 * 447.1714)))),
+         proj_se_high = ifelse(year < 2019, sum_se_high,
+                              round((projection + (1.96 * 447.1714))))) %>%
+  unite(multiplier, sum_multiplier:sum_se_high, sep = '_') %>%
+  unite(projection, projection:proj_se_high) %>%
+  pivot_longer(multiplier:projection,
+               names_to = 'estimate_source', values_to = 'estimate') %>%
+  separate(estimate, into = c('estimate', 'low', 'high'), 
+           sep = '_', convert = T) %>%
+  na.omit() %>%
+  mutate(data_source = 'MAT') -> mat_multiplier
+
+### Non-Fatal ED Overdose
+overdoses %>%
+  mutate(se_lower = round((overdoses * 100) / (40.890 - 5.111)),
+         multiplier = round((overdoses * 100) / 40.890),
+         se_upper = round((overdoses * 100) / (40.890 + 5.111))) %>%
+  group_by(year) %>%
+  summarize(sum_multiplier = sum(multiplier),
+            sum_se_low = sum(se_lower),
+            sum_se_high = sum(se_upper)) %>%
+  ungroup() %>% #lm(sum_multiplier ~ year, data = .) %>% broom::tidy()
+  filter(year != '2019') %>%
+  rbind(tibble(year = 2019:2025,
+               sum_multiplier = NA,
+               sum_se_low = NA,
+               sum_se_high = NA)) %>%
+  mutate(projection = ifelse(year < 2019, sum_multiplier,
+                             round(((year * 290.0) + -581078.4))),
+         proj_se_low = ifelse(year < 2019, sum_se_low,
+                              round((projection - (1.96 * 83.90343)))),
+         proj_se_high = ifelse(year < 2019, sum_se_high,
+                              round((projection + (1.96 * 83.90343))))) %>%
+  unite(multiplier, sum_multiplier:sum_se_high, sep = '_') %>%
+  unite(projection, projection:proj_se_high) %>%
+  pivot_longer(multiplier:projection,
+               names_to = 'estimate_source', values_to = 'estimate') %>%
+  separate(estimate, into = c('estimate', 'low', 'high'), 
+           sep = '_', convert = T) %>%
+  na.omit() %>%
+  mutate(data_source = 'nonfatal_overdoses') -> nonfatal_overdose_multiplier
+
+### Combine Data
+rbind(fatal_overdose_multiplier, 
+      nonfatal_overdose_multiplier, 
+      mat_multiplier) %>%
+  unite(group, c('estimate_source', 'data_source'), 
+        sep = '_', remove = F)-> multipliers
+```
+
+#### Multiplier Estimations of the Number of Opioid Users in Philadelphia
+
+The lines on the plot below are colored and labelled by the data used to CALCULATE the estimate; all lines are attempting to estimate the number of opioid users in Philadelphia. The estimate based on MAT patients is wildly divergent from the rest of our estimates and is most likely wildly inaccurate. This is probably because we and the Cinncinati paper have different definitions of an MAT patient and/or access to MAT is different in Cinncanti. Don't use the MAT estimate. The overdose estimates are better.
+
+```{r, fig.width = 5, fig.height = 4, include = TRUE}
+### all three multipliers
+multipliers %>%
+
+ggplot(aes(x = year, y = estimate, color = group, group = group)) +
+  geom_ribbon(aes(ymin = low, ymax = high, fill = group), 
+              alpha = 0.15, color = 'white') +
+  scale_fill_manual(name = '', 
+                    values = rep(c('firebrick3', 'orange3', 'pink3'), 2)) +
+  ggrepel::geom_label_repel(data = filter(multipliers, year == 2025),
+                           aes(label = data_source, 
+                               x = 2026, 
+                               # fatal overdoses, nonfatal overdoses, MAT
+                               y = c(18000, 5000, 60000))) +
+  geom_line(aes(linetype = group)) +
+  scale_linetype_manual(name = '', values = rep(c('solid', 'dashed'), each = 3)) +
+  scale_color_manual(name = '', 
+                     values = rep(c('firebrick3', 'orange3', 'pink3'), 2)) +
+  geom_point() +
+  labs(x = 'Year', y = 'Number of Individuals') +
+  theme_classic(base_size = 20) +
+  theme(legend.position = 'none')
+#ggsave('opioid_users_all_multiplier_estimates.png')
+
+### without MAT
+multipliers %>%
+  filter(data_source != 'MAT') %>%
+
+ggplot(aes(x = year, y = estimate, color = group, group = group)) +
+  geom_ribbon(aes(ymin = low, ymax = high, fill = group), 
+              alpha = 0.15, color = 'white') +
+  scale_fill_manual(name = '', values = rep(c('firebrick3', 'pink3'), 2)) +
+  ggrepel::geom_label_repel(data = filter(multipliers, year == 2025,
+                                          data_source != 'MAT'),
+                           aes(label = data_source, 
+                               x = 2026, 
+                               # fatal overdoses, nonfatal overdoses, MAT
+                               y = c(15500, 7000))) +
+  geom_line(aes(linetype = group)) +
+  scale_linetype_manual(name = '', 
+                        values = rep(c('solid', 'dashed'), each = 2)) +
+  scale_color_manual(name = '', 
+                     values = rep(c('firebrick3', 'pink3'), 2)) +
+  geom_point() +
+  labs(x = 'Year', y = 'Number of Individuals') +
+  theme_classic(base_size = 20) +
+  theme(legend.position = 'none')
+#ggsave('opioid_users_multiplier_estimates_no_MAT.png')
+```
+
+### Adjusted Multiplier Estimates for IDUs
+
+#### Adjusted Estimate
+
+Again, we'll adjust the estimated number of opioid users to 30-60% of the total to estimate the number of intravenous drug users.
+
+```{r}
+multipliers %>%
+  mutate(low_adj_est = estimate * 0.32,
+         low_adj_low = low * 0.32,
+         low_adj_high = high * 0.32,
+         mid_adj_est = estimate * 0.46,
+         mid_adj_low = low * 0.46,
+         mid_adj_high = high * 0.46,
+         high_adj_est = estimate * 0.6,
+         high_adj_low = low * 0.6,
+         high_adj_high = high * 0.6) %>%
+  group_by(year, group, estimate_source, data_source) %>%
+  summarize(adj_estimate = (low_adj_est + mid_adj_est + high_adj_est) / 3,
+            adj_low = min(low_adj_low, mid_adj_low, high_adj_low),
+            adj_high = max(low_adj_high, mid_adj_high, high_adj_high)) %>%
+  ungroup() -> multipliers_adjusted
+```
+
+Because the estimate based on MAT patients was so divergent from all the other estimations in this report, we didn't adjust it down for the attempt to estimate the number of intravenous drug users. Again, we have wide confidence intervals on these estimates.
+
+```{r, fig.width = 5, fig.height = 4, include = TRUE}
+### all three multipliers
+# multipliers_adjusted %>%
+# 
+# ggplot(aes(x = year, y = adj_estimate, color = group, group = group)) +
+#   geom_ribbon(aes(ymin = adj_low, ymax = adj_high, fill = group), 
+#               alpha = 0.15, color = 'white') +
+#   scale_fill_manual(name = '', values = rep(c('firebrick3', 'orange3', 'pink3'), 2)) +
+#   ggrepel::geom_label_repel(data = filter(multipliers_adjusted, year == 2025),
+#                            aes(label = data_source,
+#                                x = 2026,
+#                                # fatal overdoses, MAT, nonfatal overdoses
+#                                y = c(9000, 35000, 1000))) +
+#   geom_line(aes(linetype = group)) +
+#   scale_linetype_manual(name = '', values = rep(c('solid', 'dashed'), each = 3)) +
+#   scale_color_manual(name = '', 
+#                      values = rep(c('firebrick3', 'orange3', 'pink3'), 2)) +
+#   geom_point() +
+#   labs(x = 'Year', y = 'Number of Individuals') +
+#   theme_classic(base_size = 20) +
+#   theme(legend.position = 'none')
+# ggsave('opioid_users_all_ADJ_multiplier_estimates.png')
+
+### without MAT
+multipliers_adjusted %>%
+  filter(data_source != 'MAT') %>%
+
+ggplot(aes(x = year, y = adj_estimate, color = group, group = group)) +
+  geom_ribbon(aes(ymin = adj_low, ymax = adj_high, fill = group), 
+              alpha = 0.15, color = 'white') +
+  scale_fill_manual(name = '', values = rep(c('firebrick3', 'pink3'), 2)) +
+  ggrepel::geom_label_repel(data = filter(multipliers_adjusted, year == 2025,
+                                          data_source != 'MAT'),
+                           aes(label = data_source, 
+                               x = 2026, 
+                               # fatal overdoses, nonfatal overdoses, MAT
+                               y = c(7500, 3500))) +
+  geom_line(aes(linetype = group)) +
+  scale_linetype_manual(name = '', 
+                        values = rep(c('solid', 'dashed'), each = 2)) +
+  scale_color_manual(name = '', 
+                     values = rep(c('firebrick3', 'pink3'), 2)) +
+  geom_point() +
+  labs(x = 'Year', y = 'Number of Individuals') +
+  theme_classic(base_size = 20) +
+  theme(legend.position = 'none')
+# ggsave('opioid_users_ADJ_multiplier_estimates_no_MAT.png')
+```
+
+### Poisson Estimation Method
+
+Prevention Point (PP) records each instance an individual visits the needle exchange. The data provided indicate a distinct individual with an anonymized unique identifier. The unique identifiers make it possible to count the frequency of an individual's visits to the needle exchange. Using the observed frequency of visits by each needle exchange participant, we can apply the Poisson distribution to estimate the number of intravenous drug users (Hay & Smit 2003).
+
+The Truncated Poisson Estimator is motivated by the need to estimate the number of individuals who have visited the needle exchange 0 times but could possibly have visited the needle exchange in the observed time period. This method is particularly applied to a set of indirect estimation methods, referred to as "Capture-Recapture experiments," in which researchers track the number of times they encounter distinct members of the population being studied. The relative frequencies of individuals who visit within a certain time period are assumed to have a Poisson distribution. That distribution is estimated in order to estimate the number of individuals never encountered in the experiment (Zelterman 1988).
+
+In the case of intravenous drug users (IDUs) in the Philadelphia area, we count the number of times a distinct pariticipant visited a site in PP's needle exchange program. We intuit that needle exchange participants who have only visited once or twice within the observed time period have many characteristics in common with intravenous drug users who have visited 0 times within the observed time period. The observed counts of distinct individuals who visited the needle exchange once or twice within a given time period enable us to estimate those who visited 0 times, giving us an estimate for the total number of IDUs in the Philadelphia area.
+
+```{r}
+### define functions 
+# functions used for helping estimate
+sep_events_truncPoisson <- function(dat, start = NA, end = NA, dates = NA, justEstimate = FALSE) {
+  # returns the estimate of the total population size using a truncated poisson estimator
+  # assumes that there is a column in dat that is a unique identifier for the person named id_encode
+  # assumes that there is a column in dat that is a class of DATE; used if start and end are defined
+  require(dplyr)
+  # set up sample_dat based on args
+  if( !is.na(start) & !is.na(end) ) {
+    # filter dat based on start and end date
+    if(class(start) != "Date") start <- as.Date(start)
+    if(class(end) != "Date") end <- as.Date(end)
+    sample_dat <- dat %>% filter(DATE >= start & DATE <= end)
+  } else if(is.na(start) & !is.na(end)) {
+    if(class(end) != "Date") end <- as.Date(end)
+    sample_dat <- dat %>% filter(DATE <= end)
+  } else if(!is.na(start) & is.na(end)) {
+    if(class(start) != "Date") start <- as.Date(start)
+    sample_dat <- dat %>% filter(DATE >= start)
+  } else if(length(dates) >= 1 && !is.na(dates)) {
+    sample_dat <- dat[FALSE,]
+    for(d in dates) {
+      if(class(d) != "Date") {
+        if(class(d) == "numeric") {
+          d <- as.Date(d, origin="1970-01-01")}
+        else {
+          d <- as.Date(d)
+        }
+      }
+      temp_dat <- filter(dat, DATE == d)
+      sample_dat <- rbind(sample_dat, temp_dat)
+    }
+  } else {
+    sample_dat <- dat
+  }
+  if( !is.factor(sample_dat$id_encode) ) sample_dat$id_encode <- as.factor(sample_dat$id_encode)
+  
+  # get counts needed for zelterman estimate
+  grouped_dat <- sample_dat %>%
+    group_by(id_encode) %>%
+    summarise(
+      visits = n_distinct(DATE),
+      no_exchange = max(no_exchanging_for)
+    )
+  f1 <- nrow(filter(grouped_dat, visits == 1))
+  f2 <- nrow(filter(grouped_dat, visits == 2))
+  total <- nrow(grouped_dat)
+  
+  # get estimate
+  estimate <- zeltermanEstimate(f1, f2, total)
+  
+  # set up list to return
+  if(justEstimate) {
+    ret <- estimate
+  } else {
+    conf_ints <- zeltermanConfInt(f1, f2, total, as.numeric(grouped_dat$visits))
+    ret <- list(pop_estimate = estimate,
+                estimate_params = c(f1=f1, f2=f2, total=total),
+                dateParams = c(start=start, end=end),
+                confidence_intervals = conf_ints,
+                grouped_data = grouped_dat
+                )
+  }
+  return(ret)
+}
+
+zeltermanEstimate <- function(f1, f2, total) {
+  return(floor (total / ( 1 - exp(-2 * f2 / f1) ) ) )
+}
+
+zeltermanStandardDev <- function(f1, f2, total, occurrences) {
+  poisson_fit <- fitdistr(occurrences, "poisson")
+  theta_hat <- poisson_fit$estimate["lambda"]
+  var_relative_freq <- (exp(-theta_hat)*(1-exp(-theta_hat))*(theta_hat + 2)) / total
+  return( sqrt(var_relative_freq) )
+}
+
+zeltermanConfInt <- function(f1, f2, total, occurrences) {
+  std_dev <- zeltermanStandardDev(f1, f2, total, occurrences)
+  q1_est <- exp(-2 * (f2 / f1))
+  ret <- total / (1 - (q1_est + (c(-1,1) * 1.96 * std_dev)) )
+  return(ret)
+}
+
+sep_getByID <- function(id, dat=sep_events) {
+  # just for investigative purposes
+  return(filter(dat, id_encode == id))
+}
+```
+
+```{r, , fig.width = 5, fig.height = 4, include = TRUE, fig.cap="The relative frequency is calculated as the number of individuals who attended a certain number of times divided by the estimated size of the population. The blue frequencies indicate the individuals who were observed by Prevention Point within the data provided. The red bar indicates the estimated number of IDUs in Philadelphia who did not visit the needle exchange. The orange box at the top of the estimate reflects the 95% confidence interval of the population estimate based on all visits in 2019."}
+# run estimate for all events
+all_est <- sep_events_truncPoisson(sep_events)
+est_df <- data.frame(visits=0, num=all_est$pop_estimate-all_est$estimate_params["total"])
+est_df_rel_freq <- est_df$num / all_est$pop_estimate
+est_df <- cbind(est_df, est_df_rel_freq)
+all_count_freq_est <- all_est$grouped_data %>%
+  group_by(visits) %>%
+  summarise(num = n())
+relative_freq <- all_count_freq_est$num / all_est$pop_estimate
+all_count_freq_est <- cbind(all_count_freq_est, relative_freq)
+all_est_relative_freq_ci <- (all_est$confidence_intervals - all_est$estimate_params['total']) / all_est$pop_estimate
+frequency_plot <- ggplot(all_count_freq_est, aes(x=visits, y=0)) + 
+  geom_segment(aes(xend=visits, yend=relative_freq), color="#0A68FF", size=1.1) +
+  geom_segment(aes(x=visits, y=0, xend=visits, yend=est_df_rel_freq), data=est_df, color="#FF5C5C", size=1.1) +
+  geom_crossbar(aes(x=0, y=est_df$est_df_rel_freq, ymin=all_est_relative_freq_ci[1], ymax=all_est_relative_freq_ci[2]),
+                size=0.6, color="#FF7733", linetype="solid") +
+  labs(x="Number of Visits", y="Relative Frequency",
+       title="Relative Frequency of Visits by Intravenous Drug Users in 2019") +
+  theme_classic(base_size = 20)
+frequency_plot
+```
+
+A key assumption of the Truncated Poisson Estimator is that the population size fuctuates only in a neglible manner, meaning that the population size should remain relatively constant throughout the entire observed time period (Hickman & Taylor 2005; Hay & Smit 2003). As can be seen below, the estimated population size varies significantly based on the set of observations used to make such estimate; this variance based on the interval of time observed has occurred in other studies of this sort (Hay & Smit 2003). The below table indicates the estimate results based on the observed time periods used to create such estimate. The variation in the estimates suggests that it may be necessary to use shorter time periods, such as monthly data, instead of longer time periods, such as annual data in order to account for fluctuations in the size of the number of IDUs over time.
+
+``` {r, include = TRUE}
+# run estimate for varying time frames to observe how the estimate fluctuates
+q1_est <- sep_events_truncPoisson(sep_events, start="2019-01-01", end="2019-03-31")
+q2_est <- sep_events_truncPoisson(sep_events, start="2019-04-01", end="2019-06-30")
+q3_est <- sep_events_truncPoisson(sep_events, start="2019-07-01", end="2019-09-30")
+q4_est <- sep_events_truncPoisson(sep_events, start="2019-10-01", end="2019-12-31")
+jan_est <- sep_events_truncPoisson(sep_events, start="2019-01-01", end="2019-01-31")
+feb_est <- sep_events_truncPoisson(sep_events, start="2019-02-01", end="2019-02-28")
+mar_est <- sep_events_truncPoisson(sep_events, start="2019-03-01", end="2019-03-31")
+apr_est <- sep_events_truncPoisson(sep_events, start="2019-04-01", end="2019-04-30")
+may_est <- sep_events_truncPoisson(sep_events, start="2019-05-01", end="2019-05-31")
+jun_est <- sep_events_truncPoisson(sep_events, start="2019-06-01", end="2019-06-30")
+jul_est <- sep_events_truncPoisson(sep_events, start="2019-07-01", end="2019-07-31")
+aug_est <- sep_events_truncPoisson(sep_events, start="2019-08-01", end="2019-08-31")
+sep_est <- sep_events_truncPoisson(sep_events, start="2019-09-01", end="2019-09-30")
+oct_est <- sep_events_truncPoisson(sep_events, start="2019-10-01", end="2019-10-31")
+nov_est <- sep_events_truncPoisson(sep_events, start="2019-11-01", end="2019-11-30")
+dec_est <- sep_events_truncPoisson(sep_events, start="2019-12-01", end="2019-12-31")
+estimate_list <- list(
+  all_est,
+  q1_est,
+  q2_est,
+  q3_est,
+  q4_est,
+  jan_est,
+  feb_est,
+  mar_est,
+  apr_est,
+  may_est,
+  jun_est,
+  jul_est,
+  aug_est,
+  sep_est,
+  oct_est,
+  nov_est,
+  dec_est
+)
+estimates <- sapply(estimate_list, function(i){i$pop_estimate})
+estimate_ci_low <- sapply(estimate_list, function(i){i$confidence_intervals[1]})
+estimate_ci_high <- sapply(estimate_list, function(i){i$confidence_intervals[2]})
+f1 <- sapply(estimate_list, function(i){i$estimate_params["f1"]})
+f2 <- sapply(estimate_list, function(i){i$estimate_params["f2"]})
+total <- sapply(estimate_list, function(i){i$estimate_params["total"]})
+hidden_estimate <- estimates - total
+proportion_hidden <- hidden_estimate / estimates
+present_dat <- data.frame(
+  estimated_pop=estimates,
+  estimated_ci_low=estimate_ci_low,
+  estimated_ci_high=estimate_ci_high,
+  all_visits=total,
+  hidden_estimate=hidden_estimate,
+  proportion_hidden=proportion_hidden
+)
+column_labels <- c(
+  "Estimated Population",
+  "95% Confidence Interval Lower Bound",
+  "95% Confidence Interval Upper Bound",
+  "Total Visitors",
+  "Estimate of Hidden Population",
+  "Proportion of Hidden in Estimate"
+)
+row_labels <- c(
+  "All of 2019",
+  "Quarter 1",
+  "Quarter 2",
+  "Quarter 3",
+  "Quarter 4",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+)
+rownames(present_dat) <- row_labels
+kable(present_dat, 
+      caption = "Esimate of IDUs Based on Varying Observed Periods of 2019",
+      col.names = column_labels, row.names = TRUE)
+```
+
+The estimates based on monthly data can be displayed in a manner that helps indicate the uncertainty of the estimated population size. These estimates tend to overlap, indicating that the population size may be best measure on a monthly basis.
+```{r, include=TRUE, fig.cap="Each point indicates the estimated number of IDUs in the Philadelphia area based on the visits Prevention Point recorded in a given month. The lines indicate the 95% confidence intervals of the estimates."}
+month_est_list <- list(
+  jan_est,
+  feb_est,
+  mar_est,
+  apr_est,
+  may_est,
+  jun_est,
+  jul_est,
+  aug_est,
+  sep_est,
+  oct_est,
+  nov_est,
+  dec_est
+)
+month_est_vec <- sapply(month_est_list, function(i){i[["pop_estimate"]]})
+month_low_vec <- sapply(month_est_list, function(i){i[["confidence_intervals"]][1]})
+month_high_vec <- sapply(month_est_list, function(i){i[["confidence_intervals"]][2]})
+month_names <- c("January", "February", "March", "April", "May","June","July","August","September","October","November","December")
+month_names <- factor(month_names, levels=month_names)
+month_ests <- data.frame(
+  month_names = month_names,
+  estimates = month_est_vec,
+  low_ci = month_low_vec,
+  high_ci = month_high_vec
+)
+# plot months showing confidence intervals
+monthly_plot <- ggplot(month_ests, aes(month_names,
+                                       estimates, ymin=low_ci, ymax=high_ci))
+monthly_plot <- monthly_plot + geom_pointrange(size=0.75, color="#0A68FF")
+monthly_plot <- monthly_plot + labs( x="Month of Visits Used in Estimate",
+                                     y="Estimated Number of Intravenous Drug Users",
+                                     title="Estimate of Intravenous Drug Users Based on Monthly Visists")
+monthly_plot
+```
+
+We additionally investigated how the estimate is adjusted based on very short time intervals. All possible, consecutive 5-day intervals were investigated. A set of possible dates was determined by finding all of the weekdays during which the needle exchange had at least one visit to a site. Using the possible list of dates, an estimate was created for each possible consecutive 5-day period for the exchange's operation.
+
+```{r, include = TRUE}
+# generate vector of possible dates
+possible_dates <- c()
+current_date <- ymd("20190101")
+while (year(current_date) == 2019) {
+  week_day <- wday(current_date)
+  # only operate on week days
+  if(week_day != 1 && week_day != 7) {
+    possible_dates <- append(possible_dates, current_date)
+  }
+  current_date <- current_date + days(1)
+}
+# exclude days during which it appears the needle exchanage was not operating
+zero_visits <- c()
+zero_indexes <- c()
+for(d in possible_dates) {
+  d_index <- which(possible_dates == d)
+  d <- as.Date(d, origin='1970-01-01')
+  num_visits <- nrow(filter(sep_events, DATE == d))
+  if(num_visits == 0) {
+    zero_visits <- append(zero_visits, d)
+    zero_indexes <- append(zero_indexes, d_index)
+  }
+}
+possible_dates <- possible_dates[-zero_indexes]
+# pick all 5 date intervals to test
+possible_starts <- length(possible_dates) - 4
+trials <- numeric(possible_starts)
+for(trial in seq(1, possible_starts)) {
+  est <- sep_events_truncPoisson(sep_events, start = possible_dates[trial], end = possible_dates[trial + 4], justEstimate = TRUE)
+  trials[trial] = est
+}
+trials <- trials[ which(!is.infinite(trials) & !is.na(trials)) ]
+summary(trials)
+```
+
+Similarly, a random sample of 5 days was used to generate random samples of any 5 days during which the exchange operated. The resulting trials indicate the possible variation of an estimate created based on one week of operation by the PP needle exchange sites.
+
+```{r, fig.width = 5, fig.height = 4, include = TRUE, fig.cap="The figure indicates the distribution of the population estimate based on simulated 5-day intervals from 2019. 10,000 simulations are represented."}
+# load sample_trials
+load('simulated_5day_results.rdata')
+sample_hist <- ggplot(sample_trials, aes(sample_trials)) +
+  geom_histogram() +
+  labs(x="Population Estimate", y="Number of Trials",
+         title="Distribution of Population Estimates Based on Simulated 5-day Intervals") +
+  theme_classic(base_size = 20)
+sample_hist
+```
+
+There is a significantly level of variation in the estimates generated based on a 5 days of operation by the needle exchange. We propose using monthly observations to continue making estimates in the future when applying the Truncated Poisson Estimator.
+
+<br>
+
+## Conclusions and Next Steps
+
+These estimates are all bad, but the relative magnitude of the estimates in the low thousands are probably reasonable. The methods used here can be applied to better data either by us or by organizations within the city. Better, more granular data will allow us to make better estimates that avoid duplicatively counting the same person. More granular data would enable a more robust implementation of a Capture-Recapture experiment that could combine data collected at Prevention Point's needle exchange sites with other data sources managed by the City of Philadelphia.
+
+<br>
+
+## References
+
+**Literature:**
+
+1. Arnaud, Jeannin, and Dubois-Arber (2011) “Estimating national-level syringe availability to injecting drug users and injection coverage: Switzerland, 1996-2006,” International Journal of Drug Policy, 22(3):226-232, doi: 10.1016/j.drugpo.2011.03.008 
+2. Gordon Hay & Filip Smit (2003) “Estimating the Number of Drug Injectors from Needle Exchange Data,” Addiction Research & Theory 11:4, 235-243, DOI: 10.1080/1606635031000135622
+3. Hickman, Matthew and Colin Taylor (2005) “Indirect Methods to Estimate Prevalence,” Epidemiology of Drug Abuse, 113-132.
+4. Mallow, et al (2019) “Estimating the Prevalence of Opioid Use Disorder in the Cincinnati Region Using Probabilistic Multiplier Methods and Model Averaging,” Methodology and Health Care Policy Vol 6, Issue 2, https://doi.org/10.36469/9729
+5. Zelterman, Daniel (1988) “Robust Estimation in Truncated Discrete Distributions with Application to Capture-Recapture Experiments,” Journal of Statistical Planning and Inference 18, 225-237.
+
+**Data:**
+
+1. Levin, Jules (2018), “The Hepatitis C Continuum of Care for People Who Inject Drugs; Philadelphia, PA - young PWID 8% treated for HCV, older still only 25%” National Aids Treatment Project Conference Report http://www.natap.org/2018/AASLD/AASLD_158.htm
+2. Philadelphia Department of Public Health: https://public.tableau.com/profile/pdph#!/
+3. Philadelphia Arrest Data from the District Attorney’s Office via Philly Open Data: https://www.opendataphilly.org/showcase/da-dashboard-arrests
+4. Prevention Point Needle Exchange Data: https://github.com/CodeForPhilly/datahack2020/blob/master/data/pp_sep_site_event.zip
+5. Treatment Episode Data Set(2010-2017): https://datafiles.samhsa.gov/study-series/treatment-episode-data-set-admissions-teds-nid13518
+
+<br><br>

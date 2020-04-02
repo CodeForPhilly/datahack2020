@@ -1,0 +1,222 @@
+---
+title: "Number of Intravenous Drug Users using Truncated Poisson Estimator and Prevention Point's Needle Exchange Visit Data"
+author: "Sam May"
+date: "March 9, 2020"
+output: html_document
+---
+
+```{r, include=FALSE}
+library(dplyr)
+library(lubridate)
+library(MASS)
+library(ggplot2)
+library(knitr)
+setwd("C:/Users/spmay/source/c4p/datahack2020")
+base_dir <- paste0(getwd(), "/analyses/team04/poisson", sep="")
+source(paste0(base_dir, "/functions.R", sep=""))
+
+# get data
+sep_events <- read.csv(paste0(base_dir,"/data/pp_sep_site_event.csv", sep=""))
+sep_events$DATE <- as.Date(sep_events$DATE, format="%m/%d/%y")
+sep_events$no_exchanging_for <- as.numeric(sep_events$no_exchanging_for)
+```
+Prevention Point (PP) records each instance an individual visits the needle exchange. The data provided indicate a distinct individual with an anonymized unique identifier. The unique identifiers make it possible to count the frequency of an individual's visits to the needle exchange. Using the observed frequency of visits by each needle exchange participant, we can apply the Poisson distribution to estimate the number of intravenous drug users (Hay & Smit 2003).
+
+The Truncated Poisson Estimator is motivated by the need to estimate the number of individuals who have visited the needle exchange 0 times but could possibly have visited the needle exchange in the observed time period. This method is particularly applied to a set of indirect estimation methods, referred to as "Capture-Recapture experiments," in which researchers track the number of times they encounter distinct members of the population being studied. The relative frequencies of individuals who visit within a certain time period are assumed to have a Poisson distribution. That distribution is estimated in order to estimate the number of individuals never encountered in the experiment (Zelterman 1988).
+
+In the case of intravenous drug users (IDUs) in the Philadelphia area, we count the number of times a distinct pariticipant visited a site in PP's needle exchange program. We intuit that needle exchange participants who have only visited once or twice within the observed time period have many characteristics in common with intravenous drug users who have visited 0 times within the observed time period. The observed counts of distinct individuals who visited the needle exchange once or twice within a given time period enable us to estimate those who visited 0 times, giving us an estimate for the total number of IDUs in the Philadelphia area.
+```{r, echo=FALSE, fig.cap="The relative frequency is calculated as the number of individuals who attended a certain number of times divided by the estimated size of the population. The blue frequencies indicate the individuals who were observed by Prevention Point within the data provided. The red bar indicates the estimated number of IDUs in Philadelphia who did not visit the needle exchange. The orange box at the top of the estimate reflects the 95% confidence interval of the population estimate based on all visits in 2019."}
+# run estimate for all events
+all_est <- sep_events_truncPoisson(sep_events)
+est_df <- data.frame(visits=0, num=all_est$pop_estimate-all_est$estimate_params["total"])
+est_df_rel_freq <- est_df$num / all_est$pop_estimate
+est_df <- cbind(est_df, est_df_rel_freq)
+all_count_freq_est <- all_est$grouped_data %>%
+  group_by(visits) %>%
+  summarise(num = n())
+relative_freq <- all_count_freq_est$num / all_est$pop_estimate
+all_count_freq_est <- cbind(all_count_freq_est, relative_freq)
+
+all_est_relative_freq_ci <- (all_est$confidence_intervals - all_est$estimate_params['total']) / all_est$pop_estimate
+frequency_plot <- ggplot(all_count_freq_est, aes(x=visits, y=0)) +
+  geom_segment(aes(xend=visits, yend=relative_freq), color="#0A68FF", size=1.1) +
+  geom_segment(aes(x=visits, y=0, xend=visits, yend=est_df_rel_freq), data=est_df, color="#FF5C5C", size=1.1) +
+  geom_crossbar(aes(x=0, y=est_df$est_df_rel_freq, ymin=all_est_relative_freq_ci[1], ymax=all_est_relative_freq_ci[2]),
+                size=0.6, color="#FF7733", linetype="solid") +
+  labs(x="Number of Visits", y="Relative Frequency",
+       title="Relative Frequency of Visits by Intravenous Drug Users in 2019")
+frequency_plot
+```
+
+A key assumption of the Truncated Poisson Estimator is that the population size fuctuates only in a neglible manner, meaning that the population size should remain relatively constant throughout the entire observed time period (Hickman & Taylor 2005; Hay & Smit 2003). As can be seen below, the estimated population size varies significantly based on the set of observations used to make such estimate; this variance based on the interval of time observed has occurred in other studies of this sort (Hay & Smit 2003). The below table indicates the estimate results based on the observed time periods used to create such estimate. The variation in the estimates suggests that it may be necessary to use shorter time periods, such as monthly data, instead of longer time periods, such as annual data in order to account for fluctuations in the size of the number of IDUs over time.
+``` {r, echo=FALSE}
+# run estimate for varying time frames to observe how the estimate fluctuates
+q1_est <- sep_events_truncPoisson(sep_events, start="2019-01-01", end="2019-03-31")
+q2_est <- sep_events_truncPoisson(sep_events, start="2019-04-01", end="2019-06-30")
+q3_est <- sep_events_truncPoisson(sep_events, start="2019-07-01", end="2019-09-30")
+q4_est <- sep_events_truncPoisson(sep_events, start="2019-10-01", end="2019-12-31")
+jan_est <- sep_events_truncPoisson(sep_events, start="2019-01-01", end="2019-01-31")
+feb_est <- sep_events_truncPoisson(sep_events, start="2019-02-01", end="2019-02-28")
+mar_est <- sep_events_truncPoisson(sep_events, start="2019-03-01", end="2019-03-31")
+apr_est <- sep_events_truncPoisson(sep_events, start="2019-04-01", end="2019-04-30")
+may_est <- sep_events_truncPoisson(sep_events, start="2019-05-01", end="2019-05-31")
+jun_est <- sep_events_truncPoisson(sep_events, start="2019-06-01", end="2019-06-30")
+jul_est <- sep_events_truncPoisson(sep_events, start="2019-07-01", end="2019-07-31")
+aug_est <- sep_events_truncPoisson(sep_events, start="2019-08-01", end="2019-08-31")
+sep_est <- sep_events_truncPoisson(sep_events, start="2019-09-01", end="2019-09-30")
+oct_est <- sep_events_truncPoisson(sep_events, start="2019-10-01", end="2019-10-31")
+nov_est <- sep_events_truncPoisson(sep_events, start="2019-11-01", end="2019-11-30")
+dec_est <- sep_events_truncPoisson(sep_events, start="2019-12-01", end="2019-12-31")
+estimate_list <- list(
+  all_est,
+  q1_est,
+  q2_est,
+  q3_est,
+  q4_est,
+  jan_est,
+  feb_est,
+  mar_est,
+  apr_est,
+  may_est,
+  jun_est,
+  jul_est,
+  aug_est,
+  sep_est,
+  oct_est,
+  nov_est,
+  dec_est
+)
+estimates <- sapply(estimate_list, function(i){i$pop_estimate})
+estimate_ci_low <- sapply(estimate_list, function(i){i$confidence_intervals[1]})
+estimate_ci_high <- sapply(estimate_list, function(i){i$confidence_intervals[2]})
+f1 <- sapply(estimate_list, function(i){i$estimate_params["f1"]})
+f2 <- sapply(estimate_list, function(i){i$estimate_params["f2"]})
+total <- sapply(estimate_list, function(i){i$estimate_params["total"]})
+hidden_estimate <- estimates - total
+proportion_hidden <- hidden_estimate / estimates
+present_dat <- data.frame(
+  estimated_pop=estimates,
+  estimated_ci_low=estimate_ci_low,
+  estimated_ci_high=estimate_ci_high,
+  all_visits=total,
+  hidden_estimate=hidden_estimate,
+  proportion_hidden=proportion_hidden
+)
+column_labels <- c(
+  "Estimated Population",
+  "95% Confidence Interval Lower Bound",
+  "95% Confidence Interval Upper Bound",
+  "Total Visitors",
+  "Estimate of Hidden Population",
+  "Proportion of Hidden in Estimate"
+)
+row_labels <- c(
+  "All of 2019",
+  "Quarter 1",
+  "Quarter 2",
+  "Quarter 3",
+  "Quarter 4",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+)
+rownames(present_dat) <- row_labels
+kable(present_dat, caption = "Esimate of IDUs Based on Varying Observed Periods of 2019",
+      col.names = column_labels, row.names = TRUE)
+```
+
+The estimates based on monthly data can be displayed in a manner that helps indicate the uncertainty of the estimated population size. These estimates tend to overlap, indicating that the population size may be best measure on a monthly basis.
+```{r, echo=FALSE, fig.cap="Each point indicates the estimated number of IDUs in the Philadelphia area based on the visits Prevention Point recorded in a given month. The lines indicate the 95% confidence intervals of the estimates."}
+month_est_list <- list(
+  jan_est,
+  feb_est,
+  mar_est,
+  apr_est,
+  may_est,
+  jun_est,
+  jul_est,
+  aug_est,
+  sep_est,
+  oct_est,
+  nov_est,
+  dec_est
+)
+month_est_vec <- sapply(month_est_list, function(i){i[["pop_estimate"]]})
+month_low_vec <- sapply(month_est_list, function(i){i[["confidence_intervals"]][1]})
+month_high_vec <- sapply(month_est_list, function(i){i[["confidence_intervals"]][2]})
+month_names <- c("January", "February", "March", "April", "May","June","July","August","September","October","November","December")
+month_names <- factor(month_names, levels=month_names)
+month_ests <- data.frame(
+  month_names = month_names,
+  estimates = month_est_vec,
+  low_ci = month_low_vec,
+  high_ci = month_high_vec
+)
+# plot months showing confidence intervals
+monthly_plot <- ggplot(month_ests, aes(month_names,
+                                       estimates, ymin=low_ci, ymax=high_ci))
+monthly_plot <- monthly_plot + geom_pointrange(size=0.75, color="#0A68FF")
+monthly_plot <- monthly_plot + labs( x="Month of Visits Used in Estimate",
+                                     y="Estimated Number of Intravenous Drug Users",
+                                     title="Estimate of Intravenous Drug Users Based on Monthly Visists")
+monthly_plot
+```
+
+We additionally investigated how the estimate is adjusted based on very short time intervals. All possible, consecutive 5-day intervals were investigated. A set of possible dates was determined by finding all of the weekdays during which the needle exchange had at least one visit to a site. Using the possible list of dates, an estimate was created for each possible consecutive 5-day period for the exchange's operation.
+```{r, echo=FALSE}
+# generate vector of possible dates
+possible_dates <- c()
+current_date <- ymd("20190101")
+while (year(current_date) == 2019) {
+  week_day <- wday(current_date)
+  # only operate on week days
+  if(week_day != 1 && week_day != 7) {
+    possible_dates <- append(possible_dates, current_date)
+  }
+  current_date <- current_date + days(1)
+}
+# exclude days during which it appears the needle exchanage was not operating
+zero_visits <- c()
+zero_indexes <- c()
+for(d in possible_dates) {
+  d_index <- which(possible_dates == d)
+  d <- as.Date(d, origin='1970-01-01')
+  num_visits <- nrow(filter(sep_events, DATE == d))
+  if(num_visits == 0) {
+    zero_visits <- append(zero_visits, d)
+    zero_indexes <- append(zero_indexes, d_index)
+  }
+}
+possible_dates <- possible_dates[-zero_indexes]
+# pick all 5 date intervals to test
+possible_starts <- length(possible_dates) - 4
+trials <- numeric(possible_starts)
+for(trial in seq(1, possible_starts)) {
+  est <- sep_events_truncPoisson(sep_events, start = possible_dates[trial], end = possible_dates[trial + 4], justEstimate = TRUE)
+  trials[trial] = est
+}
+trials <- trials[ which(!is.infinite(trials) & !is.na(trials)) ]
+summary(trials)
+```
+
+Similarly, a random sample of 5 days was used to generate random samples of any 5 days during which the exchange operated. The resulting trials indicate the possible variation of an estimate created based on one week of operation by the PP needle exchange sites.
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="The figure indicates the distribution of the population estimate based on simulated 5-day intervals from 2019. 10,000 simulations are represented."}
+# load sample_trials
+load(paste0(base_dir,"/simulated_5day_results.RData",sep=""))
+sample_hist <- ggplot(sample_trials, aes(sample_trials)) +
+  geom_histogram() +
+  labs(x="Population Estimate", y="Number of Trials",
+         title="Distribution of Population Estimates Based on Simulated 5-day Intervals")
+sample_hist
+```
+
+There is a significantly level of variation in the estimates generated based on a 5 days of operation by the needle exchange. We propose using monthly observations to continue making estimates in the future when applying the Truncated Poisson Estimator.

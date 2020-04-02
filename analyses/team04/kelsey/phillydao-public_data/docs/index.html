@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Philadelphia DAO Data Dashboard</title>
+
+<script src="assets/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="assets/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="assets/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="assets/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="assets/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="assets/navigation-1.1/tabsets.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141263577-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141263577-1');
+</script>
+<script type="text/javascript" src="./assets/js/dao-dashboard-mapmaker.js"></script>
+<script type='text/javascript' src='./assets/js/dao-dashboard.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js"></script>
+<script type="text/javascript" src="https://stamen-maps.a.ssl.fastly.net/js/tile.stamen.js"></script>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css' />
+<script type='text/javascript' src='./assets/js/leaflet-choropleth/choropleth.js'></script>
+<script src="https://use.fontawesome.com/42c4092025.js"></script>
+<link rel="shortcut icon" type="image/png" href="./assets/images/favicon.png">
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+<nav class="navbar row" role="navigation">
+  <div class="container-fluid">
+    <div class="row dao_header vertical-align">
+      <div class="col-sm-12 col-md-3 text-sm-center "><img src="assets/images/dao_logo.svg" alt="DAO Logo"></div>
+      <div class="col-sm-12 col-md-6 col-md-offset-3 text-md-right text-sm-center dao_header_title">Public Data Dashboard</div>
+    </div>
+    <div class="dao_navbar">
+      <div class="navbar-header navbar-default dao-hamburger">
+        <button type="button" class="navbar-toggle dao-hamburger collapsed" data-toggle="collapse" data-target="#dao-collapse-navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse dao-menu" id="dao-collapse-navbar">
+        <ul class="dao-nav-menu nav navbar-nav dao-menu btn-group">
+          <li class="dao-nav-menu"><a href="index.html" class="btn btn-dao-menu">Home</a></li>
+          <li class="dropdown dao-nav-menu">
+            <a href="#" class="dropdown-toggle btn btn-dao-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
+            <ul class="dropdown-menu dao_menu">
+            <li class="dropdown-submenu">
+                <a href="#" class="test">Year End Reports <span class="dropdown-submenu right-pointing-triangle"></span></a>
+                  <ul class="dropdown-menu dao_menu">
+                    <li><a href="Incidents_Report_YE.html">Year End Incidents</a></li>
+                    <li><a href="Arrest_Report_YE.html">Year End Arrests</a></li>
+                    <li><a href="Charge_Report_YE.html">Year End Charges</a></li>
+                    <li><a href="Bail_Report_YE.html">Year End Bail</a></li>
+                    <li><a href="Case_Outcomes_Report_YE.html">Year End Outcomes</a></li>
+                    <li><a href="Case_Length_Report_YE.html">Year End Case Length</a></li>
+                    <li><a href="Future_Years_Incarceration_Report_YE.html">Year End Future Years of Incarceration</a></li>
+                    <li><a href="Future_Years_Supervision_Report_YE.html">Year End Future Years of Supervision</a></li>
+                    <li><a href="Summary_Arrest_Report_YE.html">Year End Summary Arrests</a></li>
+                    <li><a href="Summary_Charge_Report_YE.html">Year End Summary Charges</a></li>
+                    <li><a href="Summary_Case_Outcomes_Report_YE.html">Year End Summary Case Outcomes</a></li>
+                    <li><a href="Summary_Case_Length_Report_YE.html">Year End Summary Case Length</a></li>
+                </ul>
+              </li>
+              <li><a href="Incidents_Report.html">Incidents</a></li>
+              <li><a href="Arrest_Report.html">Arrests</a></li>
+              <li><a href="Charge_Report.html">Charges</a></li>
+              <li><a href="Bail_Report.html">Bail</a></li>
+              <li><a href="Case_Outcomes_Report.html">Outcomes</a></li>
+              <li><a href="Case_Length_Report.html">Case Length</a></li>
+              <li><a href="Future_Years_Incarceration_Report.html">Future Years of Incarceration</a></li>
+              <li><a href="Future_Years_Supervision_Report.html">Future Years of Supervision</a></li>
+              <li><a href="Summary_Arrest_Report.html">Summary Arrests</a></li>
+              <li><a href="Summary_Charge_Report.html">Summary Charges</a></li>
+              <li><a href="Summary_Case_Outcomes_Report.html">Summary Case Outcomes</a></li>
+              <li><a href="Summary_Case_Length_Report.html">Summary Case Length</a></li>
+            </ul>
+          </li>
+          <li class="dao-nav-menu"><a href="https://medium.com/philadelphia-justice/tagged/data-stories" class="btn btn-dao-menu">Data Stories</a></li>
+          <li class="dao-nav-menu"><a href="download.html" class="btn btn-dao-menu">Downloads</a></li>
+          <li class="dropdown dao-nav-menu">
+            <a href="#" class="dropdown-toggle btn btn-dao-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Resources <span class="caret"></span></a>
+            <ul class="dropdown-menu dao_menu">
+              <li><a href="about.html">About</a></li>
+              <li><a href="definitions.html">Definitions</a></li>
+              <li><a href="limitations.html">Limitations</a></li>
+              <li><a href="howto.html">How to Use This Site</a></li>
+              <li><a href="updates.html">Updates</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="rmd-container-fluid rmd-container">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Philadelphia DAO Data Dashboard</h1>
+
+</div>
+
+
+<div id="main-carousel" class="carousel slide dao_carousel row" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#main-carousel" data-slide-to="0" data-interval="10000" class="active"></li>
+    <li data-target="#main-carousel" data-slide-to="1" data-interval="10000" ></li>
+    <li data-target="#main-carousel" data-slide-to="2" data-interval="10000" ></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner dao_carousel_inner" role="listbox">
+    <div class="item active">
+      <img src="assets/images/Carousel-LK_Speaking.png" alt="Story 1: A Note from DA Krasner about transparency.">
+      <div class="carousel-caption">
+        <p class="dao-carousel-text col-md-8">“This new website is a first step toward providing greater transparency and accountability to the public. This site uses data to replace fear-driven fiction with fact. It replaces doubt with data to tell a true story that has not been told about crime, about public safety, about our people, and about our city.”</p>
+        <p class="dao-carousel-text dao-carousel-text-emphasis col-md-11"><a href="https://medium.com/philadelphia-justice/video-test-1-ba9ad564e734" target="_blank">DA Larry Krasner on Transparency and Acccountability</a></p>
+      </div>
+    </div>
+    <div class="item">
+      <img src="assets/images/Carousel-ResourceHub.png" alt="Story 2: Diversion Expansion">
+      <div class="carousel-caption">
+        <p class="dao-carousel-text col-md-8">"We are increasing the use of diversion and working on improvements and expansions to diversion that we hope will improve employment, address addiction, reduce domestic violence, support our veterans, increase education, lift up children and their families, and reduce government waste."</p>
+        <p class="dao-carousel-text dao-carousel-text-emphasis col-md-11"><a href="https://medium.com/philadelphia-justice/video-3-4eaec60eea76" target="_blank">Learn about our increased emphasis on diversion</a></p>
+      </div>
+    </div>
+    <div class="item">
+      <img src="assets/images/Carousel-FutureYearsIncarceration.png" alt="Story 3: Future Years of Incarceration">
+      <div class="carousel-caption">
+        <p class="dao-carousel-text col-md-8">"Since taking office in January 2018, the Philadelphia District Attorney’s Office has worked to reduce excessive jail and supervision so we can shift those resources to achieve more effective crime prevention and a just society."</p>
+        <p class="dao-carousel-text dao-carousel-text-emphasis col-md-11"><a href="Future_Years_Incarceration_Report.html">See our report on Future Years of Incarceration</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#main-carousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#main-carousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+<div class="row col-12 text-center">
+<h1>
+Key Metrics We’re Tracking
+</h1>
+</div>
+<div class="row dao_key_numbers">
+<div class="col-print-2 col-xs-6 col-sm-2 col-print-offset-2 col-sm-offset-2" onclick="location.href=&#39;Future_Years_Incarceration_Report.html&#39;;" style="cursor:pointer;">
+<p class="dao_key_number_value dao_metric">
+<span class="down-pointing-triangle"> </span> -8,700
+</p>
+<h4 class="dao_key_number_text">
+<h4 class="dao_key_numbers_emphasis">
+Years of Incarceration
+</h4>
+Imposed Since 2018 (vs. ’14-’17)
+</h4>
+</div>
+<div class="col-print-2 col-xs-6 col-sm-2" onclick="location.href=&#39;Future_Years_Supervision_Report.html&#39;;" style="cursor:pointer;">
+<p class="dao_key_number_value dao_metric">
+<span class="down-pointing-triangle"> </span> -41,600
+</p>
+<h4 class="dao_key_number_text">
+<h4 class="dao_key_numbers_emphasis">
+Years of Supervision
+</h4>
+Imposed Since 2018 (vs. ’14-’17)
+</h4>
+</div>
+<div class="col-print-2 col-xs-6 col-sm-2">
+<p class="dao_key_number_value dao_metric">
+0
+</p>
+<h4 class="dao_key_number_text">
+Cases Where the
+<h4 class="dao_key_numbers_emphasis">
+Death Penalty Was Sought
+</h4>
+Since 2018
+</h4>
+</div>
+<div class="col-print-2 col-xs-6 col-sm-2">
+<p class="dao_key_number_value dao_metric">
+12
+</p>
+<h4 class="dao_key_number_text">
+<h4 class="dao_key_numbers_emphasis">
+Exonerations
+</h4>
+Since 2018
+</h4>
+</div>
+</div>
+<div class="row col-12 text-center">
+<h1>
+Data Stories
+</h1>
+</div>
+<div class="row">
+<a href='https://medium.com/philadelphia-justice/outlier-cases-explain-aggravated-assault-not-guilty-rates-in-cases-taken-to-trial-d3cec5f45715?source=rss----48f13afb3224--data_stories' target='_blank'>
+<div class="col-sm-12 col-md-4 text-sm-center dao_data_story">
+<div class="thumbnail dao_data_story">
+<img src='https://cdn-images-1.medium.com/max/1024/1*CrkKyniBASOLRQqKGeUdxw.png' alt='Story Image'>
+<div class="caption dao-data-story-caption">
+Outlier Cases Explain Aggravated Assault ‘Not Guilty’ Rates in Cases Taken to Trial
+</div>
+</div>
+</div>
+</a><a href='https://medium.com/philadelphia-justice/diversion-is-up-in-philadelphia-a8a3c320d950?source=rss----48f13afb3224--data_stories' target='_blank'>
+<div class="col-sm-12 col-md-4 text-sm-center dao_data_story">
+<div class="thumbnail dao_data_story">
+<img src='https://cdn-images-1.medium.com/max/1024/1*XIzItv7FPvpTIMPVXtRCgg.png' alt='Story Image'>
+<div class="caption dao-data-story-caption">
+Diversion is Up in Philadelphia
+</div>
+</div>
+</div>
+</a><a href='https://medium.com/philadelphia-justice/inside-the-incident-arrest-charge-funnel-e2a0455b1e18?source=rss----48f13afb3224--data_stories' target='_blank'>
+<div class="col-sm-12 col-md-4 text-sm-center dao_data_story">
+<div class="thumbnail dao_data_story">
+<img src='https://cdn-images-1.medium.com/max/1024/1*XIzItv7FPvpTIMPVXtRCgg.png' alt='Story Image'>
+<div class="caption dao-data-story-caption">
+Inside the Incident-Arrest-Charge Funnel
+</div>
+</div>
+</div>
+<p></a></p>
+</div>
+<div class="row col-12 text-center">
+<h1>
+Available Reports
+</h1>
+</div>
+<div class="row">
+<div class="col-md-2 col-md-offset-1 col-sm-12">
+<p>
+<a href="Incidents_Report.html" class="dao-report-link dao_report_body_emphasis">Incidents</a>
+</p>
+<p>
+<a href="Arrest_Report.html" class="dao-report-link dao_report_body_emphasis">Arrests</a>
+</p>
+<p>
+<a href="Charge_Report.html" class="dao-report-link dao_report_body_emphasis">Charges</a>
+</p>
+<p>
+<a href="Bail_Report.html" class="dao-report-link dao_report_body_emphasis">Bail</a>
+</p>
+</div>
+<div class="col-md-3 col-md-offset-1 col-sm-12">
+<p>
+<a href="Case_Outcomes_Report.html" class="dao-report-link dao_report_body_emphasis">Case Outcomes</a>
+</p>
+<p>
+<a href="Case_Length_Report.html" class="dao-report-link dao_report_body_emphasis">Case Length</a>
+</p>
+<p>
+<a href="Future_Years_Incarceration_Report.html" class="dao-report-link dao_report_body_emphasis">Future Years of Incarceration</a>
+</p>
+<p>
+<a href="Future_Years_Supervision_Report.html" class="dao-report-link dao_report_body_emphasis">Future Years of Supervision</a>
+</p>
+</div>
+<div class="col-md-4 col-md-offset-1 col-sm-12">
+<p>
+<a href="Summary_Arrest_Report.html" class="dao-report-link dao_report_body_emphasis">Summary Arrests</a>
+</li>
+<p>
+<a href="Summary_Charge_Report.html" class="dao-report-link dao_report_body_emphasis">Summary Charges</a>
+</li>
+<p>
+<a href="Summary_Case_Outcomes_Report.html" class="dao-report-link dao_report_body_emphasis">Summary Case Outcomes</a>
+</li>
+<p>
+<a href="Summary_Case_Length_Report.html" class="dao-report-link dao_report_body_emphasis">Summary Case Length</a>
+</li>
+</div>
+</div>
+
+</div>
+<footer class="row">
+<div class="container-fluid padding">
+<div class="row text-center">
+	<div class="col-md-4">
+    <h2 class="connectext">Office</h2>
+		<hr class="light">
+		<p>
+		  Three South Penn Square<br/>
+		  Philadelphia, PA 19107-3499<br/>
+		  215-686-8000
+		</p>
+	</div>
+	<div class="col-md-4">
+		<div class="col-12">
+			<h2 class="connectext">Connect</h2>
+		<hr class="light">
+			</div>
+			<div class="col-12 social padding">
+				<a href="https://www.facebook.com/philaDAO/" target="_blank"><i class="fa fa-facebook social-circle-icon" title="facebook"></i></a>
+				<a href="https://www.instagram.com/philadao/?hl=en" target="_blank"><i class="fa fa-instagram social-circle-icon" title="instagram"></i></a>
+				<a href="https://twitter.com/philadao?lang=en" target="_blank"><i class="fa fa-twitter social-circle-icon" title="twitter"></i></a>
+				<a href="mailto:justice@phila.gov"><i class="fa fa-envelope social-circle-icon" title="email us"></i></a>
+			</div>
+		</div>
+	<div class="col-md-4">
+	  <div class="col-12">
+	    <h2 class="connectext">More</h2>
+		<hr class="light">
+      <ul>
+        <li><a href="https://medium.com/philadelphia-justice" target="_blank">The Justice Wire</a></li>
+        <li><a href="https://www.phila.gov/districtattorney/pages/default.aspx" target="_blank">Office of the District Attorney</a></li>
+        <li><a href="howto.html#constraints">Public Access and Use</a></li>
+		  </ul>
+		</div>
+  </div>
+</div>
+<p class="copytext">&copy; City of Philadelphia, Philadelphia District Attorney's Office<p>
+</div>
+</footer>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+</body>
+</html>

@@ -1,0 +1,495 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(magrittr)
+library(conflicted)
+
+library(lubridate)
+
+filter <- dplyr::filter
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Estimating the Number of Intravenous Drug Users (IDUs) in Phildelphia
+
+## Lower Bound IDU Estimate
+
+For a lower-bound estimate of the number of intravenous / injectable drug users (IDUs) in the city, I'll simply add the number of individuals arrested for IDU + the number of overdoses + the number of people in treatment. For the moment, intravenous drug users are defined as users of heroin, fentanyl or fentanyl analogues.
+
+### Read In / Wrangle Data
+
+#### Arrests
+
+From Philly Open Data <https://github.com/phillydao/phillydao-public-data/tree/master/docs>
+
+Read in the data
+
+```{r}
+### read in the table from Philly Open Data for daily arrests
+vroom::vroom('phillydao-public_data/docs/data/arrest_data_daily_by_zip.csv') -> daily_arrests_zip
+
+### read in the table for drug seizures; going to assume people are arrested
+### for using drugs in the same proportion as those drugs are seized
+vroom::vroom('philly_doh_tableau_data/drug_seizures.tsv') %>%
+  mutate(quarter = case_when(quarter == 'Q1' ~ '01-01',
+                             quarter == 'Q2' ~ '04-01',
+                             quarter == 'Q3' ~ '07-01',
+                             quarter == 'Q4' ~ '10-01')) %>%
+  unite(quarter, c('year', 'quarter'), sep = '-') %>%
+  mutate(quarter = as.Date(quarter)) -> drug_seizures
+```
+
+Summarize arrests to the year and quarter (since that's how fine-grained some of the other data is) and estimate IUDs by proportion of drugs seized.
+
+```{r}
+daily_arrests_zip %>%
+  select(date_value, `Drug Possession`) %>%
+  mutate(year = year(date_value),
+         quarter = round_date(date_value, unit = 'quarter')) %>%
+  group_by(year, quarter) %>%
+  summarize(arrests = sum(`Drug Possession`)) %>%
+  left_join(drug_seizures) %>%
+  mutate(iud_perc = fentanyl + fentanyl_analogue + heroin) %>%
+  select(-(cocaine:other)) %>%
+  mutate(arrests_adj = round(arrests * (iud_perc / 100))) -> arrests
+```
+
+#### Overdoses
+
+From Philadelphia Department of Health's public opiod tableau page <https://public.tableau.com/profile/pdph#!/>
+
+```{r}
+vroom::vroom('philly_doh_tableau_data/overdose_deaths.tsv') -> overdose_deaths
+vroom::vroom('philly_doh_tableau_data/hosp_nonfatal_overdoses.tsv') -> nonfatal_over
+
+### This is a combination of overdose deaths and nonfatal overdose, but far 
+### fewer years of datacompared to to the tables above so decided not to use
+#vroom::vroom('../../../data/data/dph_od_incident_counts.csv') -> overdose_incidents
+
+### Decided not to use this table because it's voluntarily entered first 
+### responder information and is probably counted in the other dataset
+#vroom::vroom('../../../data/psp_overdose_events.csv') -> overdoses
+```
+
+Combine the data
+
+```{r}
+overdose_deaths %>%
+  filter(year != 2019) %>%
+  group_by(year) %>%
+  summarize(deaths = sum(deaths)) %>%
+  ungroup() %>%
+# add number from city report for 2019 here
+# https://www.phila.gov/media/20200226121229/Substance-Abuse-Data-Report-02.26.20.pdf
+  rbind(tibble(year = 2019, deaths = 950)) %>%
+  left_join(nonfatal_over) %>%
+  mutate(overdoses = deaths + cases) %>%
+  select(year, overdoses) -> overdoses
+```
+
+#### Individuals in Medication Assisted Treatment
+
+From Philadelphia Department of Health's public opiod tableau page <https://public.tableau.com/profile/pdph#!/>
+
+```{r}
+vroom::vroom('philly_doh_tableau_data/medicaid_beneficiaries_in_medication_assisted_treatment.tsv') -> mat_medicaid
+vroom::vroom('philly_doh_tableau_data/prisoners_in_medication_assisted_treatment.tsv') -> mat_prison
+```
+
+Combine the data
+
+```{r}
+mat_medicaid %>%
+  group_by(year) %>%
+  summarize(patients = sum(individuals)) %>%
+  ungroup() %>%
+  left_join(mat_prison) %>%
+  replace(is.na(.), 0) %>%
+  mutate(mat_patients = patients + individuals) %>%
+  select(year, mat_patients) -> mat
+```
+
+#### Combine 3 Types of  Data
+
+```{r}
+arrests %>%
+  group_by(year) %>%
+  summarise(arrests = sum(arrests),
+            iud_perc = mean(iud_perc),
+            arrests_adj = round(arrests * (iud_perc / 100))) %>%
+  left_join(overdoses) %>%
+  left_join(mat) %>%
+  mutate(lb = arrests + overdoses + mat_patients) %>% #lm(lb ~ year, data = .) %>% summary()
+  rbind(tibble(year = 2021:2025,
+               arrests = NA,
+               iud_perc = NA, 
+               arrests_adj = NA,
+               overdoses = NA, 
+               mat_patients = NA,
+               lb = NA)) %>%
+  mutate(est_lb = round((year * 1056.6) - 2115104.8)) -> data
+```
+
+<br>
+
+---
+
+<br>
+
+### Visualize
+
+Data used to construct the estimate.
+
+```{r}
+data %>%
+  select(-iud_perc, -arrests_adj, -lb, -est_lb) %>%
+  pivot_longer(arrests:mat_patients, 
+               names_to = 'data_source', 
+               values_to = 'count') %>%
+  filter(year != 2020) %>%
+  na.omit() -> raw_data_skinny
+  
+ggplot(raw_data_skinny, aes(x = year, y = count, color = data_source)) +
+  geom_line() +
+  geom_point() +
+  scale_color_manual(name = 'Data Source',
+                     values = c('dodgerblue3', 'orange3', 'forestgreen')) +
+  labs(x = 'Year', y = 'Number of Individuals') +
+  theme_classic(base_size = 20) 
+ggsave('addition_method_opioid_users.png')
+```
+
+Plot estimated number of opiod users.
+
+```{r, fig.width = 5, fig.height = 4}
+data %>%
+  select(year, lb, est_lb) %>%
+  mutate(est_lb = ifelse(is.na(lb) == F, lb, est_lb)) %>%
+  pivot_longer(lb:est_lb, 
+               names_to = 'estimate_source', values_to = 'estimate') %>%
+
+ggplot(aes(x = year, y = estimate, color = estimate_source)) +
+  geom_line(linetype = rep(c('dashed', 'solid'), each = 12)) +
+  scale_color_manual(values = c('black', 'black')) +
+  geom_point() +
+  labs(x = 'Year', y = 'Number of Individuals') +
+  theme_classic(base_size = 20)  +
+  theme(legend.position = 'none')
+ggsave('addition_opiod_user_estimate.png')
+```
+
+#### Adjusted Estimate
+
+- ~32% of people in treatment say they have injected drugs
+- ~46% - 60% based on HCV data
+
+```{r}
+data %>%
+  select(year, lb, est_lb) %>%
+  mutate(upper_hcv_adjust = round(ifelse(is.na(lb) == F, 
+                                         lb * 0.6, est_lb * 0.6)),
+         middle_hcv_adjust = round(ifelse(is.na(lb) == F, 
+                                         lb * 0.46, est_lb * 0.46)),
+         low_treat_adjust  = round(ifelse(is.na(lb) == F, 
+                                         lb * 0.32, est_lb * 0.32)),
+         ymin = low_treat_adjust,
+         ymax = upper_hcv_adjust) %>%
+  pivot_longer(names_to = 'adjustment', values_to = 'estimate', 
+               upper_hcv_adjust:low_treat_adjust) %>%
+
+ggplot(aes(x = year, y = estimate, color = adjustment)) +
+  geom_ribbon(aes(ymin = ymin, ymax = ymax), alpha = 0.15, color = 'gray60') +
+  geom_line(aes(linetype = adjustment)) +
+  geom_point() +
+  scale_color_manual(values = rep('black', 3)) +
+  scale_linetype_manual(values = c('dashed', 'solid', 'dashed')) +
+  labs(x = 'Year', y = 'Estimated Number of\nIV Drug Users') +
+  theme_classic(base_size = 20) +
+  theme(legend.position = 'none')
+#ggsave('estimated_iud_users.png')
+```
+
+
+## Multiplier Method using Cinncinati Paper
+
+<https://jheor.org/article/9729-estimating-the-prevalence-of-opioid-use-disorder-in-the-cincinnati-region-using-probabilistic-multiplier-methods-and-model-averaging>
+
+### Calculate Multipliers
+
+#### Fatal Overdose
+
+Multiplier: 7.182 %
+Std. Error: 0.533 %
+
+```{r}
+overdose_deaths %>%
+  mutate(se_lower = round((deaths * 100) / (7.182 - 0.533)),
+         multiplier = round((deaths * 100) / 7.182),
+         se_upper = round((deaths * 100) / (7.182 + 0.533))) %>%
+  group_by(year) %>%
+  summarize(sum_multiplier = sum(multiplier),
+            sum_se_low = sum(se_lower),
+            sum_se_high = sum(se_upper)) %>%
+  ungroup() %>% #lm(sum_multiplier ~ year, data = .) %>% broom::tidy()
+  filter(year != '2019') %>%
+  rbind(tibble(year = 2019:2025,
+               sum_multiplier = NA,
+               sum_se_low = NA,
+               sum_se_high = NA)) %>%
+  mutate(projection = ifelse(year < 2019, sum_multiplier,
+                             round(((year * 654.2) + -1310155.4))),
+         proj_se_low = ifelse(year < 2019, sum_se_low,
+                              round((projection - (1.96 * 395.8294)))),
+         proj_se_high = ifelse(year < 2019, sum_se_high,
+                              round((projection + (1.96 * 395.8294))))) %>%
+  unite(multiplier, sum_multiplier:sum_se_high, sep = '_') %>%
+  unite(projection, projection:proj_se_high) %>%
+  pivot_longer(multiplier:projection,
+               names_to = 'estimate_source', values_to = 'estimate') %>%
+  separate(estimate, into = c('estimate', 'low', 'high'), 
+           sep = '_', convert = T) %>%
+  na.omit() %>%
+  mutate(data_source = 'fatal_overdoses') -> fatal_overdose_multiplier
+```
+
+#### Treatment Admission
+
+Multiplier: 21.376 %
+Std. Error: 2.142 %
+
+```{r}
+mat %>%
+  mutate(se_lower = round((mat_patients * 100) / (21.376 - 2.142)),
+         multiplier = round((mat_patients * 100) / 21.376),
+         se_upper = round((mat_patients * 100) / (21.376 + 2.142))) %>%
+  group_by(year) %>%
+  summarize(sum_multiplier = sum(multiplier),
+            sum_se_low = sum(se_lower),
+            sum_se_high = sum(se_upper)) %>%
+  ungroup() %>% #lm(sum_multiplier ~ year, data = .) %>% broom::tidy()
+  filter(year != '2019') %>%
+  rbind(tibble(year = 2019:2025,
+               sum_multiplier = NA,
+               sum_se_low = NA,
+               sum_se_high = NA)) %>%
+  mutate(projection = ifelse(year < 2019, sum_multiplier,
+                             round(((year * 3494.317) + -7006229.989))),
+         proj_se_low = ifelse(year < 2019, sum_se_low,
+                              round((projection - (1.96 * 447.1714)))),
+         proj_se_high = ifelse(year < 2019, sum_se_high,
+                              round((projection + (1.96 * 447.1714))))) %>%
+  unite(multiplier, sum_multiplier:sum_se_high, sep = '_') %>%
+  unite(projection, projection:proj_se_high) %>%
+  pivot_longer(multiplier:projection,
+               names_to = 'estimate_source', values_to = 'estimate') %>%
+  separate(estimate, into = c('estimate', 'low', 'high'), 
+           sep = '_', convert = T) %>%
+  na.omit() %>%
+  mutate(data_source = 'MAT') -> mat_multiplier
+```
+
+#### Non-Fatal ED Overdose
+
+Multiplier: 40.890 %
+Std. Error: 5.111 %
+
+```{r}
+overdoses %>%
+  mutate(se_lower = round((overdoses * 100) / (21.376 - 2.142)),
+         multiplier = round((overdoses * 100) / 21.376),
+         se_upper = round((overdoses * 100) / (21.376 + 2.142))) %>%
+  group_by(year) %>%
+  summarize(sum_multiplier = sum(multiplier),
+            sum_se_low = sum(se_lower),
+            sum_se_high = sum(se_upper)) %>%
+  ungroup() %>% #lm(sum_multiplier ~ year, data = .) %>% broom::tidy()
+  filter(year != '2019') %>%
+  rbind(tibble(year = 2019:2025,
+               sum_multiplier = NA,
+               sum_se_low = NA,
+               sum_se_high = NA)) %>%
+  mutate(projection = ifelse(year < 2019, sum_multiplier,
+                             round(((year * 554.6833) + -1111428.5667))),
+         proj_se_low = ifelse(year < 2019, sum_se_low,
+                              round((projection - (1.96 * 83.90343)))),
+         proj_se_high = ifelse(year < 2019, sum_se_high,
+                              round((projection + (1.96 * 83.90343))))) %>%
+  unite(multiplier, sum_multiplier:sum_se_high, sep = '_') %>%
+  unite(projection, projection:proj_se_high) %>%
+  pivot_longer(multiplier:projection,
+               names_to = 'estimate_source', values_to = 'estimate') %>%
+  separate(estimate, into = c('estimate', 'low', 'high'), 
+           sep = '_', convert = T) %>%
+  na.omit() %>%
+  mutate(data_source = 'nonfatal_overdoses') -> nonfatal_overdose_multiplier
+```
+
+#### Combine Data
+
+```{r}
+rbind(fatal_overdose_multiplier, 
+      nonfatal_overdose_multiplier, 
+      mat_multiplier) %>%
+  unite(group, c('estimate_source', 'data_source'), 
+        sep = '_', remove = F)-> multipliers
+```
+
+#### Plot
+
+```{r, fig.width = 5, fig.height = 4}
+### all three multipliers
+multipliers %>%
+
+ggplot(aes(x = year, y = estimate, color = group, group = group)) +
+  geom_ribbon(aes(ymin = low, ymax = high, fill = group), 
+              alpha = 0.15, color = 'white') +
+  scale_fill_manual(name = '', values = rep(c('firebrick3', 'orange3', 'pink3'), 2)) +
+  ggrepel::geom_label_repel(data = filter(multipliers, year == 2025),
+                           aes(label = data_source, 
+                               x = 2026, 
+                               # fatal overdoses, nonfatal overdoses, MAT
+                               y = c(18000, 5000, 60000))) +
+  geom_line(aes(linetype = group)) +
+  scale_linetype_manual(name = '', values = rep(c('solid', 'dashed'), each = 3)) +
+  scale_color_manual(name = '', 
+                     values = rep(c('firebrick3', 'orange3', 'pink3'), 2)) +
+  geom_point() +
+  labs(x = 'Year', y = 'Number of Individuals') +
+  theme_classic(base_size = 20) +
+  theme(legend.position = 'none')
+#ggsave('opioid_users_all_multiplier_estimates.png')
+
+### without MAT
+multipliers %>%
+  filter(data_source != 'MAT') %>%
+
+ggplot(aes(x = year, y = estimate, color = group, group = group)) +
+  geom_ribbon(aes(ymin = low, ymax = high, fill = group), 
+              alpha = 0.15, color = 'white') +
+  scale_fill_manual(name = '', values = rep(c('firebrick3', 'pink3'), 2)) +
+  ggrepel::geom_label_repel(data = filter(multipliers, year == 2025,
+                                          data_source != 'MAT'),
+                           aes(label = data_source, 
+                               x = 2026, 
+                               # fatal overdoses, nonfatal overdoses, MAT
+                               y = c(15500, 7000))) +
+  geom_line(aes(linetype = group)) +
+  scale_linetype_manual(name = '', 
+                        values = rep(c('solid', 'dashed'), each = 2)) +
+  scale_color_manual(name = '', 
+                     values = rep(c('firebrick3', 'pink3'), 2)) +
+  geom_point() +
+  labs(x = 'Year', y = 'Number of Individuals') +
+  theme_classic(base_size = 20) +
+  theme(legend.position = 'none')
+  theme(legend.position = 'none')
+#ggsave('opioid_users_multiplier_estimates_no_MAT.png')
+```
+
+### Adjusted Multiplier Estimates for IDUs
+
+#### Adjusted Estimate
+
+- ~32% of people in treatment say they have injected drugs
+- ~46% - 60% based on HCV data
+
+```{r}
+multipliers %>%
+  mutate(low_adj_est = estimate * 0.32,
+         low_adj_low = low * 0.32,
+         low_adj_high = high * 0.32,
+         mid_adj_est = estimate * 0.46,
+         mid_adj_low = low * 0.46,
+         mid_adj_high = high * 0.46,
+         high_adj_est = estimate * 0.6,
+         high_adj_low = low * 0.6,
+         high_adj_high = high * 0.6) %>%
+  group_by(year, group, estimate_source, data_source) %>%
+  summarize(adj_estimate = (low_adj_est + mid_adj_est + high_adj_est) / 3,
+            adj_low = min(low_adj_low, mid_adj_low, high_adj_low),
+            adj_high = max(low_adj_high, mid_adj_high, high_adj_high)) %>%
+  ungroup() -> multipliers_adjusted
+```
+
+#### Plot Adjusted Estimate
+
+```{r, fig.width = 5, fig.height = 4}
+### all three multipliers
+multipliers_adjusted %>%
+
+ggplot(aes(x = year, y = adj_estimate, color = group, group = group)) +
+  geom_ribbon(aes(ymin = adj_low, ymax = adj_high, fill = group), 
+              alpha = 0.15, color = 'white') +
+  scale_fill_manual(name = '', values = rep(c('firebrick3', 'orange3', 'pink3'), 2)) +
+  ggrepel::geom_label_repel(data = filter(multipliers_adjusted, year == 2025),
+                           aes(label = data_source,
+                               x = 2026,
+                               # fatal overdoses, MAT, nonfatal overdoses
+                               y = c(9000, 35000, 1000))) +
+  geom_line(aes(linetype = group)) +
+  scale_linetype_manual(name = '', values = rep(c('solid', 'dashed'), each = 3)) +
+  scale_color_manual(name = '', 
+                     values = rep(c('firebrick3', 'orange3', 'pink3'), 2)) +
+  geom_point() +
+  labs(x = 'Year', y = 'Number of Individuals') +
+  theme_classic(base_size = 20) +
+  theme(legend.position = 'none')
+NULL
+# ggsave('opioid_users_all_ADJ_multiplier_estimates.png')
+
+### without MAT
+multipliers_adjusted %>%
+  filter(data_source != 'MAT') %>%
+
+ggplot(aes(x = year, y = adj_estimate, color = group, group = group)) +
+  geom_ribbon(aes(ymin = adj_low, ymax = adj_high, fill = group), 
+              alpha = 0.15, color = 'white') +
+  scale_fill_manual(name = '', values = rep(c('firebrick3', 'pink3'), 2)) +
+  ggrepel::geom_label_repel(data = filter(multipliers_adjusted, year == 2025,
+                                          data_source != 'MAT'),
+                           aes(label = data_source, 
+                               x = 2026, 
+                               # fatal overdoses, nonfatal overdoses, MAT
+                               y = c(7500, 3500))) +
+  geom_line(aes(linetype = group)) +
+  scale_linetype_manual(name = '', 
+                        values = rep(c('solid', 'dashed'), each = 2)) +
+  scale_color_manual(name = '', 
+                     values = rep(c('firebrick3', 'pink3'), 2)) +
+  geom_point() +
+  labs(x = 'Year', y = 'Number of Individuals') +
+  theme_classic(base_size = 20) +
+  theme(legend.position = 'none')
+# ggsave('opioid_users_ADJ_multiplier_estimates_no_MAT.png')
+```
+
+```{r, fig.width = 5, fig.height = 4}
+### all three multipliers
+multipliers_adjusted %>% #distinct(group, estimate_source, data_source, adjustment)
+
+ggplot(aes(x = year, y = estimate, color = group, group = group)) +
+  geom_ribbon(aes(ymin = low, ymax = high, fill = group), 
+              alpha = 0.15, color = 'white') +
+  scale_fill_manual(name = '', 
+                    values = rep(rep(c('firebrick3', 'orange2', 'pink3'), 
+                                     each = 3), 2)) +
+  # ggrepel::geom_label_repel(data = filter(multipliers_adjusted, year == 2025),
+  #                          aes(label = data_source, 
+  #                              x = 2026, 
+  #                              # fatal overdoses, nonfatal overdoses, MAT
+  #                              y = c(18000, 5000, 60000))) +
+  geom_line(aes(linetype = group)) +
+  scale_linetype_manual(name = '', values = rep(c('solid', 'dashed'), each = 9)) +
+  scale_color_manual(name = '', 
+                     values = rep(rep(c('firebrick3', 'orange2', 'pink3'), 
+                                     each = 3), 2)) +
+  geom_point() +
+  labs(x = 'Year', y = 'Number of Individuals') +
+  theme_classic(base_size = 20) +
+  theme(legend.position = 'none')
+NULL
+```
