@@ -1,0 +1,6 @@
+distance_calculation.py = code for calculations
+distance_analysis.csv = see final 2 columns for "nearby bupe program" counts & lists per census tract
+distance_matrix.csv = table of as-crow-flies mileage to each census tract center from each of 26 programs listed in DBHIDS TAD as offering buprenorphine
+geocoded_dbhids_mat-locations_tad-2020-02-28.csv = source file for buprenorphine according to DBHIDS TAD (geocodes added)
+
+Note that each DISTINCT SITE needs a DISTINCT LABEL for accurate outcomes. For programs with multiple sites (Merakey Behavioral Health, NET Centers, Wedge Medical Center), zip code was added to distinguish labels.
