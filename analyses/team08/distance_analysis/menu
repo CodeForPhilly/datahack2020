@@ -4,3 +4,6 @@ distance_matrix.csv = table of as-crow-flies mileage to each census tract center
 geocoded_dbhids_mat-locations_tad-2020-02-28.csv = source file for buprenorphine according to DBHIDS TAD (geocodes added)
 
 Note that each DISTINCT SITE needs a DISTINCT LABEL for accurate outcomes. For programs with multiple sites (Merakey Behavioral Health, NET Centers, Wedge Medical Center), zip code was added to distinguish labels.
+
+TAD-BupeDistance_Nearest3Sites_Sorted-by-ODsDESC.xlsx = basic calculations for average distance
+TAD-BupeDistance_HighNeedTracts-by-Neighborhoods.xlsx = labels high-need tracts by neighborhood for ease of human reference
