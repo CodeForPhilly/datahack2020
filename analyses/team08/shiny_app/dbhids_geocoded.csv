@@ -1,0 +1,41 @@
+,ProgramName,Address,Zip,Buprenorphine?,Methadone?,Vivitrol?,Same-day induction during walk-in hours?,Phone,Website,Notes (DBHIDS TAD),IOP,OP,MH Tx,lat,lon
+0,Addiction Medicine and Health Advocates (AMHA),928 Market St,19107,No,Yes,No,,215-923-4202,http://www.amhainc.org/,Spanish; Child care on site,Yes,Yes,No,39.951384515530584,-75.15605026664787
+1,Asociacion Puertorriquenos en Marcha (APM),4301 Rising Sun Ave,19140,Yes,No,No,,267-296-7200,http://apmphila.org/,Spanish,Yes,Yes,Yes,40.015918879135924,-75.1295494287669
+2,Chances-Phila Health Mgmt Corp (PHMC)*,"1200 Callowhill St, Suite 102",19107,Yes,No,Yes,,215-825-8220,http://www.phmc.org/site/programs/health-care-centers/375-phmc-care-clinic,"Females only, Child care on site",Yes,Yes,No,39.959025397809036,-75.15836230093048
+3,Comhar,2055 E Allegheny Ave,19134,Yes,No,No,,215-427-5800,http://www.comhar.org/,Spanish,No,Yes,Yes,39.993003000000016,-75.10982849999999
+4,The Consortium,451 S University Ave,19104,No,Yes,Yes,,215-596-8000,http://www.consortium-inc.org/,Spanish; Child care on site,Yes,Yes,Yes,39.9472292894428,-75.19848462302522
+5,Drexel Medicine Caring Together Clinic,4700 Wissahickon Ave,19144,Yes,No,Yes,,215-967-2130,http://drexelmedicine.org/patient-services/psychiatry/the-caring-together-program/,"[Bupe & Vivitrol = maintenance, not induction.] Females only, Child care on site",No,Yes,No,40.01535000000001,-75.173778
+6,Gaudenzia Outreach,1306 Spring Garden St,19123,No,No,Yes,,215-238-2150,http://www.gaudenzia.org/,Spanish,Yes,Yes,Yes,39.96192417478562,-75.15962684350191
+7,Gaudenzia-DRC,3200 Henry Ave,19129,No,No,Yes,,215-991-9700,,--,Yes,Yes,No,40.01000689477204,-75.1807310828954
+8,GPass,4943 N 5th St,19120,No,No,Yes,,215-991-9700,,"Spanish, Korean, Vietnamese, Chinese, Cambodian",Yes,Yes,No,40.02699226005545,-75.13254322381573
+9,Interim House Inc - PHMC,333 W Upsal St,19139,Yes,No,Yes,,215-849-4606,,Spanish,Yes,Yes,Yes,40.043173608950234,-75.1886267102544
+10,JEVS Human Services - Act I,5820 Old York Road,19141,No,Yes,No,,215-276-8400,https://www.jevshumanservices.org/program/achievement-through-counseling-and-treatment/,--,Yes,Yes,No,40.042011142939565,-75.14444964351648
+11,JEVS Human Services - Act II,1745 N 4th St,19122,No,Yes,No,,215-236-0100,https://www.jevshumanservices.org/program/achievement-through-counseling-and-treatment/,Spanish,Yes,Yes,No,39.97730091968356,-75.14147317595877
+12,John F Kennedy Behavioral Health Center (JFK),907 N Broad St,19123,No,Yes,No,,215-235-5520,http://www.jfkmhmr.org/,--,No,Yes,Yes,39.97043099999999,-75.1591845
+13,Kensington Hospital,136 Diamond St,19122,No,Yes,No,,215-426-8100,http://kensingtonhospital.org/,--,No,Yes,No,39.981627,-75.1346595
+14,Merakey Behavioral Health,5000 Parkside Ave,19131,Yes,Yes,Yes,Yes,215-879-6116,http://www.nhsonline.org/,Walk-in: M-F 7a-5:30p; Sa 8a-1:30m; Su 8-11:30a,Yes,Yes,Yes,39.979682999999994,-75.219786
+15,Merakey Behavioral Health,5429 Germantown Ave,19144,Yes,Yes,Yes,Yes,215-754-0240,http://www.nhsonline.org/,Walk-in: 7a-5:30p,Yes,Yes,Yes,40.03348929312114,-75.17118301552324
+16,Merakey Behavioral Health,100 E Lehigh Ave,19125,Yes,No,Yes,Yes,215-634-2520,http://www.nhsonline.org/,Walk-in: M-F 8a-5p,Yes,Yes,Yes,39.989682000000016,-75.12818399999999
+17,Merakey Behavioral Health,11082 Knights Road,19154,Yes,No,Yes,Yes,215-632-9040,http://www.nhsonline.org/,Walk-in: M-F 8a-5p,Yes,Yes,No,40.083238882912774,-74.97480191525733
+18,North Phila Health System - Goldman Clinic,801 W Girard Ave,19122,No,Yes,Yes,,215-787-2000,https://bewellctr.org/,Spanish,Yes,Yes,No,39.97142099999999,-75.1499145
+19,NET Centers,499 N 5th St,19123,Yes,No,Yes,,215-451-7100,http://netcenters.org/services/addiction-recovery-programs/#ffs-tabbed-14,--,Yes,Yes,Yes,39.96064967772241,-75.14668539133942
+20,NET Centers,2205 Bridge St,19137,Yes,Yes,Yes,Yes,215-745-6150,http://netcenters.org/services/addiction-recovery-programs/#ffs-tabbed-14,Walk-in: M-W 7a-5p Th 7-11a; F 7a-12p,Yes,Yes,Yes,40.01051019791332,-75.06939750904705
+21,NET Centers,7520 State Road,19136,Yes,Yes,Yes,Yes,267-348-3550,http://netcenters.org/services/addiction-recovery-programs/#ffs-tabbed-14,Child care on site; Walk-in hours [noted but not specified],Yes,Yes,Yes,40.028776569045604,-75.02631258275117
+22,NET Centers,"4625 Frankford Ave, 2nd Fl",19124,Yes,No,No,Yes,267-597-3920,http://netcenters.org/services/addiction-recovery-programs/#ffs-tabbed-14,Spanish; MH Tx 1st FL; Walk-in: M-F 9a-4p,No,Yes,Yes,40.015197,-75.0848085
+23,Pathways to Housing*,"5201 Old York Road, Suite 108",19141,Yes,No,Yes,,215-390-1500,http://pathwaystohousingpa.org/,Spanish; Housing Assistance,No,No,No,40.03238748237062,-75.14556280538442
+24,Pathways to Recovery (PHMC),2301 East Allegheny Ave,19134,Yes,Yes,Yes,,215-731-2402,,"[>IOP>OP:] Partial Hospital Program; [MMT = clinic coordination, not induction]; Spanish",No,No,Yes,39.989754000000005,-75.106341
+25,Penn Medicine Presbyterian Medical Center*,"3910 Powelton Ave, 5th Fl",19104,Yes,No,No,,267-809-5080,http://www.pennmedicine.org/penn-presbyterian-medical-center/,Spanish,Yes,Yes,No,39.95924853116205,-75.20083859088815
+26,Penn Medicine Mothers Matter Program*,"3400 Spruce St, 1 West Gates",19103,Yes,No,No,,267-593-2969,https://www.med.upenn.edu/penn-promotes/mothers-matter.pdf,Pregnant Women,No,No,No,39.95055911956873,-75.19373916126142
+27,PHMC Care Clinic MAT Program*,"1200 Callowhill St, 1st Floor",19107,Yes,No,Yes,,267-398-0247,http://www.phmc.org/site/programs/health-care-centers/375-phmc-care-clinic,Health Care Center; Spanish; PCP,No,No,No,39.959025397809036,-75.15836230093048
+28,Prevention Point*,2913-2915 Kensington Ave,19134,Yes,No,Yes,,215-634-5272,https://ppponline.org/,Harm Reduction Svcs; Spanish,No,No,No,39.992733000000015,-75.119643
+29,Project Home*,1515 Fairmount Ave,19104,Yes,No,Yes,,215-320-6187 ext. 5756,http://www.projecthome.org/,Housing Assistance,No,No,No,39.9671937582355,-75.16234800000001
+30,Soar Corp,"9150 Marshall St, Suite 2",19114,No,Yes,No,,215-464-4450,http://www.soarcorp.org/,--,Yes,Yes,No,40.07244800261382,-75.03192034376053
+31,Thomas Jefferson University Family Center*,"1233 Locust St, Suite 201",19107,No,Yes,No,,215-955-8577,http://hospitals.jefferson.edu/departments-and-services/maternal-fetal-medicine/maternal-addiction-treatment-education-and-research.html,"*MATER; Females only, pregnancy, child care on site",Yes,Yes,Yes,39.947941692629406,-75.16169471557762
+32,Thomas Jefferson University (NARP)*,21st & Washington Ave,19147,No,Yes,No,,215-735-5979,http://hospitals.jefferson.edu/diseases-and-conditions/substance-abuse.html,Spanish,Yes,Yes,Yes,39.939273000000014,-75.1782285
+33,Temple TWO Program*,3401 N Broad St,19140,Yes,No,No,,215-707-3008,,Partners with the Wedge MC; OB-GYN Svcs,No,No,No,40.00471950030917,-75.15217163464212
+34,Wedge Medical Center*,3609 N Broad St,19140,Yes,No,Yes,Yes,215-276-3922,http://www.wedgepc.com/,Partners with Temple TWO; Walk-in: M-W 2-3:30p; Spanish,Yes,Yes,Yes,40.00805032999601,-75.15142226447017
+35,Wedge Medical Center*,2009 S Broad St,19148,Yes,No,Yes,Yes,215-276-3922,http://www.wedgepc.com/,Partners with Temple TWO: Walk-in: M 2-3:30p,Yes,Yes,Yes,39.92523299999999,-75.1690395
+36,Wedge Medical Center*,4243 Frankford Ave,19124,Yes,No,Yes,Yes,215-276-3922,http://www.wedgepc.com/,Partners with Temple TWO; Walk-in: T 2-3:30p,Yes,Yes,Yes,40.00937400000001,-75.0889845
+37,NET Centers,2701 N Broad St,19132,Yes,No,Yes,,215-226-1600,http://netcenters.org/services/addiction-recovery-programs/#ffs-tabbed-14,--,Yes,Yes,,39.99429000000001,-75.15379349999999
+38,NET Centers,5501 Chestnut St,19139,Yes,No,Yes,,215-747-6480,http://netcenters.org/services/addiction-recovery-programs/#ffs-tabbed-14,--,Yes,Yes,,39.959441999999996,-75.2312565
+39,Belmont Behavioral Health Hospital,4200 Monument Rd,19131,No,No,Yes,,877-418-7923,http://www.belmontbehavioral.com/,Spanish,Yes,Yes,No,39.9996670979573,-75.21585451258039
